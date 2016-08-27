@@ -31,9 +31,9 @@ namespace csgop.Clients {
 
             foreach (ProcessModule Module in External.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    var client = Module.BaseAddress;
-                    hp.ExternalPointer = new IntPtr(hp.ExternalPointer.ToInt32()+client.ToInt32() + 0xA3A43C);
-                    isWalking.ExternalPointer = new IntPtr(isWalking.ExternalPointer.ToInt32() + client.ToInt32() + 0xA3A43C);
+                    var client = Module.BaseAddress.ToInt32();
+                    hp.ExternalPointer += client + 0xA3A43C;
+                    isWalking.ExternalPointer += client + 0xA3A43C;
                 }
             }
 
