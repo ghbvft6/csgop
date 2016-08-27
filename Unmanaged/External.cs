@@ -11,7 +11,7 @@ namespace csgop.Unmanaged {
         private static Process process;
 
         static External() {
-            kernel = new Kernel32();
+            kernel = Kernel32.Instance;
         }
 
         public static Process Process {

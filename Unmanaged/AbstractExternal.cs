@@ -10,7 +10,7 @@ namespace csgop.Unmanaged {
         private static uint lpNumberOfBytesRead; // used by ReadProcessMemory()
 
         static AbstractExternal() {
-            kernel = new Kernel32();
+            kernel = Kernel32.Instance;
         }
 
         public unsafe AbstractExternal(void* externalPtr) : this(new IntPtr(externalPtr)) { }

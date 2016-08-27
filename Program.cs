@@ -10,7 +10,7 @@ namespace csgop {
         /// </summary>
         [STAThread]
         static void Main() {
-            var kernel = new Kernel32();
+            var kernel = Kernel32.Instance;
             kernel.AllocConsole();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

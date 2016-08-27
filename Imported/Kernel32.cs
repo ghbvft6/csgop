@@ -3,6 +3,17 @@ using System.Runtime.InteropServices;
 
 namespace csgop.Imported {
     class Kernel32 {
+
+        private static readonly Kernel32 instance = new Kernel32();
+
+        private Kernel32() { }
+
+        internal static Kernel32 Instance {
+            get {
+                return instance;
+            }
+        }
+
         private class Static {
             [DllImport("kernel32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
