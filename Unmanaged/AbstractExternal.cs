@@ -32,15 +32,16 @@ namespace csgop.Unmanaged {
             }
         }
 
-        public IntPtr ExternalPointer {
+        public unsafe new void* Pointer {
             get {
                 Read();
-                return externalPtr;
+                return base.Pointer;
             }
-            set {
-                externalPtr = value;
-                Write();
-            }
+        }
+
+        public IntPtr ExternalPointer {
+            get { return externalPtr; }
+            set { externalPtr = value; }
         }
 
         public void Read() {
