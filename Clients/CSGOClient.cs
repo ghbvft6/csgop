@@ -7,13 +7,13 @@ using System.Threading;
 namespace csgop.Clients {
     unsafe class CSGOClient {
 
-        readonly External<int> client;
+        readonly External<int> localbase = 0;
         readonly External<int> hp = 0xFC;
         readonly External<bool> isWalking = 102;
 
-        internal int Client {
+        internal int Localbase {
             get {
-                return *(int*)client.Pointer;
+                return *(int*)localbase.Pointer;
             }
         }
 
@@ -38,9 +38,9 @@ namespace csgop.Clients {
 
             foreach (ProcessModule Module in External.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    client.ExternalPointer = Module.BaseAddress;
-                    hp.ExternalPointer += Client + 0xA3A43C;
-                    isWalking.ExternalPointer += Client + 0xA3A43C;
+                    localbase.ExternalPointer = Module.BaseAddress + 0xA3A43C;
+                    hp.ExternalPointer += Localbase;
+                    isWalking.ExternalPointer += Localbase;
                     break;
                 }
             }
