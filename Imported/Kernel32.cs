@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
-namespace csgop.src {
+namespace csgop.Imported {
     class Kernel32 {
         private class Static {
             [DllImport("kernel32.dll", SetLastError = true)]

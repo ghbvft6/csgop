@@ -1,7 +1,8 @@
-﻿using System;
+﻿using csgop.Imported;
+using System;
 using System.Diagnostics;
 
-namespace csgop.src {
+namespace csgop.Unmanaged {
 
     sealed class External {
 

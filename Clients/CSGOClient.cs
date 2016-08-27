@@ -1,7 +1,8 @@
-﻿using System.Diagnostics;
+﻿using csgop.Unmanaged;
+using System.Diagnostics;
 using System.Reflection;
 
-namespace csgop.src {
+namespace csgop.Clients {
     unsafe class CSGOClient {
 
         readonly External<int> hp = 10;

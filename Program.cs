@@ -1,8 +1,6 @@
-﻿using csgop.src;
+﻿using csgop.GUI;
+using csgop.Imported;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace csgop {

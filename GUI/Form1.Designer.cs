@@ -1,4 +1,4 @@
-﻿namespace csgop {
+﻿namespace csgop.GUI {
     partial class Form1 {
         /// <summary>
         /// Required designer variable.

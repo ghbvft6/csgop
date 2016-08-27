@@ -1,7 +1,8 @@
-﻿using System;
+﻿using csgop.Imported;
+using System;
 using System.Runtime.InteropServices;
 
-namespace csgop.src {
+namespace csgop.Unmanaged {
     abstract class AbstractExternal<T> : Unmanaged<T> {
 
         protected IntPtr externalPtr;

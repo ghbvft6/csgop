@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace csgop.src {
+namespace csgop.Unmanaged {
     class Unmanaged<T> {
 
         protected IntPtr ptr;
