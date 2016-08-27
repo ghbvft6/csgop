@@ -23,7 +23,7 @@ namespace csgop.Clients {
         }
 
         public void Run() {
-            External.ProcessName = "csgop";
+            External.ProcessName = "csgo";
 
             while (External.AttachToProccess() == false) {
                 Thread.Sleep(1);
