@@ -1,6 +1,7 @@
 ﻿using csgop.Unmanaged;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 
 namespace csgop.Clients {
     unsafe class CSGOClient {
@@ -22,7 +23,10 @@ namespace csgop.Clients {
 
         public void Run() {
             External.ProcessName = "csgop";
-            External.AttachToProccess();
+
+            while (External.AttachToProccess() == false) {
+                Thread.Sleep(1);
+            }
 
             foreach (ProcessModule Module in External.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
