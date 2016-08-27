@@ -21,7 +21,12 @@ namespace csgop.Unmanaged {
 
         public static string ProcessName {
             get { return process.ProcessName; }
-            set { process = Process.GetProcessesByName(value)[0]; }
+            set {
+                var processes = Process.GetProcessesByName(value);
+                if (processes.Length > 0) {
+                    process = processes[0];
+                }
+            }
         }
 
         public static bool AttachToProccess() {
@@ -29,7 +34,9 @@ namespace csgop.Unmanaged {
         }
 
         public static bool AttachToProccess(Process process) {
-            pHandle = kernel.OpenProcess(0x0010, false, process.Id);
+            if (process != null) {
+                pHandle = kernel.OpenProcess(0x0010, false, process.Id);
+            }
             return pHandle == IntPtr.Zero ? false : true;
         }
     }
