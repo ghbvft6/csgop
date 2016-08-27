@@ -14,10 +14,12 @@ namespace csgop {
         static void Main() {
             var kernel = Kernel32.Instance;
             kernel.AllocConsole();
+
+            new Thread(new CSGOClient().Run).Start();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            new Thread(new CSGOClient().Run).Start();
         }
     }
 }
