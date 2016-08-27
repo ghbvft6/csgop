@@ -14,7 +14,7 @@ namespace csgop.src {
             [DllImport("kernel32.dll")]
             public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
             [DllImport("kernel32.dll")]
-            public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out uint lpNumberOfBytesRead);
+            public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr lpBuffer, uint nSize, out uint lpNumberOfBytesRead);
         }
         public bool AllocConsole() {
             return Static.AllocConsole();
@@ -22,7 +22,7 @@ namespace csgop.src {
         public IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId) {
             return Static.OpenProcess(dwDesiredAccess, bInheritHandle, dwProcessId);
         }
-        public bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out uint lpNumberOfBytesRead) {
+        public bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr lpBuffer, uint nSize, out uint lpNumberOfBytesRead) {
             return Static.ReadProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize, out lpNumberOfBytesRead);
         }
     }
