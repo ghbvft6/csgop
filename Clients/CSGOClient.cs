@@ -7,8 +7,15 @@ using System.Threading;
 namespace csgop.Clients {
     unsafe class CSGOClient {
 
+        readonly External<int> client;
         readonly External<int> hp = 0xFC;
         readonly External<bool> isWalking = 102;
+
+        internal int Client {
+            get {
+                return *(int*)client.Pointer;
+            }
+        }
 
         internal int Hp {
             get {
@@ -31,15 +38,16 @@ namespace csgop.Clients {
 
             foreach (ProcessModule Module in External.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    var client = Module.BaseAddress.ToInt32();
-                    hp.ExternalPointer += client + 0xA3A43C;
-                    isWalking.ExternalPointer += client + 0xA3A43C;
+                    client.ExternalPointer = Module.BaseAddress;
+                    hp.ExternalPointer += Client + 0xA3A43C;
+                    isWalking.ExternalPointer += Client + 0xA3A43C;
+                    break;
                 }
             }
 
             while (true) {
                 Console.WriteLine(Hp);
-                Thread.Sleep(1);
+                Thread.Sleep(1000);
             }
         }
     }
