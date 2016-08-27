@@ -1,4 +1,5 @@
 ﻿using csgop.Unmanaged;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
@@ -6,7 +7,7 @@ using System.Threading;
 namespace csgop.Clients {
     unsafe class CSGOClient {
 
-        readonly External<int> hp = 10;
+        readonly External<int> hp = 0xFC;
         readonly External<bool> isWalking = 102;
 
         internal int Hp {
@@ -30,22 +31,15 @@ namespace csgop.Clients {
 
             foreach (ProcessModule Module in External.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    var client = (int)Module.BaseAddress;
-                    FieldInfo[] fieldInfos;
-                    fieldInfos = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-                    foreach (var fieldInfo in fieldInfos) {
-                        if (fieldInfo.FieldType == typeof(External<>)) {
-                            fieldInfo.SetValue(this, fieldInfo.GetValue(this));
-                        }
-                    }
-                    break;
+                    var client = Module.BaseAddress;
+                    hp.ExternalPointer = new IntPtr(hp.ExternalPointer.ToInt32()+client.ToInt32() + 0xA3A43C);
+                    isWalking.ExternalPointer = new IntPtr(isWalking.ExternalPointer.ToInt32() + client.ToInt32() + 0xA3A43C);
                 }
             }
 
-            if (Hp > 0) {
-            }
-            if (IsWalking) {
-
+            while (true) {
+                Console.WriteLine(Hp);
+                Thread.Sleep(1);
             }
         }
     }
