@@ -25,6 +25,8 @@ namespace csgop.Imported {
             [DllImport("user32.dll")]
             public static extern bool keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
             [DllImport("user32.dll")]
+            public static extern bool mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, uint dwExtraInfo);
+            [DllImport("user32.dll")]
             public static extern bool GetAsyncKeyState(int key);
         }
 
@@ -39,6 +41,10 @@ namespace csgop.Imported {
         }
         public bool keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo) {
             return Static.keybd_event(bVk, bScan, dwFlags, dwExtraInfo);
+        }
+        public bool mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, uint dwExtraInfo)
+        {
+            return Static.mouse_event(dwFlags, dx, dy, dwData, dwExtraInfo);
         }
         public bool GetAsyncKeyState(int key) {
             return Static.GetAsyncKeyState(key);
