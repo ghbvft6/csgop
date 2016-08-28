@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSGO\CSGOCheat.cs" />
+    <Compile Include="CSGO\CSGOClient.cs" />
+    <Compile Include="CSGO\Player.cs" />
     <Compile Include="Unmanaged\AbstractExternal.cs" />
     <Compile Include="Unmanaged\External.cs" />
-    <Compile Include="Clients\CSGOClient.cs" />
     <Compile Include="Imported\Kernel32.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -59,6 +61,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unmanaged\OffsetDAO.cs" />
     <Compile Include="Unmanaged\Unmanaged.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

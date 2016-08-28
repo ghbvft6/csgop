@@ -1,4 +1,4 @@
-﻿using csgop.Clients;
+﻿using csgop.CSGO;
 using csgop.GUI;
 using csgop.Imported;
 using System;
@@ -15,7 +15,7 @@ namespace csgop {
             var kernel = Kernel32.Instance;
             kernel.AllocConsole();
 
-            new Thread(new CSGOClient().Run).Start();
+            new Thread(new CSGOCheat().Run).Start();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
