@@ -21,8 +21,8 @@ namespace csgop.CSGO {
                 if (Module.ModuleName.Equals("client.dll")) {
                     csgo = new CSGOClient(Module.BaseAddress.ToInt32());
                     player = new Player(csgo.Player);
-                    for (int i = 2; i<players.Length + 2; ++i) {
-                        players[i-2] = new Player(csgo.Players + i * 0x10);
+                    for (int i = 0; i<players.Length; ++i) {
+                        players[i] = new Player(csgo.Players + (i +1) * 0x10);
                     }
                     break;
                 }
@@ -38,14 +38,19 @@ namespace csgop.CSGO {
 
         public void ContinouslyPrintHp() {
             while (true) {
+                Console.Write("\n my hp:");
                 Console.WriteLine(player.Hp);
+                Console.WriteLine("");
                 Thread.Sleep(1000);
             }
         }
 
         public void ContinouslyPrintHp2() {
             while (true) {
-                Console.WriteLine(players[0].Hp);
+                for (int i = 0; i < players.Length; ++i) {
+                    Console.Write("\nplayer {0}: ", i);
+                    Console.WriteLine(players[i].Hp);
+                }
                 Thread.Sleep(1000);
             }
         }
