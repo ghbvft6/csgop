@@ -6,11 +6,11 @@ using System.Threading;
 namespace csgop.CSGO {
     class CSGOCheat {
 
-        private static CSGOClient csgo;
-        private static Player player;
-        private static Player[] players = new Player[63];
+        public static CSGOClient csgo;
+        public static Player player;
+        public static Player[] players = new Player[5];
 
-        private void AttachToClient() {
+        public static void AttachToClient() {
             External.ProcessName = "csgo";
 
             while (External.AttachToProccess() == false) {
@@ -27,32 +27,6 @@ namespace csgop.CSGO {
                     break;
                 }
             }
-        }
-
-        public void Run() {
-            AttachToClient();
-
-            new Thread(this.ContinouslyPrintHp).Start();
-            new Thread(this.ContinouslyPrintHp2).Start();
-        }        
-
-        public void ContinouslyPrintHp() {
-            while (true) {
-                Console.Write("\n my hp:");
-                Console.WriteLine(player.Hp);
-                Console.WriteLine("");
-                Thread.Sleep(1000);
-            }
-        }
-
-        public void ContinouslyPrintHp2() {
-            while (true) {
-                for (int i = 0; i < players.Length; ++i) {
-                    Console.Write("\nplayer {0}: ", i);
-                    Console.WriteLine(players[i].Hp);
-                }
-                Thread.Sleep(1000);
-            }
-        }
+        }     
     }
 }

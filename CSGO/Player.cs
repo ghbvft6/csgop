@@ -4,7 +4,7 @@ namespace csgop.CSGO {
     unsafe class Player : OffsetDAO {
 
         readonly External<int> hp = 0xFC;
-        readonly External<bool> isWalking = 102;
+        readonly External<int> state = 0x100;
 
         public Player(int baseAddress) : base(baseAddress) {
         }
@@ -15,9 +15,9 @@ namespace csgop.CSGO {
             }
         }
 
-        internal bool IsWalking {
+        internal int State {
             get {
-                return *(bool*)isWalking.Pointer;
+                return *(int*)state.Pointer;
             }
         }
     }

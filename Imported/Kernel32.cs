@@ -22,7 +22,12 @@ namespace csgop.Imported {
             public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
             [DllImport("kernel32.dll")]
             public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr lpBuffer, uint nSize, out uint lpNumberOfBytesRead);
+            [DllImport("user32.dll")]
+            public static extern bool keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
+            [DllImport("user32.dll")]
+            public static extern bool GetAsyncKeyState(int key);
         }
+
         public bool AllocConsole() {
             return Static.AllocConsole();
         }
@@ -31,6 +36,12 @@ namespace csgop.Imported {
         }
         public bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, IntPtr lpBuffer, uint nSize, out uint lpNumberOfBytesRead) {
             return Static.ReadProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize, out lpNumberOfBytesRead);
+        }
+        public bool keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo) {
+            return Static.keybd_event(bVk, bScan, dwFlags, dwExtraInfo);
+        }
+        public bool GetAsyncKeyState(int key) {
+            return Static.GetAsyncKeyState(key);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using csgop.CSGO;
+using csgop.Functions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -9,7 +10,8 @@ namespace csgop.GUI {
         }
 
         private void button1_Click(object sender, System.EventArgs e) {
-            new Thread(new CSGOCheat().Run).Start();
+            CSGOCheat.AttachToClient();
+            new Thread(new Bunnyhop().Run).Start();
         }
     }
 }
