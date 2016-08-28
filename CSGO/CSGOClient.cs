@@ -9,6 +9,10 @@ namespace csgop.CSGO {
         public CSGOClient(int baseAddress) : base(baseAddress) {
         }
 
+        public int GetPlayer(int i) {
+            return *(int*)new External<int>(players.ExternalPointer + (i + 1) * 0x10).Pointer;
+        }
+
         internal int Player {
             get {
                 return *(int*)player.Pointer;

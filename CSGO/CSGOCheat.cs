@@ -22,7 +22,7 @@ namespace csgop.CSGO {
                     csgo = new CSGOClient(Module.BaseAddress.ToInt32());
                     player = new Player(csgo.Player);
                     for (int i = 0; i<players.Length; ++i) {
-                        players[i] = new Player(csgo.Players + (i +1) * 0x10);
+                        players[i] = new Player(csgo.GetPlayer(i));
                     }
                     break;
                 }
