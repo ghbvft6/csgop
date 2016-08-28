@@ -9,7 +9,7 @@ namespace csgop.CSGO {
 
         private static CSGOClient csgo;
         public static Player player;
-        public static Player[] players = new Player[5];
+        public static Player[] players = new Player[24];
 
         private void AttachToClient() {
             External.ProcessName = "csgo";
@@ -34,6 +34,7 @@ namespace csgop.CSGO {
 
             AttachToClient();
             new Thread(new Bunnyhop().Run).Start();
+            new Thread(new SoundESP().Run).Start();
 
         }  
       

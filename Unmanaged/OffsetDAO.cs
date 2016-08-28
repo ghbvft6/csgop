@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using csgop.CSGO;
 
 namespace csgop.Unmanaged {
     abstract class OffsetDAO {
@@ -15,6 +16,8 @@ namespace csgop.Unmanaged {
                         ((External<bool>)fieldInfo.GetValue(this)).ExternalPointer += baseAddress;
                     } else if (argumentType == typeof(External<short>)) {
                         ((External<short>)fieldInfo.GetValue(this)).ExternalPointer += baseAddress;
+                    } else if (argumentType == typeof(External<Player.Vector3>)) {
+                        ((External<Player.Vector3>)fieldInfo.GetValue(this)).ExternalPointer += baseAddress;
                     } else {
                         ((External<object>)fieldInfo.GetValue(this)).ExternalPointer += baseAddress; // INFO will throw an exception
                     }
