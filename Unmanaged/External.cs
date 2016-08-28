@@ -9,6 +9,7 @@ namespace csgop.Unmanaged {
         private readonly static Kernel32 kernel;
         internal static IntPtr pHandle; // TODO fix accessibility level
         private static Process process;
+        private static string processName;
 
         static External() {
             kernel = Kernel32.Instance;
@@ -16,20 +17,22 @@ namespace csgop.Unmanaged {
 
         public static Process Process {
             get { return process; }
-            set { process = value; }
-        }
-
-        public static string ProcessName {
-            get { return process.ProcessName; }
             set {
-                var processes = Process.GetProcessesByName(value);
-                if (processes.Length > 0) {
-                    process = processes[0];
-                }
+                process = value;
+                ProcessName = process.ProcessName;
             }
         }
 
+        public static string ProcessName {
+            get { return processName; }
+            set { processName = value; }
+        }
+
         public static bool AttachToProccess() {
+            var processes = Process.GetProcessesByName(processName);
+            if (processes.Length > 0) {
+                process = processes[0];
+            }
             return AttachToProccess(process);
         }
 
