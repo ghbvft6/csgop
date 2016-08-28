@@ -1,4 +1,5 @@
 ﻿using csgop.Unmanaged;
+using csgop.Functions;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -6,11 +7,11 @@ using System.Threading;
 namespace csgop.CSGO {
     class CSGOCheat {
 
-        public static CSGOClient csgo;
+        private static CSGOClient csgo;
         public static Player player;
         public static Player[] players = new Player[5];
 
-        public static void AttachToClient() {
+        private void AttachToClient() {
             External.ProcessName = "csgo";
 
             while (External.AttachToProccess() == false) {
@@ -27,6 +28,14 @@ namespace csgop.CSGO {
                     break;
                 }
             }
-        }     
+        }
+
+        public void Run() {
+
+            AttachToClient();
+            new Thread(new Bunnyhop().Run).Start();
+
+        }  
+      
     }
 }
