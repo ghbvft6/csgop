@@ -3,7 +3,12 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace csgop.Unmanaged {
-    abstract class AbstractExternal<T> : Unmanaged<T> {
+
+    interface IExternal {
+        IntPtr ExternalPointer { get; set; }
+    }
+
+    abstract class AbstractExternal<T> : Unmanaged<T>, IExternal {
 
         protected IntPtr externalPtr;
         protected readonly static Kernel32 kernel;
