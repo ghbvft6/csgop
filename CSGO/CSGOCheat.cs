@@ -12,17 +12,17 @@ namespace csgop.CSGO {
         public static Player[] players = new Player[24];
 
         private void AttachToClient() {
-            External.ProcessName = "csgo";
+            ExternalProcess<External>.ProcessName = "csgo";
 
-            while (External.AttachToProccess() == false) {
+            while (ExternalProcess<External>.AttachToProccess() == false) {
                 Thread.Sleep(1);
             }
 
-            foreach (ProcessModule Module in External.Process.Modules) {
+            foreach (ProcessModule Module in ExternalProcess<External>.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
                     csgo = new CSGOClient(Module.BaseAddress.ToInt32());
                     player = new Player(csgo.Player);
-                    for (int i = 0; i<players.Length; ++i) {
+                    for (int i = 0; i < players.Length; ++i) {
                         players[i] = new Player(csgo.GetPlayer(i));
                     }
                     break;
@@ -36,7 +36,7 @@ namespace csgop.CSGO {
             new Thread(new Bunnyhop().Run).Start();
             new Thread(new SoundESP().Run).Start();
 
-        }  
-      
+        }
+
     }
 }

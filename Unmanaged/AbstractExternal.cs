@@ -8,7 +8,7 @@ namespace csgop.Unmanaged {
         IntPtr ExternalPointer { get; set; }
     }
 
-    abstract class AbstractExternal<T> : Unmanaged<T>, IExternal {
+    abstract class AbstractExternal<T, U> : Unmanaged<T>, IExternal {
 
         protected IntPtr externalPtr;
         protected readonly static Kernel32 kernel;
@@ -23,8 +23,6 @@ namespace csgop.Unmanaged {
         public AbstractExternal(IntPtr externalPtr) {
             this.externalPtr = externalPtr;
         }
-
-        abstract public IntPtr PHandle { get; set; }
 
         public new T Value {
             get {
@@ -50,7 +48,7 @@ namespace csgop.Unmanaged {
         }
 
         public void Read() {
-            kernel.ReadProcessMemory(PHandle, externalPtr, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesRead);
+            kernel.ReadProcessMemory(ExternalProcess<U>.PHandle, externalPtr, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesRead);
         }
 
         public void Write() {
