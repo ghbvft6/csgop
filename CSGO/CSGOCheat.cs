@@ -8,8 +8,8 @@ namespace csgop.CSGO {
     class CSGOCheat {
 
         private static CSGOClient csgo;
-        public static Player player;
-        public static Player[] players = new Player[24];
+        private Player player;
+        private Player[] players = new Player[24];
 
         private void AttachToClient() {
             ExternalProcess<External>.ProcessName = "csgo";
@@ -31,12 +31,9 @@ namespace csgop.CSGO {
         }
 
         public void Run() {
-
             AttachToClient();
-            new Thread(new Bunnyhop().Run).Start();
-            new Thread(new SoundESP().Run).Start();
-
+            new Thread(new Bunnyhop(player).Run).Start();
+            new Thread(new SoundESP(player, players).Run).Start();
         }
-
     }
 }
