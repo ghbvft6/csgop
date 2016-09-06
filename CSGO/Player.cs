@@ -20,8 +20,7 @@ namespace csgop.CSGO {
             }
         }
 
-        internal int Team
-        {
+        internal int Team {
             get {
                 return *(int*)team.Pointer;
             }
@@ -33,8 +32,7 @@ namespace csgop.CSGO {
             }
         }
 
-        internal bool Dormant
-        {
+        internal bool Dormant {
             get {
                 return *(bool*)dormant.Pointer;
             }
