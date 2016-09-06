@@ -1,13 +1,13 @@
 ﻿using csgop.Unmanaged;
 
 namespace csgop.CSGO {
-    unsafe class CSGOClient : OffsetDAO {
+    public unsafe struct m { public fixed float i[16]; }
 
-        public unsafe struct m { public fixed float i[16]; }
+    unsafe class CSGOClient : OffsetDAO {       
 
         readonly External<int> player = 0xA3A43C;
         readonly External<int> players = 0x04A57EA4;
-        readonly External<m> view = 0x4A49A44;
+        public readonly External<m> view = 0x4A49A44;
 
         public CSGOClient(int baseAddress) : base(baseAddress) {
         }

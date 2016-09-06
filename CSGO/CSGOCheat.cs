@@ -32,7 +32,7 @@ namespace csgop.CSGO {
 
         public void Run() {
             AttachToClient();
-            new Thread(new Bunnyhop(player, csgo).Run).Start();
+            new Thread(new Bunnyhop(player, csgo.View).Run).Start();
             new Thread(new SoundESP(player, players).Run).Start();
         }
     }
