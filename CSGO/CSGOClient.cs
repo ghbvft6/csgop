@@ -1,36 +1,37 @@
 ﻿using csgop.Unmanaged;
+using System;
 
 namespace csgop.CSGO {
-    public unsafe struct m { public fixed float i[16]; }
 
-    unsafe class CSGOClient : OffsetDAO {       
+    unsafe class CSGOClient : OffsetDAO {
 
-        readonly External<int> player = 0xA3A43C;
-        readonly External<int> players = 0x04A57EA4;
-        public readonly External<m> view = 0x4A49A44;
+        readonly Player player;
+        readonly Player[] players = new Player[24];
+        readonly View view;
 
         public CSGOClient(int baseAddress) : base(baseAddress) {
+            player = new Player(baseAddress + 0xA3A43C);
+            for (var i = 0; i < players.Length; ++i) {
+                players[i] = new Player(baseAddress + 0x04A57EA4 + (i + 1) * 0x10);
+            }
+            view = new View(baseAddress);
         }
 
-        public int GetPlayer(int i) {
-            return *(int*)new External<int>(players.ExternalPointer + (i + 1) * 0x10).Pointer;
-        }
-
-        internal int Player {
+        internal Player Player {
             get {
-                return *(int*)player.Pointer;
+                return player;
             }
         }
 
-        internal int Players {
+        internal Player[] Players {
             get {
-                return *(int*)players.Pointer;
+                return players;
             }
         }
 
-        internal m View {
+        internal View View {
             get {
-                return *(m*)view.Pointer;
+                return view;
             }
         }
     }

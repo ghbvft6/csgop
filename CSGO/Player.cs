@@ -3,15 +3,16 @@
 namespace csgop.CSGO {
     unsafe class Player : OffsetDAO {
 
-        public struct Vector3 { public float x, y, z; };
-
         readonly External<int> hp = 0xFC;
         readonly External<int> team = 0xF0;
         readonly External<int> state = 0x100;
         readonly External<bool> dormant = 0xE9;
-        readonly External<Vector3> position = 0x134;
+        readonly PositionVector position;
+        readonly Bones bones;
 
         public Player(int baseAddress) : base(baseAddress) {
+            position = new PositionVector(baseAddress + 0x134);
+            bones = new Bones(baseAddress + 0x2698);
         }
 
         internal int Hp {
@@ -38,9 +39,9 @@ namespace csgop.CSGO {
             }
         }
 
-        internal Vector3 Position {
+        internal PositionVector Position {
             get {
-                return *(Vector3*)position.Pointer;
+                return position;
             }
         }
     }

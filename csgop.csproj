@@ -48,8 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSGO\View.cs" />
+    <Compile Include="CSGO\PositionVector.cs" />
+    <Compile Include="CSGO\BonesVector.cs" />
     <Compile Include="CSGO\CSGOCheat.cs" />
     <Compile Include="CSGO\CSGOClient.cs" />
+    <Compile Include="CSGO\Bones.cs" />
     <Compile Include="CSGO\Player.cs" />
     <Compile Include="Functions\Bunnyhop.cs" />
     <Compile Include="Functions\Algebra.cs" />
