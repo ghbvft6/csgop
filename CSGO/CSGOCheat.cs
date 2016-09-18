@@ -18,7 +18,7 @@ namespace csgop.CSGO {
 
             foreach (ProcessModule Module in ExternalProcess<External>.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    csgo = new CSGOClient(Module.BaseAddress.ToInt32());
+                    csgo = new CSGOClient(() => Module.BaseAddress);
                     break;
                 }
             }

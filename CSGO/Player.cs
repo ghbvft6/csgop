@@ -1,4 +1,5 @@
 ﻿using csgop.Unmanaged;
+using System;
 
 namespace csgop.CSGO {
     unsafe class Player : OffsetDAO {
@@ -7,12 +8,10 @@ namespace csgop.CSGO {
         readonly External<int> team = 0xF0;
         readonly External<int> state = 0x100;
         readonly External<bool> dormant = 0xE9;
-        readonly PositionVector position;
-        readonly Bones bones;
+        readonly PositionVector position = new PositionVector(0x134);
+        readonly Bones bones = new Bones(0x2698);
 
-        public Player(int baseAddress) : base(baseAddress) {
-            position = new PositionVector(baseAddress + 0x134);
-            bones = new Bones(baseAddress + 0x2698);
+        public Player(int pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         internal int Hp {

@@ -5,16 +5,15 @@ namespace csgop.CSGO {
 
     unsafe class CSGOClient : OffsetDAO {
 
-        readonly Player player;
+        readonly Player player = new Player(0xA3A43C);
         readonly Player[] players = new Player[24];
         readonly View view;
 
-        public CSGOClient(int baseAddress) : base(baseAddress) {
-            player = new Player(baseAddress + 0xA3A43C);
+        public CSGOClient(Func<IntPtr> GetBaseAddress) : base(GetBaseAddress) {
             for (var i = 0; i < players.Length; ++i) {
-                players[i] = new Player(baseAddress + 0x04A57EA4 + (i + 1) * 0x10);
+                players[i] = new Player(0 + 0x04A57EA4 + (i + 1) * 0x10);
             }
-            view = new View(baseAddress);
+            view = new View(0);
         }
 
         internal Player Player {

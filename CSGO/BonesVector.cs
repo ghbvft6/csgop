@@ -7,7 +7,7 @@ namespace csgop.CSGO {
         readonly External<float> y = 0x1C;
         readonly External<float> z = 0x2C;
 
-        public BonesVector(int baseAddress) : base(baseAddress) {
+        public BonesVector(int pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         internal float X {
