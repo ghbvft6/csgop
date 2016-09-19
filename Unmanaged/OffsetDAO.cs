@@ -33,8 +33,10 @@ namespace csgop.Unmanaged {
                         ((IExternal)fieldInfo.GetValue(this)).ExternalPointer += (newBaseAddress.ToInt32() - currentBaseAddress.ToInt32());
                     } else if (fieldInfo.FieldType.IsSubclassOf(typeof(OffsetDAO))) {
                         var nestedDAO = ((OffsetDAO)fieldInfo.GetValue(this));
-                        nestedDAO.pointer.ExternalPointer = (newBaseAddress + nestedDAO.pointerAddressOffset);
-                        nestedDAO.Update();
+                        if (nestedDAO != null) { // TODO
+                            nestedDAO.pointer.ExternalPointer = (newBaseAddress + nestedDAO.pointerAddressOffset);
+                            nestedDAO.Update();
+                        }
                     }
                 }
                 currentBaseAddress = newBaseAddress;
