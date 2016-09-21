@@ -4,12 +4,17 @@ using System;
 namespace csgop.CSGO {
     unsafe class View : OffsetDAO {
 
-        readonly External<float>[] view = new External<float>[16];
+        readonly External<float>[] view = InitView();
 
-        public View(int baseAddress) : base(baseAddress) {
+        static External<float>[] InitView() {
+            var view = new External<float>[16];
             for (var i = 0; i < view.Length; ++i) {
-                view[i] = new External<float>(new IntPtr(baseAddress + 0x4A49A44 + i * sizeof(float)));
+                view[i] = new External<float>(new IntPtr(i * sizeof(float)));
             }
+            return view;
+        }
+
+        public View(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         public float this[int i] {

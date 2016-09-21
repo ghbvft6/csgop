@@ -1,4 +1,5 @@
 ﻿using csgop.Unmanaged;
+using System;
 
 namespace csgop.CSGO {
     unsafe class BonesVector : OffsetDAO {
@@ -7,7 +8,7 @@ namespace csgop.CSGO {
         readonly External<float> y = 0x1C;
         readonly External<float> z = 0x2C;
 
-        public BonesVector(int pointerAddressOffset) : base(pointerAddressOffset) {
+        public BonesVector(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         internal float X {

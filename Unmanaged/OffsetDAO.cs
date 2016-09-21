@@ -19,6 +19,14 @@ namespace csgop.Unmanaged {
             }
         }
 
+        public OffsetDAO(IntPtr pointerAddressOffset) { // pointer is used only partially
+            this.pointerAddressOffset = pointerAddressOffset.ToInt32();
+            unsafe
+            {
+                GetBaseAddress = () => { return pointer.ExternalPointer; };
+            }
+        }
+
         public OffsetDAO(Func<IntPtr> GetBaseAddress) {
             this.GetBaseAddress = GetBaseAddress;
             Update();
@@ -29,6 +37,21 @@ namespace csgop.Unmanaged {
             if (newBaseAddress != currentBaseAddress) {
                 var fieldInfos = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
                 foreach (var fieldInfo in fieldInfos) {
+                    if (fieldInfo.FieldType.IsArray) {
+                        if (fieldInfo.FieldType.GetElementType().IsGenericType && fieldInfo.FieldType.GetElementType().GetGenericTypeDefinition() == typeof(External<>)) { // TODO DRY
+                            foreach (var obj in (IExternal[])fieldInfo.GetValue(this)) {
+                                obj.ExternalPointer += (newBaseAddress.ToInt32() - currentBaseAddress.ToInt32());
+                            }
+                        } else if (fieldInfo.FieldType.GetElementType().IsSubclassOf(typeof(OffsetDAO))) { // TODO DRY
+                            foreach (var obj in (OffsetDAO[])fieldInfo.GetValue(this)) {
+                                var nestedDAO = obj;
+                                if (nestedDAO != null) { // TODO
+                                    nestedDAO.pointer.ExternalPointer = (newBaseAddress + nestedDAO.pointerAddressOffset);
+                                    nestedDAO.Update();
+                                }
+                            }
+                        }
+                    }
                     if (fieldInfo.FieldType.IsGenericType && fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(External<>)) {
                         ((IExternal)fieldInfo.GetValue(this)).ExternalPointer += (newBaseAddress.ToInt32() - currentBaseAddress.ToInt32());
                     } else if (fieldInfo.FieldType.IsSubclassOf(typeof(OffsetDAO))) {
