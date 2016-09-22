@@ -9,7 +9,7 @@ namespace csgop.CSGO {
         readonly External<int> state = 0x100;
         readonly External<bool> dormant = 0xE9;
         readonly PositionVector position = new PositionVector(new IntPtr(0x134));
-        readonly Bones bones = new Bones(new IntPtr(0x2698));
+        readonly Bones bones = new Bones(0x2698);
 
         public Player(int baseAddress) : base(baseAddress) {
         }

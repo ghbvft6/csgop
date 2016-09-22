@@ -7,7 +7,7 @@ namespace csgop.CSGO {
         readonly BonesVector head = new BonesVector(new IntPtr(0x30* 6));
         readonly BonesVector somethingelse = new BonesVector(new IntPtr(0x30 * 5));
 
-        public Bones(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
+        public Bones(int pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         internal BonesVector Head {
