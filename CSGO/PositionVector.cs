@@ -1,4 +1,5 @@
 ﻿using csgop.Unmanaged;
+using System;
 
 namespace csgop.CSGO {
     unsafe class PositionVector : OffsetDAO {
@@ -7,7 +8,7 @@ namespace csgop.CSGO {
         readonly External<float> y = sizeof(float) * 1;
         readonly External<float> z = sizeof(float) * 2;
 
-        public PositionVector(int baseAddress) : base(baseAddress) {
+        public PositionVector(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         internal float X {
