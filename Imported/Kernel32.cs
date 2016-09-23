@@ -28,6 +28,8 @@ namespace csgop.Imported {
             public static extern bool mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, uint dwExtraInfo);
             [DllImport("user32.dll")]
             public static extern bool GetAsyncKeyState(int key);
+            [DllImport("user32.dll")]
+            public static extern bool SetCursorPos(int x, int y);
         }
 
         public bool AllocConsole() {
@@ -48,6 +50,9 @@ namespace csgop.Imported {
         }
         public bool GetAsyncKeyState(int key) {
             return Static.GetAsyncKeyState(key);
+        }
+        public bool SetCursorPos(int x, int y) {
+            return Static.SetCursorPos(x, y);
         }
     }
 }

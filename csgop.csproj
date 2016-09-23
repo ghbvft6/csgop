@@ -55,9 +55,11 @@
     <Compile Include="CSGO\CSGOClient.cs" />
     <Compile Include="CSGO\Bones.cs" />
     <Compile Include="CSGO\Player.cs" />
+    <Compile Include="Functions\Aimbot.cs" />
     <Compile Include="Functions\Bunnyhop.cs" />
     <Compile Include="Functions\Algebra.cs" />
     <Compile Include="Functions\SoundESP.cs" />
+    <Compile Include="Functions\WorldToScreen.cs" />
     <Compile Include="Unmanaged\AbstractExternal.cs" />
     <Compile Include="Unmanaged\External.cs" />
     <Compile Include="Imported\Kernel32.cs" />

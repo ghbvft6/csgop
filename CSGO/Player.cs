@@ -43,5 +43,11 @@ namespace csgop.CSGO {
                 return position;
             }
         }
+
+        internal Bones Bones {
+            get {
+                return bones;
+            }
+        }
     }
 }

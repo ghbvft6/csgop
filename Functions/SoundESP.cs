@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-
 namespace csgop.Functions {
     class SoundESP {
 
@@ -22,8 +21,10 @@ namespace csgop.Functions {
                 for (int i = 0; i < players.Length; ++i) {
                     if ((!players[i].Dormant) && (player.Team != players[i].Team) && (players[i].Hp > 0)) {
                         float distance = Algebra.distance(player.Position.X, player.Position.Y, players[i].Position.X, players[i].Position.Y);
+
                         Console.Beep(300, 150);
                         Thread.Sleep((int)(distance / 3));
+
                     }
                 }
                 Thread.Sleep(1);

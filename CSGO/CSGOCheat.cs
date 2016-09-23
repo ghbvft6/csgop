@@ -7,7 +7,7 @@ using System.Threading;
 namespace csgop.CSGO {
     class CSGOCheat {
 
-        private static CSGOClient csgo;
+        public static CSGOClient csgo;
 
         private void AttachToClient() {
             ExternalProcess<External>.ProcessName = "csgo";
@@ -27,7 +27,7 @@ namespace csgop.CSGO {
         public void Run() {
             AttachToClient();
             new Thread(new Bunnyhop(csgo.Player, csgo.View).Run).Start();
-            new Thread(new SoundESP(csgo.Player, csgo.Players).Run).Start();
+            new Thread(new Aimbot(csgo.Player, csgo.Players).Run).Start();
         }
     }
 }
