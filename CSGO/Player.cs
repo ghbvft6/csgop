@@ -2,16 +2,22 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class Player : OffsetDAO {
+    unsafe class Player : External<IntPtr> {
 
-        readonly External<int> hp = 0xFC;
-        readonly External<int> team = 0xF0;
-        readonly External<int> state = 0x100;
-        readonly External<bool> dormant = 0xE9;
-        readonly PositionVector position = new PositionVector(new IntPtr(0x134));
-        readonly Bones bones = new Bones(0x2698);
+        readonly External<int> hp;
+        readonly External<int> team;
+        readonly External<int> state;
+        readonly External<bool> dormant;
+        readonly PositionVector position;
+        readonly Bones bones;
 
-        public Player(int baseAddress) : base(baseAddress) {
+        public Player(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
+            hp = new External<int>(this, 0xFC);
+            team = new External<int>(this, 0xF0);
+            state = new External<int>(this, 0x100);
+            dormant = new External<bool>(this, 0xE9);
+            position = new PositionVector(this, 0x134);
+            bones = new Bones(this, 0x2698);
         }
 
         internal int Hp {

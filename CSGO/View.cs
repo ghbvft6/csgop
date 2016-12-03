@@ -2,19 +2,15 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class View : OffsetDAO {
+    unsafe class View {
 
-        readonly External<float>[] view = InitView();
+        readonly External<float>[] view;
 
-        static External<float>[] InitView() {
-            var view = new External<float>[16];
+        public View (External<IntPtr> client, int viewOffset) {
+            view = new External<float>[16];
             for (var i = 0; i < view.Length; ++i) {
-                view[i] = new External<float>(new IntPtr(i * sizeof(float)));
+                view[i] = new External<float>(client, viewOffset + i * sizeof(float));
             }
-            return view;
-        }
-
-        public View(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
         }
 
         public float this[int i] {

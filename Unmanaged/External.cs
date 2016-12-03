@@ -6,14 +6,14 @@ namespace csgop.Unmanaged {
 
     sealed class External { }
 
-    sealed class External<T> : AbstractExternal<T, External> {
+    class External<T> : AbstractExternal<T, External> {
+        public External(Func<IntPtr> GetAddress) : base(GetAddress) {
+        }
 
-        public unsafe External(void* externalPtr) : base(externalPtr) { }
+        public External(int address) : base(address) {
+        }
 
-        public External(IntPtr externalPtr) : base(externalPtr) { }
-
-        public unsafe static implicit operator External<T>(int externalPointer) {
-            return new External<T>(new IntPtr(externalPointer));
+        public External(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
         }
     }
 }

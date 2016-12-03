@@ -2,13 +2,16 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class PositionVector : OffsetDAO {
+    unsafe class PositionVector {
 
-        readonly External<float> x = sizeof(float) * 0;
-        readonly External<float> y = sizeof(float) * 1;
-        readonly External<float> z = sizeof(float) * 2;
+        readonly External<float> x;
+        readonly External<float> y;
+        readonly External<float> z;
 
-        public PositionVector(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
+        public PositionVector(External<IntPtr> player, int positionOffset) {
+            x = new External<float>(player, positionOffset + sizeof(float) * 0);
+            y = new External<float>(player, positionOffset + sizeof(float) * 1);
+            z = new External<float>(player, positionOffset + sizeof(float) * 2);
         }
 
         internal float X {

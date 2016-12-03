@@ -2,12 +2,14 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class Bones : OffsetDAO {
+    unsafe class Bones : External<IntPtr> {
 
-        readonly BonesVector head = new BonesVector(new IntPtr(0x30* 6));
-        readonly BonesVector somethingelse = new BonesVector(new IntPtr(0x30 * 5));
+        readonly BonesVector head;
+        readonly BonesVector somethingelse;
 
-        public Bones(int pointerAddressOffset) : base(pointerAddressOffset) {
+        public Bones(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
+            head = new BonesVector(this, 0x30 * 6);
+            somethingelse = new BonesVector(this, 0x30 * 5);
         }
 
         internal BonesVector Head {

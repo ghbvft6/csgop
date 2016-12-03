@@ -2,13 +2,16 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class BonesVector : OffsetDAO {
+    unsafe class BonesVector {
 
-        readonly External<float> x = 0x0C;
-        readonly External<float> y = 0x1C;
-        readonly External<float> z = 0x2C;
+        readonly External<float> x;
+        readonly External<float> y;
+        readonly External<float> z;
 
-        public BonesVector(IntPtr pointerAddressOffset) : base(pointerAddressOffset) {
+        public BonesVector(External<IntPtr> boneBase, int boneOffset) {
+            x = new External<float>(boneBase, boneOffset + 0x0C);
+            y = new External<float>(boneBase, boneOffset + 0x1C);
+            z = new External<float>(boneBase, boneOffset + 0x2C);
         }
 
         internal float X {
