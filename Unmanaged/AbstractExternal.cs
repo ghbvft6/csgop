@@ -8,7 +8,7 @@ namespace csgop.Unmanaged {
         IntPtr ExternalPointer { get; set; }
     }
 
-    abstract class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal {
+    abstract class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
 
         private AbstractExternal<IntPtr, BindingClass> parentObject;
         private IntPtr address;
@@ -27,9 +27,10 @@ namespace csgop.Unmanaged {
             this.address = new IntPtr(address);
         }
 
-        public AbstractExternal(Func<IntPtr> GetAddress) {
-            // NOT USED: parentObject, offset
-            this.UpdateAddress = () => { address = GetAddress(); };
+        public unsafe AbstractExternal(Func<IntPtr> GetBaseAddress, int offset) {
+            // NOT USED: parentObject
+            this.offset = offset;
+            this.UpdateAddress = () => { address = GetBaseAddress() + this.offset; };
             UpdateAddress();
         }
 

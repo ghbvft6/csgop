@@ -6,10 +6,10 @@ namespace csgop.CSGO {
 
         readonly External<float>[] view;
 
-        public View (External<IntPtr> client, int viewOffset) {
+        public View (Func<IntPtr> GetBaseAddress, int viewOffset) {
             view = new External<float>[16];
             for (var i = 0; i < view.Length; ++i) {
-                view[i] = new External<float>(client, viewOffset + i * sizeof(float));
+                view[i] = new External<float>(GetBaseAddress, viewOffset + i * sizeof(float));
             }
         }
 

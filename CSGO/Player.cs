@@ -11,7 +11,7 @@ namespace csgop.CSGO {
         readonly PositionVector position;
         readonly Bones bones;
 
-        public Player(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
+        public Player(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
             hp = new External<int>(this, 0xFC);
             team = new External<int>(this, 0xF0);
             state = new External<int>(this, 0x100);
