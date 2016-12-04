@@ -15,7 +15,7 @@ namespace csgop.CSGO {
 
         public float this[int i] {
             get {
-                return *(float*)view[i].Pointer;
+                return view[i].Value;
             }
         }
     }

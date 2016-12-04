@@ -22,25 +22,25 @@ namespace csgop.CSGO {
 
         internal int Hp {
             get {
-                return *(int*)hp.Pointer;
+                return hp.Value;
             }
         }
 
         internal int Team {
             get {
-                return *(int*)team.Pointer;
+                return team.Value;
             }
         }
 
         internal int State {
             get {
-                return *(int*)state.Pointer;
+                return state.Value;
             }
         }
 
         internal bool Dormant {
             get {
-                return *(bool*)dormant.Pointer;
+                return dormant.Value;
             }
         }
 

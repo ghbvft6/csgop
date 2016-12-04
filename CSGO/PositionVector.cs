@@ -16,19 +16,19 @@ namespace csgop.CSGO {
 
         internal float X {
             get {
-                return *(float*)x.Pointer;
+                return x.Value;
             }
         }
 
         internal float Y {
             get {
-                return *(float*)y.Pointer;
+                return y.Value;
             }
         }
 
         internal float Z {
             get {
-                return *(float*)z.Pointer;
+                return z.Value;
             }
         }
     }
