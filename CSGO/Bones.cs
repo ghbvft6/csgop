@@ -8,7 +8,7 @@ namespace csgop.CSGO {
         readonly BonesVector somethingelse;
 
         public Bones(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
-            head = new BonesVector(this, 0x30 * 7);
+            head = new BonesVector(this, 0x30 * 8);
             somethingelse = new BonesVector(this, 0x30 * 5);
         }
 
