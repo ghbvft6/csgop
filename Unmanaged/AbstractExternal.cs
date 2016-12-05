@@ -11,6 +11,29 @@ namespace csgop.Unmanaged {
         void UpdateAddress();
     }
 
+    static class ExternalExtensions {
+        public static void UpdateAllAddresses(this object o) {
+            var queue = new Queue<object>();
+            queue.Enqueue(o);
+            while (queue.Count > 0) {
+                var obj = queue.Dequeue();
+                if (obj is IExternal externalObj) {
+                    externalObj.UpdateAddress();
+                }
+                var fieldInfos = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (var fieldInfo in fieldInfos) {
+                    if (fieldInfo.FieldType.IsArray) {
+                        foreach (var element in fieldInfo.GetValue(obj) as object[]) {
+                            queue.Enqueue(element);
+                        }
+                    } else {
+                        queue.Enqueue(fieldInfo.GetValue(obj));
+                    }
+                }
+            }
+        }
+    }
+
     abstract class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
 
         private AbstractExternal<IntPtr, BindingClass> parentObject;
@@ -54,27 +77,6 @@ namespace csgop.Unmanaged {
                 UpdateAddressDelegate();
             } else {
                 UpdateAddressDelegate();
-            }
-        }
-
-        public void UpdateAllAddresses() {
-            var queue = new Queue<object>();
-            queue.Enqueue(this);
-            while (queue.Count>0) {
-                var obj = queue.Dequeue();
-                if (obj is IExternal externalObj) {
-                    externalObj.UpdateAddress();
-                }
-                var fieldInfos = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                foreach (var fieldInfo in fieldInfos) {
-                    if (fieldInfo.FieldType.IsArray) {
-                        foreach (var element in fieldInfo.GetValue(obj) as object[]) {
-                            queue.Enqueue(element);
-                        }
-                    } else {
-                        queue.Enqueue(fieldInfo.GetValue(obj));
-                    }
-                }
             }
         }
 
