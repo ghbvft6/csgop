@@ -1,5 +1,4 @@
-﻿using csgop.Unmanaged;
-using System;
+﻿using System;
 
 namespace csgop.CSGO {
 
@@ -10,12 +9,12 @@ namespace csgop.CSGO {
         readonly View view;
 
         public CSGOClient(Func<IntPtr> GetBaseAddress) {
-            player = new Player(GetBaseAddress, 0xA3B43C);
+            player = new Player(GetBaseAddress, 0xA9E8E4);
             players = new Player[24];
             for (var i = 0; i < players.Length; ++i) {
-                players[i] = new Player(GetBaseAddress, 0x4A58F14 + (i + 1) * 0x10);
+                players[i] = new Player(GetBaseAddress, 0x4AC0CA4 + (i + 1) * 0x10);
             }
-            view = new View(GetBaseAddress, 0x4A4AAB4);
+            view = new View(GetBaseAddress, 0x4AB2844);
         }
 
         internal Player Player {

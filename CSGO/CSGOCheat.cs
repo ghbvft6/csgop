@@ -26,7 +26,7 @@ namespace csgop.CSGO {
 
         public void Run() {
             AttachToClient();
-            new Thread(new Bunnyhop(csgo.Player, csgo.View).Run).Start();
+            new Thread(new Bunnyhop(csgo.Player).Run).Start();
             new Thread(new Aimbot(csgo.Player, csgo.Players).Run).Start();
         }
     }
