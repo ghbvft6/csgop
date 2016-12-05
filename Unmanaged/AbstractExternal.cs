@@ -17,6 +17,7 @@ namespace csgop.Unmanaged {
             queue.Enqueue(o);
             while (queue.Count > 0) {
                 var obj = queue.Dequeue();
+                if (obj == null) continue;
                 if (obj is IExternal externalObj) {
                     externalObj.UpdateAddress();
                 }
