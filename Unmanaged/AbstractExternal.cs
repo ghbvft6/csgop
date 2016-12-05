@@ -21,7 +21,7 @@ namespace csgop.Unmanaged {
                 if (obj is IExternal externalObj) {
                     externalObj.UpdateAddress();
                 }
-                var fieldInfos = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                var fieldInfos = obj.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 foreach (var fieldInfo in fieldInfos) {
                     if (fieldInfo.FieldType.IsArray) {
                         foreach (var element in fieldInfo.GetValue(obj) as object[]) {
