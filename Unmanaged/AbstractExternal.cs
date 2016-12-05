@@ -1,11 +1,14 @@
 ﻿using csgop.Imported;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace csgop.Unmanaged {
 
     interface IExternal {
         IntPtr ExternalPointer { get; set; }
+        void UpdateAddress();
     }
 
     abstract class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
@@ -16,7 +19,7 @@ namespace csgop.Unmanaged {
         protected readonly static Kernel32 kernel;
         private static uint lpNumberOfBytesRead; // used by ReadProcessMemory()
 
-        private Action UpdateAddress; // mayby better name
+        private Action UpdateAddressDelegate;
 
         static AbstractExternal() {
             kernel = Kernel32.Instance;
@@ -25,13 +28,14 @@ namespace csgop.Unmanaged {
         public AbstractExternal(int address) {
             // NOT USED: parentObject, offset, UpdateAddress
             this.address = new IntPtr(address);
+            this.UpdateAddressDelegate = () => { }; // not null
         }
 
         public unsafe AbstractExternal(Func<IntPtr> GetBaseAddress, int offset) {
             // NOT USED: parentObject
             this.offset = offset;
-            this.UpdateAddress = () => { address = GetBaseAddress() + this.offset; };
-            UpdateAddress();
+            this.UpdateAddressDelegate = () => { address = GetBaseAddress() + this.offset; };
+            UpdateAddressDelegate();
         }
 
         public unsafe AbstractExternal(AbstractExternal<IntPtr, BindingClass> parentObject, int offset) {
@@ -39,24 +43,43 @@ namespace csgop.Unmanaged {
             this.offset = offset;
             unsafe
             {
-                UpdateAddress = () => { address = *((IntPtr*)parentObject.Pointer) + this.offset; };
+                UpdateAddressDelegate = () => { address = *((IntPtr*)parentObject.Pointer) + this.offset; };
             }
-            UpdateAddress();
+            UpdateAddressDelegate();
         }
 
-        // TODO + mayby better name
-        private void UpdateAncestors() {
-            if (parentObject != null)
-                parentObject.UpdateAncestors(); // make a stack with root pointer on the top
-            else {
-                // refresh addresses to the bottom of the stack
+        public void UpdatePointingAddresses() {
+            if (parentObject != null) {
+                parentObject.UpdatePointingAddresses();
+                UpdateAddressDelegate();
+            } else {
+                UpdateAddressDelegate();
             }
-            throw new NotImplementedException();
         }
 
-        // TODO
-        private void UpdateChildren() {
-            throw new NotImplementedException();
+        public void UpdateAllAddresses() {
+            var queue = new Queue<object>();
+            queue.Enqueue(this);
+            while (queue.Count>0) {
+                var obj = queue.Dequeue();
+                if (obj is IExternal externalObj) {
+                    externalObj.UpdateAddress();
+                }
+                var fieldInfos = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                foreach (var fieldInfo in fieldInfos) {
+                    if (fieldInfo.FieldType.IsArray) {
+                        foreach (var element in fieldInfo.GetValue(obj) as object[]) {
+                            queue.Enqueue(element);
+                        }
+                    } else {
+                        queue.Enqueue(fieldInfo.GetValue(obj));
+                    }
+                }
+            }
+        }
+
+        public void UpdateAddress() {
+            UpdateAddressDelegate();
         }
 
         public new T Value {
