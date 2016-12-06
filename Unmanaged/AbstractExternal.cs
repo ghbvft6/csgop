@@ -35,7 +35,7 @@ namespace csgop.Unmanaged {
         }
     }
 
-    abstract class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
+    class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
 
         private AbstractExternal<IntPtr, BindingClass> parentObject;
         private IntPtr address;

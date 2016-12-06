@@ -62,6 +62,7 @@
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
     <Compile Include="Unmanaged\AbstractExternal.cs" />
+    <Compile Include="Unmanaged\AbstractExternalArray.cs" />
     <Compile Include="Unmanaged\External.cs" />
     <Compile Include="Imported\Kernel32.cs" />
     <Compile Include="GUI\Form1.cs">

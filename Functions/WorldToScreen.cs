@@ -1,11 +1,12 @@
 ﻿using csgop.CSGO;
+using csgop.Unmanaged;
 
 namespace csgop.Functions {
     class WorldToScreen {
 
-        private View view;
+        private ExternalArray<float>.Values view;
 
-        public WorldToScreen(View view) {
+        public WorldToScreen(ExternalArray<float>.Values view) {
             this.view = view;
         }
 
