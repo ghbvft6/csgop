@@ -17,7 +17,6 @@ namespace csgop.Unmanaged {
             queue.Enqueue(o);
             while (queue.Count > 0) {
                 var obj = queue.Dequeue();
-                if (obj == null) continue;
                 if (obj is IExternal externalObj) {
                     externalObj.UpdateAddress();
                 }
@@ -25,9 +24,13 @@ namespace csgop.Unmanaged {
                 foreach (var fieldInfo in fieldInfos) {
                     if (fieldInfo.FieldType.IsArray) {
                         foreach (var element in fieldInfo.GetValue(obj) as object[]) {
+                            if (element == null) continue;
+                            if (element.GetType().IsGenericType && element.GetType().GetGenericTypeDefinition() == typeof(AbstractExternal<,>)) continue;
                             queue.Enqueue(element);
                         }
                     } else {
+                        if (fieldInfo.GetValue(obj) == null) continue;
+                        if (fieldInfo.GetValue(obj).GetType().IsGenericType && fieldInfo.GetValue(obj).GetType().GetGenericTypeDefinition() == typeof(AbstractExternal<,>)) continue;
                         queue.Enqueue(fieldInfo.GetValue(obj));
                     }
                 }
@@ -40,14 +43,12 @@ namespace csgop.Unmanaged {
         public class Array<T> where T : struct {
 
             private AbstractExternal<T, BindingClass>[] array;
-            private Values<T> valuesArray;
 
             public Array(int length, int address, int elementSize) {
                 array = new AbstractExternal<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
                     array[i] = new AbstractExternal<T, BindingClass>(address + i * elementSize);
                 }
-                valuesArray = new Values<T>(array);
             }
 
             public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
@@ -55,7 +56,6 @@ namespace csgop.Unmanaged {
                 for (var i = 0; i < length; ++i) {
                     array[i] = new AbstractExternal<T, BindingClass>(GetBaseAddress, offset + i * elementSize);
                 }
-                valuesArray = new Values<T>(array);
             }
 
             public unsafe Array(int length, AbstractExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
@@ -63,7 +63,6 @@ namespace csgop.Unmanaged {
                 for (var i = 0; i < length; ++i) {
                     array[i] = new AbstractExternal<T, BindingClass>(parentObject, offset + i * elementSize);
                 }
-                valuesArray = new Values<T>(array);
             }
 
             public AbstractExternal<T, BindingClass> this[int i] {
@@ -80,7 +79,7 @@ namespace csgop.Unmanaged {
 
             public Values<T> ValuesArray {
                 get {
-                    return valuesArray;
+                    return new Values<T>(array);
                 }
             }
         }
