@@ -105,7 +105,35 @@ namespace csgop.Unmanaged {
             }
         }
 
-        public static T[] NewArray<T>(int length, Func<int, T> constructor) {
+        public static T[] NewArray<T>(int length, int address, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+            var array = new T[length];
+            ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(int) });
+            for (var i = 0; i < length; ++i) {
+                array[i] = (T)constructorInfo.Invoke(new object[] { address + i * elementSize });
+            }
+            return array;
+        }
+
+        public static T[] NewArray<T>(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+            var array = new T[length];
+            ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(Func<IntPtr>), typeof(int) });
+            for (var i = 0; i < length; ++i) {
+                array[i] = (T)constructorInfo.Invoke(new object[] { GetBaseAddress, offset + i * elementSize });
+            }
+            return array;
+        }
+
+        public static T[] NewArray<T>(int length, AbstractExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+            var array = new T[length];
+            ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(AbstractExternal<IntPtr, BindingClass>), typeof(int)});
+            for (var i = 0; i < length; ++i) {
+                array[i] = (T)constructorInfo.Invoke(new object[] { parentObject, offset + i * elementSize });
+            }
+            return array;
+        }
+
+        // TODO move
+        private static T[] NewArray<T>(int length, Func<int, T> constructor) {
             var array = new T[length];
             for (var i = 0; i < length; ++i) {
                 array[i] = constructor(i);
