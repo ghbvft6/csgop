@@ -121,7 +121,7 @@ namespace csgop.Unmanaged {
         private IntPtr address;
         private int offset;
         protected readonly static Kernel32 kernel;
-        private static uint lpNumberOfBytesRead; // used by ReadProcessMemory()
+        private static uint lpNumberOfBytesReadOrWritten; // used by ReadProcessMemory()
 
         private Action UpdateAddressDelegate;
 
@@ -189,11 +189,11 @@ namespace csgop.Unmanaged {
         }
 
         public void Read() {
-            kernel.ReadProcessMemory(ExternalProcess<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesRead);
+            kernel.ReadProcessMemory(ExternalProcess<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
         }
 
         public void Write() {
-            throw new NotImplementedException();
+            kernel.WriteProcessMemory(ExternalProcess<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
         }
     }
 }
