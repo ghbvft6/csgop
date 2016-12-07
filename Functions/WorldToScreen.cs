@@ -4,9 +4,9 @@ using csgop.Unmanaged;
 namespace csgop.Functions {
     class WorldToScreen {
 
-        private ExternalArray<float>.Values view;
+        private External.Values<float> view;
 
-        public WorldToScreen(ExternalArray<float>.Values view) {
+        public WorldToScreen(External.Values<float> view) {
             this.view = view;
         }
 

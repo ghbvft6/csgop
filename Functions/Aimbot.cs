@@ -2,6 +2,7 @@
 using csgop.Imported;
 using System.Threading;
 using System;
+using csgop.Unmanaged;
 
 namespace csgop.Functions {
     class Aimbot {

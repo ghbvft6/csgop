@@ -7,15 +7,12 @@ namespace csgop.CSGO {
 
         readonly Player player;
         readonly Player[] players;
-        readonly ExternalArray<float> view;
+        readonly External.Array<float> view;
 
         public CSGOClient(Func<IntPtr> GetBaseAddress) {
             player = new Player(GetBaseAddress, 0xA9E8E4);
-            players = new Player[24];
-            for (var i = 0; i < players.Length; ++i) {
-                players[i] = new Player(GetBaseAddress, 0x4AC0CA4 + (i + 1) * 0x10);
-            }
-            view = new ExternalArray<float>(16, GetBaseAddress, 0x4AB2844, sizeof(float));
+            players = External.NewArray(24, (i) => new Player(GetBaseAddress, 0x4AC0CA4 + (i + 1) * 0x10));
+            view = new External.Array<float>(16, GetBaseAddress, 0x4AB2844, sizeof(float));
         }
 
         internal Player Player {
@@ -30,7 +27,7 @@ namespace csgop.CSGO {
             }
         }
 
-        internal ExternalArray<float>.Values View {
+        internal External.Values<float> View {
             get {
                 return view.ValuesArray;
             }

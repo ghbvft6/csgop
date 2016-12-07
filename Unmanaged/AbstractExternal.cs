@@ -35,6 +35,86 @@ namespace csgop.Unmanaged {
         }
     }
 
+    class AbstractExternal<BindingClass> {
+
+        public class Array<T> where T : struct {
+
+            private AbstractExternal<T, BindingClass>[] array;
+            private Values<T> valuesArray;
+
+            public Array(int length, int address, int elementSize) {
+                array = new AbstractExternal<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = new AbstractExternal<T, BindingClass>(address + i * elementSize);
+                }
+                valuesArray = new Values<T>(array);
+            }
+
+            public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
+                array = new AbstractExternal<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = new AbstractExternal<T, BindingClass>(GetBaseAddress, offset + i * elementSize);
+                }
+                valuesArray = new Values<T>(array);
+            }
+
+            public unsafe Array(int length, AbstractExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+                array = new AbstractExternal<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = new AbstractExternal<T, BindingClass>(parentObject, offset + i * elementSize);
+                }
+                valuesArray = new Values<T>(array);
+            }
+
+            public AbstractExternal<T, BindingClass> this[int i] {
+                get {
+                    return array[i];
+                }
+            }
+
+            public int Length {
+                get {
+                    return array.Length;
+                }
+            }
+
+            public Values<T> ValuesArray {
+                get {
+                    return valuesArray;
+                }
+            }
+        }
+
+        public class Values<T> where T : struct {
+
+            public AbstractExternal<T, BindingClass>[] array;
+
+            public Values(AbstractExternal<T, BindingClass>[] array) {
+                this.array = array;
+            }
+
+            public T this[int i] {
+                get {
+                    return array[i].Value;
+                }
+            }
+
+            public int Length {
+                get {
+                    return array.Length;
+                }
+            }
+        }
+
+        public static T[] NewArray<T>(int length, Func<int, T> constructor) {
+            var array = new T[length];
+            for (var i = 0; i < length; ++i) {
+                array[i] = constructor(i);
+            }
+            return array;
+        }
+    }
+
     class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
 
         private AbstractExternal<IntPtr, BindingClass> parentObject;
