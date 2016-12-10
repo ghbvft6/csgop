@@ -14,6 +14,13 @@ namespace csgop.Imported {
             }
         }
 
+        public struct RECT {
+            public int Left { get; set; }
+            public int Top { get; set; }
+            public int Right { get; set; }
+            public int Bottom { get; set; }
+        }
+
         private class Static {
             [DllImport("kernel32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -32,6 +39,14 @@ namespace csgop.Imported {
             public static extern bool GetAsyncKeyState(int key);
             [DllImport("user32.dll")]
             public static extern bool SetCursorPos(int x, int y);
+            [DllImport("user32.dll")]
+            public static extern bool GetClientRect(IntPtr hwnd, out RECT rect);
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetForegroundWindow();
+            [DllImport("User32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hwnd);
+            [DllImport("dwmapi.dll")]
+            public static extern bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref int[] margins);
         }
 
         public bool AllocConsole() {
@@ -58,6 +73,18 @@ namespace csgop.Imported {
         }
         public bool SetCursorPos(int x, int y) {
             return Static.SetCursorPos(x, y);
+        }
+        public bool GetClientRect(IntPtr hwnd, out RECT rect) {
+            return Static.GetClientRect(hwnd, out rect);
+        }
+        public IntPtr GetForegroundWindow() {
+            return Static.GetForegroundWindow();
+        }
+        public bool SetForegroundWindow(IntPtr hwnd) {
+            return Static.SetForegroundWindow(hwnd);
+        }
+        public bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref int[] margins) {
+            return Static.DwmExtendFrameIntoClientArea(hwnd, ref margins);
         }
     }
 }
