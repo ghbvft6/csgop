@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSGO\Vector3.cs" />
     <Compile Include="CSGO\PositionVector.cs" />
     <Compile Include="CSGO\BonesVector.cs" />
     <Compile Include="CSGO\CSGOCheat.cs" />

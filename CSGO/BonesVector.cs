@@ -2,7 +2,7 @@
 using System;
 
 namespace csgop.CSGO {
-    unsafe class BonesVector {
+    unsafe class BonesVector : Vector3 {
 
         readonly External<float> x;
         readonly External<float> y;
@@ -14,19 +14,19 @@ namespace csgop.CSGO {
             z = new External<float>(boneBase, boneOffset + 0x2C);
         }
 
-        internal float X {
+        float Vector3.X {
             get {
                 return x.Value;
             }
         }
 
-        internal float Y {
+        float Vector3.Y {
             get {
                 return y.Value;
             }
         }
 
-        internal float Z {
+        float Vector3.Z {
             get {
                 return z.Value;
             }
