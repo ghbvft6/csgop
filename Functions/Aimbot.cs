@@ -5,6 +5,7 @@ using System.Threading;
 using System;
 using csgop.Unmanaged;
 using csgop.Core.Data;
+using csgop.Core;
 
 namespace csgop.Functions {
     class Aimbot {
@@ -17,7 +18,7 @@ namespace csgop.Functions {
             this.players = players;
         }
 
-        WorldToScreen world = new WorldToScreen(CSGOCheat.csgo.View);
+        WorldToScreen world = new WorldToScreen(Cheat.csgo.View);
 
         float[] boneout = new float[3];
 

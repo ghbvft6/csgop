@@ -74,7 +74,7 @@
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Games\CSGO\Data\PositionVector.cs" />
     <Compile Include="Games\CSGO\Data\BonesVector.cs" />
-    <Compile Include="Games\CSGO\Data\CSGOCheat.cs" />
+    <Compile Include="Core\Cheat.cs" />
     <Compile Include="Games\CSGO\Data\CSGOClient.cs" />
     <Compile Include="Games\CSGO\Data\Bones.cs" />
     <Compile Include="Games\CSGO\Data\Player.cs" />

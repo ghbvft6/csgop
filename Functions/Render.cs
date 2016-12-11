@@ -4,11 +4,12 @@ using csgop.Unmanaged;
 using System.IO;
 using SharpDX;
 using csgop.Core.Data;
+using csgop.Core;
 
 namespace csgop.Functions {
     class Render {
 
-        private static WorldToScreen world = new WorldToScreen(CSGOCheat.csgo.View);
+        private static WorldToScreen world = new WorldToScreen(Cheat.csgo.View);
 
         private static int width = Process.Width;
         private static int height = Process.Height;

@@ -1,22 +1,24 @@
-﻿using csgop.Unmanaged;
+﻿using csgop.Games.CSGO;
+using csgop.Unmanaged;
 using csgop.Functions;
 using System.Diagnostics;
 using System.Threading;
 using csgop.Core.Data;
+using csgop.Games.CSGO.Data;
 
-namespace csgop.Games.CSGO.Data {
-    class CSGOCheat {
+namespace csgop.Core {
+    class Cheat {
 
         public static ICSGOClient csgo;
 
         private void AttachToClient() {
-            Process.ProcessName = "csgo";
+            Games.CSGO.Process.ProcessName = "csgo";
 
-            while (Process.AttachToProccess() == false) {
+            while (Games.CSGO.Process.AttachToProccess() == false) {
                 Thread.Sleep(1);
             }
 
-            foreach (ProcessModule Module in Process.Process.Modules) {
+            foreach (ProcessModule Module in Games.CSGO.Process.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
                     csgo = new CSGOClient(() => Module.BaseAddress);
                     break;

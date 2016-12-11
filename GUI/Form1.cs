@@ -1,4 +1,5 @@
-﻿using csgop.Games.CSGO;
+﻿using csgop.Core;
+using csgop.Games.CSGO;
 using csgop.Games.CSGO.Data;
 using csgop.Imported;
 using csgop.Unmanaged;
@@ -26,7 +27,7 @@ namespace csgop.GUI {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            new Thread(new CSGOCheat().Run).Start();
+            new Thread(new Cheat().Run).Start();
         }
 
         protected override void OnPaint(PaintEventArgs e) {
