@@ -1,17 +1,18 @@
-﻿using csgop.Games.CSGO;
+﻿using csgop.Core.Data;
+using csgop.Games.CSGO;
 using csgop.Games.CSGO.Data;
 using csgop.Unmanaged;
 
 namespace csgop.Functions {
     class WorldToScreen {
 
-        private Process.Values<float> view;
+        private Process.IValues<float> view;
 
-        public WorldToScreen(Process.Values<float> view) {
+        public WorldToScreen(Process.IValues<float> view) {
             this.view = view;
         }
 
-        public bool conversion(Vector3 C3D, float[] C2D, int width, int height) {
+        public bool conversion(IVector3 C3D, float[] C2D, int width, int height) {
             float w = ((view[12] * C3D.X) + (view[13] * C3D.Y) + (view[14] * C3D.Z) + view[15]);
             if (w > 0.01) {
                 C2D[0] = (width / 2) + (0.5f * (((view[0] * C3D.X) + (view[1] * C3D.Y) + (view[2] * C3D.Z) + view[3]) * 1 / w) * width + 0.5f);

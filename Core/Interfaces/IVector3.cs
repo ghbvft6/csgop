@@ -1,8 +1,8 @@
 ﻿using csgop.Unmanaged;
 using System;
 
-namespace csgop.Games.CSGO.Data {
-    unsafe interface Vector3 {
+namespace csgop.Core.Data {
+    unsafe interface IVector3 {
 
         float X {
             get;

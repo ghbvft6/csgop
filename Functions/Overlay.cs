@@ -8,15 +8,16 @@ using SharpDX;
 using SharpDX.Direct2D1;
 using Factory = SharpDX.Direct2D1.Factory;
 using Format = SharpDX.DXGI.Format;
+using csgop.Core.Data;
 
 namespace csgop.Functions {
 
     class Overlay {
 
-        private readonly Player player;
-        private readonly Player[] players;
+        private readonly IPlayer player;
+        private readonly IPlayer[] players;
 
-        public Overlay(Player player, Player[] players) {
+        public Overlay(IPlayer player, IPlayer[] players) {
             this.player = player;
             this.players = players;
         }

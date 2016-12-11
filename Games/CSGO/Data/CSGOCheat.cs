@@ -2,11 +2,12 @@
 using csgop.Functions;
 using System.Diagnostics;
 using System.Threading;
+using csgop.Core.Data;
 
 namespace csgop.Games.CSGO.Data {
     class CSGOCheat {
 
-        public static CSGOClient csgo;
+        public static ICSGOClient csgo;
 
         private void AttachToClient() {
             Process.ProcessName = "csgo";

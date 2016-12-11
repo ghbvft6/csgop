@@ -1,14 +1,15 @@
-﻿using csgop.Games.CSGO.Data;
+﻿using csgop.Core.Data;
+using csgop.Games.CSGO.Data;
 using System;
 using System.Threading;
 
 namespace csgop.Functions {
     class SoundESP {
 
-        private readonly Player player;
-        private readonly Player[] players;
+        private readonly IPlayer player;
+        private readonly IPlayer[] players;
 
-        public SoundESP(Player player, Player[] players) {
+        public SoundESP(IPlayer player, IPlayer[] players) {
             this.player = player;
             this.players = players;
         }

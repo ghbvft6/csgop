@@ -61,7 +61,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Games\CSGO\Data\Vector3.cs" />
+    <Compile Include="Core\Data\Bones.cs" />
+    <Compile Include="Core\Data\BonesVector.cs" />
+    <Compile Include="Core\Data\CSGOClient.cs" />
+    <Compile Include="Core\Data\Player.cs" />
+    <Compile Include="Core\Data\PositionVector.cs" />
+    <Compile Include="Core\Interfaces\IBones.cs" />
+    <Compile Include="Core\Interfaces\IBonesVector.cs" />
+    <Compile Include="Core\Interfaces\ICSGOClient.cs" />
+    <Compile Include="Core\Interfaces\IPlayer.cs" />
+    <Compile Include="Core\Interfaces\IPositionVector.cs" />
+    <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Games\CSGO\Data\PositionVector.cs" />
     <Compile Include="Games\CSGO\Data\BonesVector.cs" />
     <Compile Include="Games\CSGO\Data\CSGOCheat.cs" />

@@ -40,7 +40,19 @@ namespace csgop.Unmanaged {
         }
     }
 
-    class External<BindingClass> {
+    class External {
+        public interface IValues<T> where T : struct {
+            T this[int i] {
+                get;
+            }
+
+            int Length {
+                get;
+            }
+        }
+    }
+
+    class External<BindingClass> : External {
 
         /* start OF ExternalProcess */
         private readonly static Kernel32 kernel;
@@ -123,7 +135,6 @@ namespace csgop.Unmanaged {
         /* END OF ExternalProcess */
 
 
-
         public class Array<T> where T : struct {
 
             private External<T, BindingClass>[] array;
@@ -168,7 +179,9 @@ namespace csgop.Unmanaged {
             }
         }
 
-        public class Values<T> where T : struct {
+
+
+        public class Values<T>  : IValues<T> where T : struct {
 
             public External<T, BindingClass>[] array;
 

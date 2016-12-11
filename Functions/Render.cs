@@ -3,6 +3,7 @@ using csgop.Games.CSGO.Data;
 using csgop.Unmanaged;
 using System.IO;
 using SharpDX;
+using csgop.Core.Data;
 
 namespace csgop.Functions {
     class Render {
@@ -33,7 +34,7 @@ namespace csgop.Functions {
             }
         }
 
-        public static void Run(Player player, Player[] players) {
+        public static void Run(IPlayer player, IPlayer[] players) {
             for (int i = 0; i < players.Length; ++i) {
                 if (players[i].Dormant == false && player.Team != players[i].Team && players[i].Hp > 0 && world.conversion(players[i].Bones.Head, boneout, width, height) && world.conversion(players[i].Position, positionout, width, height)) {
 

@@ -4,14 +4,15 @@ using csgop.Imported;
 using System.Threading;
 using System;
 using csgop.Unmanaged;
+using csgop.Core.Data;
 
 namespace csgop.Functions {
     class Aimbot {
 
-        private readonly Player player;
-        private readonly Player[] players;
+        private readonly IPlayer player;
+        private readonly IPlayer[] players;
 
-        public Aimbot(Player player, Player[] players) {
+        public Aimbot(IPlayer player, IPlayer[] players) {
             this.player = player;
             this.players = players;
         }
