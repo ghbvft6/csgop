@@ -2,6 +2,7 @@
 using SharpDX.DirectWrite;
 using SharpDX.Direct2D1;
 using FontFactory = SharpDX.DirectWrite.Factory;
+using SharpDX.Mathematics.Interop;
 
 namespace csgop.Functions {
     class Draw {
@@ -16,6 +17,13 @@ namespace csgop.Functions {
 
         public static void Circle(int x, int y, int w, Color color, WindowRenderTarget device) {
             device.DrawEllipse(new Ellipse(new Vector2(x, y), w, w), new SolidColorBrush(device, color));
+        }
+
+        public static void VerticalBar(int x, int y, int width, int height, float value, float thickness, Color color, WindowRenderTarget device) {
+            RawRectangleF first = new RawRectangleF(x, y, x + width, y + height);
+            device.DrawRectangle(first, new SolidColorBrush(device, Color.White), thickness);
+            first.Top += height - ((float)height / 100.0f * value);
+            device.FillRectangle(first, new SolidColorBrush(device, color));
         }
     }
 }

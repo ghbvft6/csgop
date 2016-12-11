@@ -1,8 +1,7 @@
 ﻿using csgop.Imported;
 using csgop.Unmanaged;
 using csgop.GUI;
-using csgop.Functions;
-using System.IO;
+using csgop.CSGO;
 using System.Threading;
 using SharpDX;
 using SharpDX.Direct2D1;
@@ -12,6 +11,14 @@ using Format = SharpDX.DXGI.Format;
 namespace csgop.Functions {
 
     class Overlay {
+
+        private readonly Player player;
+        private readonly Player[] players;
+
+        public Overlay(Player player, Player[] players) {
+            this.player = player;
+            this.players = players;
+        }
 
         private Thread DirectX = null;
         private Factory Factory = new Factory();
@@ -49,6 +56,7 @@ namespace csgop.Functions {
                 if (kernel.GetForegroundWindow() == ExternalProcess<External>.Window) {
                     Render.ModificationDate();
                     Render.AimbotRange();
+                    Render.Run(player, players);
                     Thread.Sleep(1);
                 }
                 Device.EndDraw();

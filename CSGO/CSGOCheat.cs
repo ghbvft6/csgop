@@ -29,7 +29,7 @@ namespace csgop.CSGO {
             new Thread(() => { while (true) { csgo.UpdateAllAddresses(); Thread.Sleep(500); } } ).Start();
             new Thread(new Bunnyhop(csgo.Player).Run).Start();
             new Thread(new Aimbot(csgo.Player, csgo.Players).Run).Start();
-            new Thread(new Overlay().Run).Start();
+            new Thread(new Overlay(csgo.Player, csgo.Players).Run).Start();
         }
     }
 }
