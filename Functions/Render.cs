@@ -15,7 +15,9 @@ namespace csgop.Functions {
         private static float[] positionout = new float[3];
 
         public static int DrawAimbotRange = 1;
-        public static int DrawPlayerHealth = 1;
+
+        public static int DrawPlayersHealth = 1;
+        public static int HealthBarStyle = 1;
 
         public static void ModificationDate() {
             Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, Color.White, Overlay.Device);
@@ -35,8 +37,20 @@ namespace csgop.Functions {
                     float height = System.Math.Abs(boneout[1] - positionout[1]);
                     float width = height / 2;
 
-                    if (DrawPlayerHealth == 1) {     
-                        Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, Color.White, Overlay.Device);
+                    if (DrawPlayersHealth == 1) {
+                        switch (HealthBarStyle) {
+                            case 0:
+                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, Color.White, Overlay.Device);
+                                break;
+                            case 1:
+                                Color healthcolor = Color.Green;
+                                if (players[i].Hp > 75 && players[i].Hp < 100) { healthcolor = Color.Green; }
+                                if (players[i].Hp > 50 && players[i].Hp < 75) { healthcolor = Color.Yellow; }
+                                if (players[i].Hp > 25 && players[i].Hp < 50) { healthcolor = Color.DarkOrange; }
+                                if (players[i].Hp > 0 && players[i].Hp < 25) { healthcolor = Color.Red; }
+                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, healthcolor, Overlay.Device);
+                                break;
+                        }
                     }
                 }
             }
