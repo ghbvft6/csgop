@@ -1,6 +1,7 @@
 ﻿using csgop.Imported;
 using csgop.Unmanaged;
 using csgop.GUI;
+using csgop.Functions;
 using System.IO;
 using System.Threading;
 using SharpDX;
@@ -14,7 +15,7 @@ namespace csgop.Functions {
 
         private Thread DirectX = null;
         private Factory Factory = new Factory();
-        private WindowRenderTarget Device;
+        public static WindowRenderTarget Device;
         private HwndRenderTargetProperties RenderProperties = new HwndRenderTargetProperties();
 
         public static int width = ExternalProcess<External>.Width;
@@ -33,22 +34,23 @@ namespace csgop.Functions {
 
             Device = new WindowRenderTarget(Factory, new RenderTargetProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Premultiplied)), RenderProperties);
 
-            DirectX = new Thread(new ParameterizedThreadStart(Render));
+            DirectX = new Thread(new ParameterizedThreadStart(Run));
             DirectX.Priority = ThreadPriority.Highest;
             DirectX.IsBackground = true;
             DirectX.Start();
         }
-   
-        private void Render(object sender) {
+
+        private void Run(object sender) {
             while (true) {
                 Device.BeginDraw();
                 Device.Clear(Color.Transparent);
-                Device.TextAntialiasMode = SharpDX.Direct2D1.TextAntialiasMode.Aliased;
+                Device.TextAntialiasMode = TextAntialiasMode.Aliased;
 
                 if (kernel.GetForegroundWindow() == ExternalProcess<External>.Window) {
-                    Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, Color.White, Device);
+                    Render.ModificationDate();
+                    Render.AimbotRange();
+                    Thread.Sleep(1);
                 }
-
                 Device.EndDraw();
             }
         }

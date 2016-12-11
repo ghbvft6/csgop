@@ -10,9 +10,9 @@ namespace csgop.CSGO {
         readonly External.Array<float> view;
 
         public CSGOClient(Func<IntPtr> GetBaseAddress) {
-            player = new Player(GetBaseAddress, 0xA9E8E4);
-            players = External.NewArray<Player>(24, GetBaseAddress, 0x4AC0CA4 + 0x10, 0x10);
-            view = new External.Array<float>(16, GetBaseAddress, 0x4AB2844, sizeof(float));
+            player = new Player(GetBaseAddress, 0xAA38E4);
+            players = External.NewArray<Player>(24, GetBaseAddress, 0x4AC5E94 + 0x10, 0x10);
+            view = new External.Array<float>(16, GetBaseAddress, 0x4AB7A34, sizeof(float));
         }
 
         internal Player Player {

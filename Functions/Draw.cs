@@ -13,5 +13,9 @@ namespace csgop.Functions {
             device.DrawText(text, TextFormat, new RectangleF(x + 1, y + 1, TextFormat.FontSize * text.Length, TextFormat.FontSize), new SolidColorBrush(device, Color.Black));
             device.DrawText(text, TextFormat, new RectangleF(x, y, TextFormat.FontSize * text.Length, TextFormat.FontSize), new SolidColorBrush(device, color));
         }
+
+        public static void Circle(int x, int y, int w, Color color, WindowRenderTarget device) {
+            device.DrawEllipse(new Ellipse(new Vector2(x, y), w, w), new SolidColorBrush(device, color));
+        }
     }
 }

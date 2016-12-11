@@ -17,13 +17,13 @@ namespace csgop.Functions {
 
         WorldToScreen world = new WorldToScreen(CSGOCheat.csgo.View);
 
+        float[] boneout = new float[3];
+
         bool automatic = false;
 
         public static int width = 1280, height = 720, correctionx = 0, correctiony = 0;
 
-        float[] boneout = new float[3];
-
-        float distancetohead = 30.0f, smooth = 1.5f, recoil = 0, distance = 0, x = 0, y = 0;
+        public static float distancetohead = 30.0f, smooth = 1.5f, recoil = 0, distance = 0, x = 0, y = 0;
 
         private void recoilsystem() {
             recoil = 0;

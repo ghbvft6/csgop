@@ -73,6 +73,7 @@
     <Compile Include="Functions\Algebra.cs" />
     <Compile Include="Functions\Draw.cs" />
     <Compile Include="Functions\Overlay.cs" />
+    <Compile Include="Functions\Render.cs" />
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
     <Compile Include="Unmanaged\AbstractExternal.cs" />
