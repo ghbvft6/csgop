@@ -9,13 +9,13 @@ namespace csgop.Games.CSGO.Data {
         public static CSGOClient csgo;
 
         private void AttachToClient() {
-            External.ProcessName = "csgo";
+            Process.ProcessName = "csgo";
 
-            while (External.AttachToProccess() == false) {
+            while (Process.AttachToProccess() == false) {
                 Thread.Sleep(1);
             }
 
-            foreach (ProcessModule Module in External.Process.Modules) {
+            foreach (ProcessModule Module in Process.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
                     csgo = new CSGOClient(() => Module.BaseAddress);
                     break;

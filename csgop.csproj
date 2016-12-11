@@ -76,8 +76,8 @@
     <Compile Include="Functions\Render.cs" />
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
-    <Compile Include="Unmanaged\AbstractExternal.cs" />
-    <Compile Include="Games\CSGO\External.cs" />
+    <Compile Include="Unmanaged\External.cs" />
+    <Compile Include="Games\CSGO\Process.cs" />
     <Compile Include="Imported\Kernel32.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>

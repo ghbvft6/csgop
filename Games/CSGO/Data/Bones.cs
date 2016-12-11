@@ -2,12 +2,12 @@
 using System;
 
 namespace csgop.Games.CSGO.Data {
-    unsafe class Bones : External<IntPtr> {
+    unsafe class Bones : Process<IntPtr> {
 
         readonly BonesVector head;
         readonly BonesVector somethingelse;
 
-        public Bones(AbstractExternal<IntPtr, External> parentObject, int offset) : base(parentObject, offset) {
+        public Bones(External<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
             head = new BonesVector(this, 0x30 * 8);
             somethingelse = new BonesVector(this, 0x30 * 5);
         }

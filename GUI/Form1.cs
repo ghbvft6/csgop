@@ -17,9 +17,9 @@ namespace csgop.GUI {
         }
 
         public Form1() {
-            if (External.WindowHandle("csgo") == true && External.WindowRect() == true) {
-                kernel.SetForegroundWindow(External.Window);
-                this.ClientSize = new System.Drawing.Size(External.Width, External.Height);
+            if (Process.WindowHandle("csgo") == true && Process.WindowRect() == true) {
+                kernel.SetForegroundWindow(Process.Window);
+                this.ClientSize = new System.Drawing.Size(Process.Width, Process.Height);
                 InitializeComponent();
                 FormHandle = this.Handle;
             }
@@ -30,7 +30,7 @@ namespace csgop.GUI {
         }
 
         protected override void OnPaint(PaintEventArgs e) {
-            int[] marg = new int[] { 0, 0, External.Width / 2, External.Height / 2 };
+            int[] marg = new int[] { 0, 0, Process.Width / 2, Process.Height / 2 };
             kernel.DwmExtendFrameIntoClientArea(this.Handle, ref marg);
         }
     }

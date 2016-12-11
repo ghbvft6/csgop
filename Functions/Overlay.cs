@@ -27,8 +27,8 @@ namespace csgop.Functions {
         private HwndRenderTargetProperties RenderProperties = new HwndRenderTargetProperties();
 
         public static int Antialiasing = 0;
-        public static int width = External.Width;
-        public static int height = External.Height;
+        public static int width = Process.Width;
+        public static int height = Process.Height;
 
         private readonly static Kernel32 kernel;
 
@@ -62,7 +62,7 @@ namespace csgop.Functions {
                 Device.Clear(Color.Transparent);
                 Device.TextAntialiasMode = TextAntialiasMode.Aliased;
                 Antialias();
-                if (kernel.GetForegroundWindow() == External.Window) {
+                if (kernel.GetForegroundWindow() == Process.Window) {
                     Render.ModificationDate();
                     Render.AimbotRange();
                     Render.Run(player, players);

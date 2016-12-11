@@ -27,12 +27,12 @@ namespace csgop.Unmanaged {
                     if (fieldInfo.FieldType.IsArray) {
                         foreach (var element in fieldInfo.GetValue(obj) as object[]) {
                             if (element == null) continue;
-                            if (element.GetType().IsGenericType && element.GetType().GetGenericTypeDefinition() == typeof(AbstractExternal<,>)) continue;
+                            if (element.GetType().IsGenericType && element.GetType().GetGenericTypeDefinition() == typeof(External<,>)) continue;
                             queue.Enqueue(element);
                         }
                     } else {
                         if (fieldInfo.GetValue(obj) == null) continue;
-                        if (fieldInfo.GetValue(obj).GetType().IsGenericType && fieldInfo.GetValue(obj).GetType().GetGenericTypeDefinition() == typeof(AbstractExternal<,>)) continue;
+                        if (fieldInfo.GetValue(obj).GetType().IsGenericType && fieldInfo.GetValue(obj).GetType().GetGenericTypeDefinition() == typeof(External<,>)) continue;
                         queue.Enqueue(fieldInfo.GetValue(obj));
                     }
                 }
@@ -40,7 +40,7 @@ namespace csgop.Unmanaged {
         }
     }
 
-    class AbstractExternal<BindingClass> {
+    class External<BindingClass> {
 
         /* start OF ExternalProcess */
         private readonly static Kernel32 kernel;
@@ -48,10 +48,10 @@ namespace csgop.Unmanaged {
         private static IntPtr window;
         private static int width;
         private static int height;
-        private static Process process;
+        private static System.Diagnostics.Process process;
         private static string processName;
 
-        static AbstractExternal() {
+        static External() {
             kernel = Kernel32.Instance;
         }
 
@@ -75,7 +75,7 @@ namespace csgop.Unmanaged {
             set { height = value; }
         }
 
-        public static Process Process {
+        public static System.Diagnostics.Process Process {
             get { return process; }
             set {
                 process = value;
@@ -89,14 +89,14 @@ namespace csgop.Unmanaged {
         }
 
         public static bool AttachToProccess() {
-            var processes = Process.GetProcessesByName(processName);
+            var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 process = processes[0];
             }
             return AttachToProccess(process);
         }
 
-        public static bool AttachToProccess(Process process) {
+        public static bool AttachToProccess(System.Diagnostics.Process process) {
             if (process != null) {
                 pHandle = kernel.OpenProcess(0x0010, false, process.Id);
             }
@@ -104,7 +104,7 @@ namespace csgop.Unmanaged {
         }
 
         public static bool WindowHandle(string process) {
-            var processes = Process.GetProcessesByName(process);
+            var processes = System.Diagnostics.Process.GetProcessesByName(process);
             if (processes.Length > 0) {
                 window = processes[0].MainWindowHandle;
             }
@@ -113,7 +113,7 @@ namespace csgop.Unmanaged {
 
         public static bool WindowRect() {
             Kernel32.RECT WindowSize = new Kernel32.RECT();
-            if (kernel.GetClientRect(External.Window, out WindowSize)) {
+            if (kernel.GetClientRect(Games.CSGO.Process.Window, out WindowSize)) {
                 width = WindowSize.Right - WindowSize.Left;
                 height = WindowSize.Bottom - WindowSize.Top;
                 return true;
@@ -126,30 +126,30 @@ namespace csgop.Unmanaged {
 
         public class Array<T> where T : struct {
 
-            private AbstractExternal<T, BindingClass>[] array;
+            private External<T, BindingClass>[] array;
 
             public Array(int length, int address, int elementSize) {
-                array = new AbstractExternal<T, BindingClass>[length];
+                array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new AbstractExternal<T, BindingClass>(address + i * elementSize);
+                    array[i] = new External<T, BindingClass>(address + i * elementSize);
                 }
             }
 
             public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
-                array = new AbstractExternal<T, BindingClass>[length];
+                array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new AbstractExternal<T, BindingClass>(GetBaseAddress, offset + i * elementSize);
+                    array[i] = new External<T, BindingClass>(GetBaseAddress, offset + i * elementSize);
                 }
             }
 
-            public unsafe Array(int length, AbstractExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
-                array = new AbstractExternal<T, BindingClass>[length];
+            public unsafe Array(int length, External<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+                array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new AbstractExternal<T, BindingClass>(parentObject, offset + i * elementSize);
+                    array[i] = new External<T, BindingClass>(parentObject, offset + i * elementSize);
                 }
             }
 
-            public AbstractExternal<T, BindingClass> this[int i] {
+            public External<T, BindingClass> this[int i] {
                 get {
                     return array[i];
                 }
@@ -170,9 +170,9 @@ namespace csgop.Unmanaged {
 
         public class Values<T> where T : struct {
 
-            public AbstractExternal<T, BindingClass>[] array;
+            public External<T, BindingClass>[] array;
 
-            public Values(AbstractExternal<T, BindingClass>[] array) {
+            public Values(External<T, BindingClass>[] array) {
                 this.array = array;
             }
 
@@ -189,7 +189,7 @@ namespace csgop.Unmanaged {
             }
         }
 
-        public static T[] NewArray<T>(int length, int address, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+        public static T[] NewArray<T>(int length, int address, int elementSize) where T : External<IntPtr, BindingClass> {
             var array = new T[length];
             ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(int) });
             for (var i = 0; i < length; ++i) {
@@ -198,7 +198,7 @@ namespace csgop.Unmanaged {
             return array;
         }
 
-        public static T[] NewArray<T>(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+        public static T[] NewArray<T>(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) where T : External<IntPtr, BindingClass> {
             var array = new T[length];
             ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(Func<IntPtr>), typeof(int) });
             for (var i = 0; i < length; ++i) {
@@ -207,9 +207,9 @@ namespace csgop.Unmanaged {
             return array;
         }
 
-        public static T[] NewArray<T>(int length, AbstractExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) where T : AbstractExternal<IntPtr, BindingClass> {
+        public static T[] NewArray<T>(int length, External<IntPtr, BindingClass> parentObject, int offset, int elementSize) where T : External<IntPtr, BindingClass> {
             var array = new T[length];
-            ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(AbstractExternal<IntPtr, BindingClass>), typeof(int)});
+            ConstructorInfo constructorInfo = typeof(T).GetConstructor(new[] { typeof(External<IntPtr, BindingClass>), typeof(int)});
             for (var i = 0; i < length; ++i) {
                 array[i] = (T)constructorInfo.Invoke(new object[] { parentObject, offset + i * elementSize });
             }
@@ -226,9 +226,9 @@ namespace csgop.Unmanaged {
         }
     }
 
-    class AbstractExternal<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
+    class External<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
 
-        private AbstractExternal<IntPtr, BindingClass> parentObject;
+        private External<IntPtr, BindingClass> parentObject;
         private IntPtr address;
         private int offset;
         protected readonly static Kernel32 kernel;
@@ -236,24 +236,24 @@ namespace csgop.Unmanaged {
 
         private Action UpdateAddressDelegate;
 
-        static AbstractExternal() {
+        static External() {
             kernel = Kernel32.Instance;
         }
 
-        public AbstractExternal(int address) {
+        public External(int address) {
             // NOT USED: parentObject, offset, UpdateAddress
             this.address = new IntPtr(address);
             this.UpdateAddressDelegate = () => { }; // not null
         }
 
-        public unsafe AbstractExternal(Func<IntPtr> GetBaseAddress, int offset) {
+        public unsafe External(Func<IntPtr> GetBaseAddress, int offset) {
             // NOT USED: parentObject
             this.offset = offset;
             this.UpdateAddressDelegate = () => { address = GetBaseAddress() + this.offset; };
             UpdateAddressDelegate();
         }
 
-        public unsafe AbstractExternal(AbstractExternal<IntPtr, BindingClass> parentObject, int offset) {
+        public unsafe External(External<IntPtr, BindingClass> parentObject, int offset) {
             this.parentObject = parentObject;
             this.offset = offset;
             unsafe
@@ -300,11 +300,11 @@ namespace csgop.Unmanaged {
         }
 
         public void Read() {
-            kernel.ReadProcessMemory(AbstractExternal<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
+            kernel.ReadProcessMemory(External<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
         }
 
         public void Write() {
-            kernel.WriteProcessMemory(AbstractExternal<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
+            kernel.WriteProcessMemory(External<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace csgop.Functions {
 
         private static WorldToScreen world = new WorldToScreen(CSGOCheat.csgo.View);
 
-        private static int width = External.Width;
-        private static int height = External.Height;
+        private static int width = Process.Width;
+        private static int height = Process.Height;
 
         private static float[] boneout = new float[3];
         private static float[] positionout = new float[3];
