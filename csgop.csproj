@@ -61,13 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSGO\Vector3.cs" />
-    <Compile Include="CSGO\PositionVector.cs" />
-    <Compile Include="CSGO\BonesVector.cs" />
-    <Compile Include="CSGO\CSGOCheat.cs" />
-    <Compile Include="CSGO\CSGOClient.cs" />
-    <Compile Include="CSGO\Bones.cs" />
-    <Compile Include="CSGO\Player.cs" />
+    <Compile Include="Games\CSGO\Vector3.cs" />
+    <Compile Include="Games\CSGO\PositionVector.cs" />
+    <Compile Include="Games\CSGO\BonesVector.cs" />
+    <Compile Include="Games\CSGO\CSGOCheat.cs" />
+    <Compile Include="Games\CSGO\CSGOClient.cs" />
+    <Compile Include="Games\CSGO\Bones.cs" />
+    <Compile Include="Games\CSGO\Player.cs" />
     <Compile Include="Functions\Aimbot.cs" />
     <Compile Include="Functions\Bunnyhop.cs" />
     <Compile Include="Functions\Algebra.cs" />

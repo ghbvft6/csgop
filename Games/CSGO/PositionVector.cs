@@ -1,17 +1,17 @@
 ﻿using csgop.Unmanaged;
 using System;
 
-namespace csgop.CSGO {
-    unsafe class BonesVector : Vector3 {
+namespace csgop.Games.CSGO {
+    unsafe class PositionVector : Vector3 {
 
         readonly External<float> x;
         readonly External<float> y;
         readonly External<float> z;
 
-        public BonesVector(External<IntPtr> boneBase, int boneOffset) {
-            x = new External<float>(boneBase, boneOffset + 0x0C);
-            y = new External<float>(boneBase, boneOffset + 0x1C);
-            z = new External<float>(boneBase, boneOffset + 0x2C);
+        public PositionVector(External<IntPtr> player, int positionOffset) {
+            x = new External<float>(player, positionOffset + sizeof(float) * 0);
+            y = new External<float>(player, positionOffset + sizeof(float) * 1);
+            z = new External<float>(player, positionOffset + sizeof(float) * 2);
         }
 
         float Vector3.X {

@@ -1,7 +1,7 @@
 ﻿using csgop.Unmanaged;
 using System;
 
-namespace csgop.CSGO {
+namespace csgop.Games.CSGO {
     unsafe class Bones : External<IntPtr> {
 
         readonly BonesVector head;

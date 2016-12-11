@@ -1,4 +1,4 @@
-﻿using csgop.CSGO;
+﻿using csgop.Games.CSGO;
 using csgop.Unmanaged;
 
 namespace csgop.Functions {

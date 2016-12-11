@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace csgop.CSGO {
+namespace csgop.Games.CSGO {
     class CSGOCheat {
 
         public static CSGOClient csgo;
