@@ -19,6 +19,8 @@ namespace csgop.Functions {
         public static int DrawPlayersHealth = 1;
         public static int HealthBarStyle = 1;
 
+        public static int DrawPlayersBox = 1;
+
         public static void ModificationDate() {
             Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, Color.White, Overlay.Device);
         }
@@ -50,6 +52,10 @@ namespace csgop.Functions {
                                 if (players[i].Hp > 0 && players[i].Hp < 25) { healthcolor = Color.Red; }
                                 Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, healthcolor, Overlay.Device);
                                 break;
+                        }
+
+                        if (DrawPlayersBox == 1){
+                            Draw.Rectangle((int)boneout[0] - ((int)height / 4), (int)boneout[1] + 25, (int)height / 2, (int)height, 1, Color.White, Overlay.Device);
                         }
                     }
                 }

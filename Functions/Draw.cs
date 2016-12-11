@@ -25,5 +25,9 @@ namespace csgop.Functions {
             first.Top += height - ((float)height / 100.0f * value);
             device.FillRectangle(first, new SolidColorBrush(device, color));
         }
+
+        public static void Rectangle(int x, int y, int w, int h, float thickness, Color color, WindowRenderTarget device) {
+            device.DrawRectangle(new RectangleF(x, y, w, h), new SolidColorBrush(device, color), thickness);
+        }
     }
 }
