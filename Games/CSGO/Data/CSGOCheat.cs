@@ -1,10 +1,9 @@
 ﻿using csgop.Unmanaged;
 using csgop.Functions;
-using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace csgop.Games.CSGO {
+namespace csgop.Games.CSGO.Data {
     class CSGOCheat {
 
         public static CSGOClient csgo;

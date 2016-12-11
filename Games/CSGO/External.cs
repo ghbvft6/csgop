@@ -1,8 +1,9 @@
 ﻿using csgop.Imported;
+using csgop.Unmanaged;
 using System;
 using System.Diagnostics;
 
-namespace csgop.Unmanaged {
+namespace csgop.Games.CSGO {
 
     sealed class External : AbstractExternal<External> {
     }

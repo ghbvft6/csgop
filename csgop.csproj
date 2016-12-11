@@ -61,13 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Games\CSGO\Vector3.cs" />
-    <Compile Include="Games\CSGO\PositionVector.cs" />
-    <Compile Include="Games\CSGO\BonesVector.cs" />
-    <Compile Include="Games\CSGO\CSGOCheat.cs" />
-    <Compile Include="Games\CSGO\CSGOClient.cs" />
-    <Compile Include="Games\CSGO\Bones.cs" />
-    <Compile Include="Games\CSGO\Player.cs" />
+    <Compile Include="Games\CSGO\Data\Vector3.cs" />
+    <Compile Include="Games\CSGO\Data\PositionVector.cs" />
+    <Compile Include="Games\CSGO\Data\BonesVector.cs" />
+    <Compile Include="Games\CSGO\Data\CSGOCheat.cs" />
+    <Compile Include="Games\CSGO\Data\CSGOClient.cs" />
+    <Compile Include="Games\CSGO\Data\Bones.cs" />
+    <Compile Include="Games\CSGO\Data\Player.cs" />
     <Compile Include="Functions\Aimbot.cs" />
     <Compile Include="Functions\Bunnyhop.cs" />
     <Compile Include="Functions\Algebra.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
     <Compile Include="Unmanaged\AbstractExternal.cs" />
-    <Compile Include="Unmanaged\External.cs" />
+    <Compile Include="Games\CSGO\External.cs" />
     <Compile Include="Imported\Kernel32.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>

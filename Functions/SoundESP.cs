@@ -1,4 +1,4 @@
-﻿using csgop.Games.CSGO;
+﻿using csgop.Games.CSGO.Data;
 using System;
 using System.Threading;
 

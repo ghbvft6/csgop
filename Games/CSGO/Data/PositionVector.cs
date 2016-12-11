@@ -1,7 +1,7 @@
 ﻿using csgop.Unmanaged;
 using System;
 
-namespace csgop.Games.CSGO {
+namespace csgop.Games.CSGO.Data {
     unsafe class PositionVector : Vector3 {
 
         readonly External<float> x;

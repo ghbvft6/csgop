@@ -1,4 +1,5 @@
-﻿using csgop.Imported;
+﻿using csgop.Games.CSGO;
+using csgop.Imported;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
