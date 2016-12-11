@@ -63,19 +63,19 @@
   <ItemGroup>
     <Compile Include="Core\Data\Bones.cs" />
     <Compile Include="Core\Data\BonesVector.cs" />
-    <Compile Include="Core\Data\CSGOClient.cs" />
+    <Compile Include="Core\Data\Client.cs" />
     <Compile Include="Core\Data\Player.cs" />
     <Compile Include="Core\Data\PositionVector.cs" />
     <Compile Include="Core\Interfaces\IBones.cs" />
     <Compile Include="Core\Interfaces\IBonesVector.cs" />
-    <Compile Include="Core\Interfaces\ICSGOClient.cs" />
+    <Compile Include="Core\Interfaces\IClient.cs" />
     <Compile Include="Core\Interfaces\IPlayer.cs" />
     <Compile Include="Core\Interfaces\IPositionVector.cs" />
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Games\CSGO\Data\PositionVector.cs" />
     <Compile Include="Games\CSGO\Data\BonesVector.cs" />
     <Compile Include="Core\Cheat.cs" />
-    <Compile Include="Games\CSGO\Data\CSGOClient.cs" />
+    <Compile Include="Games\CSGO\Data\Client.cs" />
     <Compile Include="Games\CSGO\Data\Bones.cs" />
     <Compile Include="Games\CSGO\Data\Player.cs" />
     <Compile Include="Functions\Aimbot.cs" />

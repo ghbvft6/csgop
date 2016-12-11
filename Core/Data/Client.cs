@@ -3,25 +3,25 @@ using System;
 
 namespace csgop.Core.Data {
 
-    unsafe class CSGOClient<BindingClass> : ICSGOClient {
+    unsafe class Client<BindingClass> : IClient {
 
         protected Player<BindingClass> player;
         protected Player<BindingClass>[] players;
         protected External<BindingClass>.Array<float> view;
 
-        IPlayer ICSGOClient.Player {
+        IPlayer IClient.Player {
             get {
                 return player;
             }
         }
 
-        IPlayer[] ICSGOClient.Players {
+        IPlayer[] IClient.Players {
             get {
                 return players;
             }
         }
 
-        External.IValues<float> ICSGOClient.View {
+        External.IValues<float> IClient.View {
             get {
                 return view.ValuesArray;
             }

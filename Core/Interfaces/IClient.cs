@@ -3,7 +3,7 @@ using System;
 
 namespace csgop.Core.Data {
 
-    interface ICSGOClient {
+    interface IClient {
         IPlayer Player {
             get;
         }

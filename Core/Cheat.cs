@@ -9,7 +9,7 @@ using csgop.Games.CSGO.Data;
 namespace csgop.Core {
     class Cheat {
 
-        public static ICSGOClient csgo;
+        public static IClient csgo;
 
         private void AttachToClient() {
             Games.CSGO.Process.ProcessName = "csgo";
@@ -20,7 +20,7 @@ namespace csgop.Core {
 
             foreach (ProcessModule Module in Games.CSGO.Process.Process.Modules) {
                 if (Module.ModuleName.Equals("client.dll")) {
-                    csgo = new CSGOClient(() => Module.BaseAddress);
+                    csgo = new Client(() => Module.BaseAddress);
                     break;
                 }
             }
