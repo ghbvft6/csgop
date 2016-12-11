@@ -25,6 +25,7 @@ namespace csgop.Functions {
         public static WindowRenderTarget Device;
         private HwndRenderTargetProperties RenderProperties = new HwndRenderTargetProperties();
 
+        public static int Antialiasing = 0;
         public static int width = ExternalProcess<External>.Width;
         public static int height = ExternalProcess<External>.Height;
 
@@ -47,12 +48,19 @@ namespace csgop.Functions {
             DirectX.Start();
         }
 
+        private void Antialias() {
+            switch (Antialiasing) {
+                case 0: Device.AntialiasMode = AntialiasMode.Aliased; break;
+                case 1: Device.AntialiasMode = AntialiasMode.PerPrimitive; break;
+            }
+        }
+
         private void Run(object sender) {
             while (true) {
                 Device.BeginDraw();
                 Device.Clear(Color.Transparent);
                 Device.TextAntialiasMode = TextAntialiasMode.Aliased;
-
+                Antialias();
                 if (kernel.GetForegroundWindow() == ExternalProcess<External>.Window) {
                     Render.ModificationDate();
                     Render.AimbotRange();
