@@ -6,9 +6,9 @@ using csgop.Unmanaged;
 namespace csgop.Functions {
     class WorldToScreen {
 
-        private Process.IValues<float> view;
+        private External.IValues<float> view;
 
-        public WorldToScreen(Process.IValues<float> view) {
+        public WorldToScreen(External.IValues<float> view) {
             this.view = view;
         }
 

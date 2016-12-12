@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace csgop.Games.CSGO {
 
-    sealed class Process : External<Process> {
+    sealed class Process : ExternalProcess<Process> {
     }
 
     class Process<T> : External<T, Process> where T : struct {

@@ -12,7 +12,7 @@ namespace csgop.Core.Data {
             get;
         }
 
-        External<object>.IValues<float> View {
+        External.IValues<float> View {
             get;
         }
     }

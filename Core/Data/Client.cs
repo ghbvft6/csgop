@@ -7,7 +7,7 @@ namespace csgop.Core.Data {
 
         protected Player<BindingClass> player;
         protected Player<BindingClass>[] players;
-        protected External<BindingClass>.Array<float> view;
+        protected External<float, BindingClass>.Array view;
 
         IPlayer IClient.Player {
             get {
