@@ -1,12 +1,12 @@
-﻿using csgop.Games.CSGO;
-using csgop.Imported;
+﻿using CSGOP.Games.CSGO;
+using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace csgop.Unmanaged {
+namespace CSGOP.Unmanaged {
 
     class ExternalProcess<BindingClass> {
         private readonly static Kernel32 kernel;

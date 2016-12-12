@@ -1,13 +1,13 @@
-﻿using csgop.Core;
-using csgop.Games.CSGO;
-using csgop.Games.CSGO.Data;
-using csgop.Imported;
-using csgop.Unmanaged;
+﻿using CSGOP.Core;
+using CSGOP.Games.CSGO;
+using CSGOP.Games.CSGO.Data;
+using CSGOP.Imported;
+using CSGOP.Unmanaged;
 using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace csgop.GUI {
+namespace CSGOP.GUI {
     public partial class Form1 : Form {
 
         public static IntPtr FormHandle;

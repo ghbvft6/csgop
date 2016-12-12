@@ -1,7 +1,7 @@
-﻿using csgop.Unmanaged;
+﻿using CSGOP.Unmanaged;
 using System;
 
-namespace csgop.Core.Data {
+namespace CSGOP.Core.Data {
     interface IPlayer {
         int Hp {
             get;

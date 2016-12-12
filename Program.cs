@@ -1,9 +1,9 @@
-﻿using csgop.GUI;
-using csgop.Imported;
+﻿using CSGOP.GUI;
+using CSGOP.Imported;
 using System;
 using System.Windows.Forms;
 
-namespace csgop {
+namespace CSGOP {
     static class Program {
         /// <summary>
         /// The main entry point for the application.

@@ -1,8 +1,8 @@
-﻿using csgop.Core.Data;
-using csgop.Unmanaged;
+﻿using CSGOP.Core.Data;
+using CSGOP.Unmanaged;
 using System;
 
-namespace csgop.Games.CSGO.Data {
+namespace CSGOP.Games.CSGO.Data {
     unsafe class BonesVector : BonesVector<Process> {
 
         public BonesVector(Bones boneBase, int boneOffset) {

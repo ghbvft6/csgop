@@ -1,13 +1,13 @@
-﻿using csgop.Games.CSGO;
-using csgop.Games.CSGO.Data;
-using csgop.Imported;
+﻿using CSGOP.Games.CSGO;
+using CSGOP.Games.CSGO.Data;
+using CSGOP.Imported;
 using System.Threading;
 using System;
-using csgop.Unmanaged;
-using csgop.Core.Data;
-using csgop.Core;
+using CSGOP.Unmanaged;
+using CSGOP.Core.Data;
+using CSGOP.Core;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class Aimbot {
 
         private readonly IPlayer player;

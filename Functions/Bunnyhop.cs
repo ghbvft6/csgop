@@ -1,9 +1,9 @@
-﻿using csgop.Core.Data;
-using csgop.Games.CSGO.Data;
-using csgop.Imported;
+﻿using CSGOP.Core.Data;
+using CSGOP.Games.CSGO.Data;
+using CSGOP.Imported;
 using System.Threading;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class Bunnyhop {
         
         private readonly IPlayer player;

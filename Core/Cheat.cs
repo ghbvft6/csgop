@@ -1,12 +1,12 @@
-﻿using csgop.Games.CSGO;
-using csgop.Unmanaged;
-using csgop.Functions;
+﻿using CSGOP.Games.CSGO;
+using CSGOP.Unmanaged;
+using CSGOP.Functions;
 using System.Diagnostics;
 using System.Threading;
-using csgop.Core.Data;
-using csgop.Games.CSGO.Data;
+using CSGOP.Core.Data;
+using CSGOP.Games.CSGO.Data;
 
-namespace csgop.Core {
+namespace CSGOP.Core {
     class Cheat {
 
         public static IClient csgo;

@@ -1,12 +1,12 @@
-﻿using csgop.Games.CSGO;
-using csgop.Games.CSGO.Data;
-using csgop.Unmanaged;
+﻿using CSGOP.Games.CSGO;
+using CSGOP.Games.CSGO.Data;
+using CSGOP.Unmanaged;
 using System.IO;
 using SharpDX;
-using csgop.Core.Data;
-using csgop.Core;
+using CSGOP.Core.Data;
+using CSGOP.Core;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class Render {
 
         private static WorldToScreen world = new WorldToScreen(Cheat.csgo.View);

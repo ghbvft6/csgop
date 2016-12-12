@@ -1,9 +1,9 @@
-﻿using csgop.Core.Data;
-using csgop.Games.CSGO;
-using csgop.Games.CSGO.Data;
-using csgop.Unmanaged;
+﻿using CSGOP.Core.Data;
+using CSGOP.Games.CSGO;
+using CSGOP.Games.CSGO.Data;
+using CSGOP.Unmanaged;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class WorldToScreen {
 
         private External.IValues<float> view;

@@ -1,7 +1,7 @@
-﻿using csgop.Unmanaged;
+﻿using CSGOP.Unmanaged;
 using System;
 
-namespace csgop.Core.Data {
+namespace CSGOP.Core.Data {
     unsafe class BonesVector<BindingClass> : IBonesVector {
 
         protected External<float, BindingClass> x;

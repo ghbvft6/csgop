@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace csgop.Imported {
+namespace CSGOP.Imported {
     class Kernel32 {
 
         private static readonly Kernel32 instance = new Kernel32();

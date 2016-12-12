@@ -1,8 +1,8 @@
-﻿using csgop.Core.Data;
-using csgop.Unmanaged;
+﻿using CSGOP.Core.Data;
+using CSGOP.Unmanaged;
 using System;
 
-namespace csgop.Games.CSGO.Data {
+namespace CSGOP.Games.CSGO.Data {
     unsafe class Player : Player<Process> {
         public Player(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
             hp = new External<int>(this, 0xFC);

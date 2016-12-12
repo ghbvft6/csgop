@@ -1,9 +1,9 @@
-﻿using csgop.Core.Data;
-using csgop.Games.CSGO.Data;
+﻿using CSGOP.Core.Data;
+using CSGOP.Games.CSGO.Data;
 using System;
 using System.Threading;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class SoundESP {
 
         private readonly IPlayer player;

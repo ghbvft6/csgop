@@ -1,9 +1,9 @@
-﻿using csgop.Imported;
-using csgop.Unmanaged;
+﻿using CSGOP.Imported;
+using CSGOP.Unmanaged;
 using System;
 using System.Diagnostics;
 
-namespace csgop.Games.CSGO {
+namespace CSGOP.Games.CSGO {
 
     sealed class Process : ExternalProcess<Process> {
     }

@@ -1,16 +1,16 @@
-﻿using csgop.Imported;
-using csgop.Unmanaged;
-using csgop.GUI;
-using csgop.Games.CSGO;
-using csgop.Games.CSGO.Data;
+﻿using CSGOP.Imported;
+using CSGOP.Unmanaged;
+using CSGOP.GUI;
+using CSGOP.Games.CSGO;
+using CSGOP.Games.CSGO.Data;
 using System.Threading;
 using SharpDX;
 using SharpDX.Direct2D1;
 using Factory = SharpDX.Direct2D1.Factory;
 using Format = SharpDX.DXGI.Format;
-using csgop.Core.Data;
+using CSGOP.Core.Data;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
 
     class Overlay {
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class Algebra {
         
         public static float distance(float x1, float y1, float x2, float y2) {

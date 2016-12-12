@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace csgop.Properties {
+namespace CSGOP.Properties {
     using System;
     
     

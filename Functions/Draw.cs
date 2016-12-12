@@ -4,7 +4,7 @@ using SharpDX.Direct2D1;
 using FontFactory = SharpDX.DirectWrite.Factory;
 using SharpDX.Mathematics.Interop;
 
-namespace csgop.Functions {
+namespace CSGOP.Functions {
     class Draw {
 
         private static readonly FontFactory FontFactory = new FontFactory();
