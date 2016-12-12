@@ -1,4 +1,6 @@
-﻿using CSGOP.Games.CSGO;
+﻿using CSGOP.Core;
+using CSGOP.Core.Data;
+using CSGOP.Games.CSGO;
 using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
@@ -21,18 +23,21 @@ namespace CSGOP.Unmanaged {
                 var obj = queue.Dequeue();
                 if (obj is IExternal externalObj) {
                     externalObj.UpdateAddress();
+                } else {
+
                 }
-                var fieldInfos = obj.GetType().GetFields(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                var fieldInfos = obj.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
                 foreach (var fieldInfo in fieldInfos) {
                     if (fieldInfo.FieldType.IsArray) {
                         foreach (var element in fieldInfo.GetValue(obj) as object[]) {
-                            if (element == null) continue;
-                            if (element.GetType().IsGenericType && element.GetType().GetGenericTypeDefinition() == typeof(External<,>)) continue;
+                            if (element == null
+                                || element.GetType().Namespace.Split('.')[0].Equals(typeof(Cheat).Namespace.Split('.')[0]) == false) continue;
                             queue.Enqueue(element);
                         }
                     } else {
-                        if (fieldInfo.GetValue(obj) == null) continue;
-                        if (fieldInfo.GetValue(obj).GetType().IsGenericType && fieldInfo.GetValue(obj).GetType().GetGenericTypeDefinition() == typeof(External<,>)) continue;
+                        if (fieldInfo.GetValue(obj) == null
+                            || fieldInfo.GetValue(obj).GetType().Namespace.Split('.')[0].Equals(typeof(Cheat).Namespace.Split('.')[0]) == false
+                            || fieldInfo.Name.Equals("parentObject")) continue;
                         queue.Enqueue(fieldInfo.GetValue(obj));
                     }
                 }
