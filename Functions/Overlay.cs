@@ -38,16 +38,16 @@ namespace CSGOP.Functions {
         }
 
         public void Run() {
-            RenderProperties.Hwnd = Form1.FormHandle;
-            RenderProperties.PixelSize = new Size2(width, height);
-            RenderProperties.PresentOptions = PresentOptions.None;
+            //RenderProperties.Hwnd = Form1.FormHandle;
+            //RenderProperties.PixelSize = new Size2(width, height);
+            //RenderProperties.PresentOptions = PresentOptions.None;
 
-            Device = new WindowRenderTarget(Factory, new RenderTargetProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Premultiplied)), RenderProperties);
+            //Device = new WindowRenderTarget(Factory, new RenderTargetProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Premultiplied)), RenderProperties);
 
-            DirectX = new Thread(new ParameterizedThreadStart(Run));
-            DirectX.Priority = ThreadPriority.Highest;
-            DirectX.IsBackground = true;
-            DirectX.Start();
+            //DirectX = new Thread(new ParameterizedThreadStart(Run));
+            //DirectX.Priority = ThreadPriority.Highest;
+            //DirectX.IsBackground = true;
+            //DirectX.Start();
         }
 
         private void Antialias() {

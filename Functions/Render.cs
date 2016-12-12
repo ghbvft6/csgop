@@ -9,7 +9,7 @@ using CSGOP.Core;
 namespace CSGOP.Functions {
     class Render {
 
-        private static WorldToScreen world = new WorldToScreen(Cheat.csgo.View);
+        private static WorldToScreen world = new WorldToScreen(Games.CSGO.Process.client.View);
 
         private static int width = Process.Width;
         private static int height = Process.Height;

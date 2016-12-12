@@ -1,6 +1,8 @@
-﻿using CSGOP.GUI;
+﻿using CSGOP.Core;
+using CSGOP.GUI;
 using CSGOP.Imported;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CSGOP {
@@ -14,7 +16,9 @@ namespace CSGOP {
             kernel.AllocConsole();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            new Thread(new Cheat().Run).Start();
             Application.Run(new Form1());
+            
         }
     }
 }

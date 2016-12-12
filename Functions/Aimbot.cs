@@ -18,7 +18,7 @@ namespace CSGOP.Functions {
             this.players = players;
         }
 
-        WorldToScreen world = new WorldToScreen(Cheat.csgo.View);
+        WorldToScreen world = new WorldToScreen(Games.CSGO.Process.client.View);
 
         float[] boneout = new float[3];
 

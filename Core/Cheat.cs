@@ -9,29 +9,16 @@ using CSGOP.Games.CSGO.Data;
 namespace CSGOP.Core {
     class Cheat {
 
-        public static IClient csgo;
-
-        private void AttachToClient() {
-            Games.CSGO.Process.ProcessName = "csgo";
-
-            while (Games.CSGO.Process.AttachToProccess() == false) {
-                Thread.Sleep(1);
-            }
-
-            foreach (ProcessModule Module in Games.CSGO.Process.Process.Modules) {
-                if (Module.ModuleName.Equals("client.dll")) {
-                    csgo = new Client(() => Module.BaseAddress);
-                    break;
-                }
-            }
-        }
+        
 
         public void Run() {
-            AttachToClient();
-            new Thread(() => { while (true) { csgo.UpdateAllAddresses(); Thread.Sleep(500); } } ).Start();
-            new Thread(new Bunnyhop(csgo.Player).Run).Start();
-            new Thread(new Aimbot(csgo.Player, csgo.Players).Run).Start();
-            new Thread(new Overlay(csgo.Player, csgo.Players).Run).Start();
+            var csgoProcess = new Games.CSGO.Process();
+            var csgo = Games.CSGO.Process.client;
+            new Thread(csgoProcess.MonitorClient).Start();
+            csgoProcess.AddCheat(new Thread(() => { while (true) { Games.CSGO.Process.client.UpdateAllAddresses(); Thread.Sleep(500); } }));
+            csgoProcess.AddCheat(new Thread(new Bunnyhop(csgo.Player).Run));
+            csgoProcess.AddCheat(new Thread(new Aimbot(csgo.Player, csgo.Players).Run));
+            csgoProcess.AddCheat(new Thread(new Overlay(csgo.Player, csgo.Players).Run));
         }
     }
 }
