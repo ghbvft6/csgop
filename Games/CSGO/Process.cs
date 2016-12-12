@@ -12,14 +12,12 @@ namespace CSGOP.Games.CSGO {
 
     sealed class Process : ExternalProcess<Process>, IGameProcess {
         public static IClient client;
-        private IList<Thread> cheats = new List<Thread>();
+        private IList<Action> cheats = new List<Action>();
+        private IList<Thread> cheatsThreads = new List<Thread>();
         private Func<IntPtr> clientBaseAddress = () => new IntPtr(0);
 
-
-        IntPtr foo () { return clientBaseAddress(); }
-
         public Process() {
-            client = new Client(foo);
+            client = new Client(clientBaseAddress);
         }
 
         public IClient Client {
@@ -28,37 +26,49 @@ namespace CSGOP.Games.CSGO {
             }
         }
 
-        public void AddCheat(Thread cheat) {
+        public void AddCheat(Action cheat) {
             cheats.Add(cheat);
-            //cheat.Start();
         }
 
         public void MonitorClient() {
-            
             while (true) {
-                while (AttachToProccess() == false) {
-                    ProcessName = "csgo";
-                    Thread.Sleep(1);
-                }
-                foreach (ProcessModule Module in Process.Modules) {
-                    if (Module.ModuleName.Equals("client.dll")) {
-                        clientBaseAddress = () => Module.BaseAddress;
-                        break;
+                var foundClient = false;
+                while (foundClient == false) {
+                    while (AttachToProccess() == false) {
+                        ProcessName = "csgo";
+                        Thread.Sleep(100);
+                    }
+                    foreach (ProcessModule Module in Process.Modules) {
+                        if (Module.ModuleName.Equals("client.dll")) {
+                            clientBaseAddress = () => Module.BaseAddress;
+                            foundClient = true;
+                            break;
+                        }
+                        Thread.Sleep(100);
                     }
                 }
-                var y = clientBaseAddress();
                 foreach (var cheat in cheats) {
-                    cheat.Start();
+                    var t = new Thread(() => cheat());
+                    cheatsThreads.Add(t);
+                    t.Start();
                 }
-                while (System.Diagnostics.Process.GetProcessById(Process.Id) != null) {
-                    Thread.Sleep(5000);
-                    //((Client<Process>)client).player.UpdateAddress();
-                    //var x = ((Client<Process>)client).player.address;
+                while (true) {
+                    try {
+                        var testproc = System.Diagnostics.Process.GetProcessById(Process.Id);
+                    } catch (ArgumentException e) {
+                        break;
+                    }
+                    Thread.Sleep(100);
                 }
-                foreach (var cheat in cheats) {
+                foreach (var cheat in cheatsThreads) {
                     cheat.Abort();
                 }
+                cheatsThreads.Clear();
             }
+        }
+
+        public void AddCheat(Thread cheat) {
+            throw new NotImplementedException();
         }
     }
 

@@ -58,6 +58,8 @@ namespace CSGOP.Unmanaged {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 process = processes[0];
+            } else {
+                return false;
             }
             return AttachToProccess(process);
         }
