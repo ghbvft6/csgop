@@ -8,14 +8,14 @@ namespace csgop.Games.CSGO {
     sealed class Process : ExternalProcess<Process> {
     }
 
-    class Process<T> : External<T, Process> where T : struct {
-        public Process(int address) : base(address) {
+    class External<T> : External<T, Process> where T : struct {
+        public External(int address) : base(address) {
         }
 
-        public Process(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset){
+        public External(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset){
         }
 
-        public Process(External<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
+        public External(External<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
         }
     }
 }
