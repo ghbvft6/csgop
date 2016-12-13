@@ -40,6 +40,8 @@ namespace CSGOP.Functions {
 
         public void Run() {
             while (Form1.FormHandle == IntPtr.Zero) Thread.Sleep(100);
+            width = Process.Width;
+            height = Process.Height;
             RenderProperties.Hwnd = Form1.FormHandle;
             RenderProperties.PixelSize = new Size2(width, height);
             RenderProperties.PresentOptions = PresentOptions.None;
