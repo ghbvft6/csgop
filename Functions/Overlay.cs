@@ -9,6 +9,7 @@ using SharpDX.Direct2D1;
 using Factory = SharpDX.Direct2D1.Factory;
 using Format = SharpDX.DXGI.Format;
 using CSGOP.Core.Data;
+using System;
 
 namespace CSGOP.Functions {
 
@@ -38,16 +39,17 @@ namespace CSGOP.Functions {
         }
 
         public void Run() {
-            //RenderProperties.Hwnd = Form1.FormHandle;
-            //RenderProperties.PixelSize = new Size2(width, height);
-            //RenderProperties.PresentOptions = PresentOptions.None;
+            while (Form1.FormHandle == IntPtr.Zero) Thread.Sleep(100);
+            RenderProperties.Hwnd = Form1.FormHandle;
+            RenderProperties.PixelSize = new Size2(width, height);
+            RenderProperties.PresentOptions = PresentOptions.None;
 
-            //Device = new WindowRenderTarget(Factory, new RenderTargetProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Premultiplied)), RenderProperties);
+            Device = new WindowRenderTarget(Factory, new RenderTargetProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Premultiplied)), RenderProperties);
 
-            //DirectX = new Thread(new ParameterizedThreadStart(Run));
-            //DirectX.Priority = ThreadPriority.Highest;
-            //DirectX.IsBackground = true;
-            //DirectX.Start();
+            DirectX = new Thread(new ParameterizedThreadStart(Run));
+            DirectX.Priority = ThreadPriority.Highest;
+            DirectX.IsBackground = true;
+            DirectX.Start();
         }
 
         private void Antialias() {
