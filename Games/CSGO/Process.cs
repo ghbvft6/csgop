@@ -14,10 +14,10 @@ namespace CSGOP.Games.CSGO {
         public static IClient client;
         private IList<Action> cheats = new List<Action>();
         private IList<Thread> cheatsThreads = new List<Thread>();
-        private Func<IntPtr> clientBaseAddress = () => new IntPtr(0);
+        private IntPtr clientBaseAddress = new IntPtr(0);
 
         public Process() {
-            client = new Client(clientBaseAddress);
+            client = new Client(() => clientBaseAddress);
         }
 
         public IClient Client {
@@ -40,12 +40,12 @@ namespace CSGOP.Games.CSGO {
                     }
                     foreach (ProcessModule Module in Process.Modules) {
                         if (Module.ModuleName.Equals("client.dll")) {
-                            clientBaseAddress = () => Module.BaseAddress;
+                            clientBaseAddress = Module.BaseAddress;
                             foundClient = true;
                             break;
                         }
-                        Thread.Sleep(100);
                     }
+                    Thread.Sleep(100);
                 }
                 foreach (var cheat in cheats) {
                     var t = new Thread(() => cheat());
