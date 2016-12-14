@@ -38,5 +38,11 @@ namespace CSGOP.Functions {
         public static void Rectangle(int x, int y, int w, int h, float thickness, byte R, byte G, byte B, byte A, WindowRenderTarget device) {
             device.DrawRectangle(new RectangleF(x, y, w, h), new SolidColorBrush(device, new Color { R = R, G = G, B = B, A = A }), thickness);
         }
+
+        public static void RectangleOutlined(int x, int y, int w, int h, float thickness, byte R, byte G, byte B, byte A, WindowRenderTarget device) {
+            device.DrawRectangle(new RectangleF(x - 1, y - 1, w + 2, h + 2), new SolidColorBrush(device, Color.Black), 1);
+            device.DrawRectangle(new RectangleF(x, y, w, h), new SolidColorBrush(device, new Color { R = R, G = G, B = B, A = A }), thickness);
+            device.DrawRectangle(new RectangleF(x + 1, y + 1, w - 2, h - 2), new SolidColorBrush(device, Color.Black), 1);
+        }
     }
 }
