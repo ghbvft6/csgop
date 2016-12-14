@@ -47,6 +47,14 @@ namespace CSGOP.Functions {
                     float width = height / 2;
 
                     if (DrawPlayersHealth == 1) {
+
+                          if (HealthBarStyle == 1 || HealthBarStyle == 3) {                     
+                            if (players[i].Hp > 75 && players[i].Hp < 101) { HealthBarColorR = 154; HealthBarColorG = 205; HealthBarColorB = 50; }
+                            if (players[i].Hp > 50 && players[i].Hp < 75) { HealthBarColorR = 255; HealthBarColorG = 255; HealthBarColorB = 100; }
+                            if (players[i].Hp > 25 && players[i].Hp < 50) { HealthBarColorR = 255; HealthBarColorG = 165; HealthBarColorB = 0; }
+                            if (players[i].Hp > 0 && players[i].Hp < 25) { HealthBarColorR = 205; HealthBarColorG = 92; HealthBarColorB = 92; }
+                        }
+
                         switch (HealthBarStyle) {
                             case 0:
                                 Draw.VerticalBar((int)boneout[0] + (int)height / 3, (int)boneout[1] + 25, 3, (int)height, players[i].Hp, 1, HealthBarColorR, HealthBarColorG, HealthBarColorB, HealthBarColorAlpha, Device);
