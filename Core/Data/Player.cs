@@ -5,6 +5,7 @@ namespace CSGOP.Core.Data {
     unsafe class Player<BindingClass> : External<IntPtr, BindingClass>, IPlayer {
 
         protected External<int, BindingClass> hp;
+        protected External<int, BindingClass> armor;
         protected External<int, BindingClass> team;
         protected External<int, BindingClass> state;
         protected External<int, BindingClass> consecutiveshots;
@@ -24,6 +25,12 @@ namespace CSGOP.Core.Data {
         int IPlayer.Hp {
             get {
                 return hp.Value;
+            }
+        }
+
+        int IPlayer.Armor {
+            get {
+                return armor.Value;
             }
         }
 

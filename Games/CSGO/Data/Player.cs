@@ -6,6 +6,7 @@ namespace CSGOP.Games.CSGO.Data {
     unsafe class Player : Player<Process> {
         public Player(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
             hp = new External<int>(this, 0xFC);
+            armor = new External<int>(this, 0xAA04);
             team = new External<int>(this, 0xF0);
             state = new External<int>(this, 0x100);
             consecutiveshots = new External<int>(this, 0xA2C0);

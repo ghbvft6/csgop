@@ -7,6 +7,10 @@ namespace CSGOP.Core.Data {
             get;
         }
 
+        int Armor {
+            get;
+        }
+
         int Team {
             get;
         }
