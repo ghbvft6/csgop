@@ -25,13 +25,13 @@ namespace CSGOP.Functions {
         public static int DrawPlayersBox = 1;
 
         public static void ModificationDate() {
-            Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, Color.White, Overlay.Device);
+            Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, 255, 255, 255, 255, Overlay.Device);
         }
 
         public static void AimbotRange() {
             if (DrawAimbotRange == 1) {
-                Draw.Circle(width / 2, height / 2 + 26, (int)Aimbot.distancetohead, Color.White, Overlay.Device);
-                Draw.StringOutlined(width / 2 - 55, height / 2 + 60, "Your current aimbot range.", "Tahoma", 10.0f, Color.White, Overlay.Device);
+                Draw.Circle(width / 2, height / 2 + 26, (int)Aimbot.distancetohead, 255, 255, 255, 255, Overlay.Device);
+                Draw.StringOutlined(width / 2 - 55, height / 2 + 60, "Your current aimbot range.", "Tahoma", 10.0f, 255, 255, 255, 255, Overlay.Device);
             }
         }
 
@@ -45,7 +45,7 @@ namespace CSGOP.Functions {
                     if (DrawPlayersHealth == 1) {
                         switch (HealthBarStyle) {
                             case 0:
-                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, Color.White, Overlay.Device);
+                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, 255, 255, 255, 255, Overlay.Device);
                                 break;
                             case 1:
                                 Color healthcolor = Color.Green;
@@ -53,12 +53,12 @@ namespace CSGOP.Functions {
                                 if (players[i].Hp > 50 && players[i].Hp < 75) { healthcolor = Color.Yellow; }
                                 if (players[i].Hp > 25 && players[i].Hp < 50) { healthcolor = Color.DarkOrange; }
                                 if (players[i].Hp > 0 && players[i].Hp < 25) { healthcolor = Color.Red; }
-                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, healthcolor, Overlay.Device);
+                                Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, 255, 255, 255, 255, Overlay.Device);
                                 break;
                         }
 
                         if (DrawPlayersBox == 1){
-                            Draw.Rectangle((int)boneout[0] - ((int)height / 4), (int)boneout[1] + 25, (int)height / 2, (int)height, 1, Color.White, Overlay.Device);
+                            Draw.Rectangle((int)boneout[0] - ((int)height / 4), (int)boneout[1] + 25, (int)height / 2, (int)height, 1, 255, 255, 255, 255, Overlay.Device);
                         }
                     }
                 }
