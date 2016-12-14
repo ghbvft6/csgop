@@ -20,7 +20,7 @@ namespace CSGOP.Functions {
         public static int DrawAimbotRange = 1;
 
         public static int DrawPlayersHealth = 1;
-        public static int HealthBarStyle = 1;
+        public static int HealthBarStyle = 2;
 
         public static int DrawPlayersBox = 1;
 
@@ -54,6 +54,9 @@ namespace CSGOP.Functions {
                                 if (players[i].Hp > 25 && players[i].Hp < 50) { healthcolor = Color.DarkOrange; }
                                 if (players[i].Hp > 0 && players[i].Hp < 25) { healthcolor = Color.Red; }
                                 Draw.VerticalBar((int)boneout[0] + ((int)height / 3), (int)boneout[1] + 25, (int)height / 20, (int)height, players[i].Hp, 1, 255, 255, 255, 255, Overlay.Device);
+                                break;
+                            case 2:
+                                Draw.HorizontalBar((int)boneout[0] - (int)height / 4, (int)positionout[1] + 28, (int)height / 2, 4, players[i].Hp, 1, 255, 255, 255, 255, Overlay.Device);
                                 break;
                         }
 
