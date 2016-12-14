@@ -66,7 +66,7 @@ namespace CSGOP.Unmanaged {
 
         public static bool AttachToProccess(System.Diagnostics.Process process) {
             if (process != null) {
-                pHandle = kernel.OpenProcess(0x0010, false, process.Id);
+                pHandle = kernel.OpenProcess(0x10 | 0x20 | 0x08, false, process.Id);
             }
             return pHandle == IntPtr.Zero ? false : true;
         }
