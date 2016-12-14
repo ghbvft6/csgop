@@ -19,14 +19,19 @@ namespace CSGOP.Functions {
 
         public static int DrawAimbotRange = 1;
 
-        public static int DrawPlayersHealth = 1;
+        public static int DrawHealthBar = 1;
         public static int HealthBarStyle = 2;
         public static byte HealthBarColorR = 255;
         public static byte HealthBarColorG = 0;
         public static byte HealthBarColorB = 80;
         public static byte HealthBarColorAlpha = 255;
 
-        public static int DrawPlayersBox = 1;
+        public static int DrawRectangle = 1;
+        public static int RectangleStyle = 1;
+        public static byte RectangleColorR = 255;
+        public static byte RectangleColorG = 255;
+        public static byte RectangleColorB = 255;
+        public static byte RectangleColorAlpha = 255;
 
         public static void ModificationDate(SharpDX.Direct2D1.WindowRenderTarget Device) {
             Draw.StringOutlined(5, 30, "Last modification date : " + File.GetLastWriteTime(Directory.GetCurrentDirectory()), "Tahoma", 10.0f, 255, 255, 255, 255, Device);
@@ -46,7 +51,7 @@ namespace CSGOP.Functions {
                     float height = System.Math.Abs(boneout[1] - positionout[1]);
                     float width = height / 2;
 
-                    if (DrawPlayersHealth == 1) {
+                    if (DrawHealthBar == 1) {
 
                           if (HealthBarStyle == 1 || HealthBarStyle == 3) {                     
                             if (players[i].Hp > 75 && players[i].Hp < 101) { HealthBarColorR = 154; HealthBarColorG = 205; HealthBarColorB = 50; }
@@ -70,8 +75,15 @@ namespace CSGOP.Functions {
                                 break;
                         }
 
-                        if (DrawPlayersBox == 1){
-                            Draw.Rectangle((int)boneout[0] - ((int)height / 4), (int)boneout[1] + 25, (int)height / 2, (int)height, 1, 255, 255, 255, 255, Device);
+                        if (DrawRectangle == 1) {
+                            switch (RectangleStyle) {
+                                case 0:
+                                    Draw.Rectangle((int)boneout[0] - (int)height / 4, (int)boneout[1] + 25, (int)height / 2, (int)height, 1, RectangleColorR, RectangleColorG, RectangleColorB, RectangleColorAlpha, Device);
+                                    break;
+                                case 1:
+                                    Draw.RectangleOutlined((int)boneout[0] - (int)height / 4, (int)boneout[1] + 25, (int)height / 2, (int)height, 1, RectangleColorR, RectangleColorG, RectangleColorB, RectangleColorAlpha, Device);
+                                    break;
+                            }
                         }
                     }
                 }
