@@ -26,6 +26,13 @@ namespace CSGOP.Functions {
         public static byte HealthBarColorB = 80;
         public static byte HealthBarColorAlpha = 255;
 
+        public static int DrawArmorBar = 1;
+        public static int ArmorBarStyle = 1;
+        public static byte ArmorBarColorR = 0;
+        public static byte ArmorBarColorG = 150;
+        public static byte ArmorBarColorB = 255;
+        public static byte ArmorBarColorAlpha = 255;
+
         public static int DrawRectangle = 1;
         public static int RectangleStyle = 1;
         public static byte RectangleColorR = 255;
@@ -73,6 +80,17 @@ namespace CSGOP.Functions {
                             case 3:
                                 Draw.HorizontalBar((int)boneout[0] - (int)height / 4, (int)positionout[1] + 28, (int)height / 2, 4, players[i].Hp, 1, HealthBarColorR, HealthBarColorG, HealthBarColorB, HealthBarColorAlpha, Device);
                                 break;
+                        }
+
+                        if (DrawArmorBar == 1) {
+                            switch (ArmorBarStyle) {
+                                case 0:
+                                    Draw.VerticalBar((int)boneout[0] + (int)height / 3 + 5, (int)boneout[1] + 25, 3, (int)height, players[i].Armor, 1, ArmorBarColorR, ArmorBarColorG, ArmorBarColorB, ArmorBarColorAlpha, Device);
+                                    break;
+                                case 1:
+                                    Draw.HorizontalBar((int)boneout[0] - ((int)height / 4), (int)positionout[1] + 34, (int)height / 2, 4, players[i].Armor, 1, ArmorBarColorR, ArmorBarColorG, ArmorBarColorB, ArmorBarColorAlpha, Overlay.Device);
+                                    break;
+                            }
                         }
 
                         if (DrawRectangle == 1) {
