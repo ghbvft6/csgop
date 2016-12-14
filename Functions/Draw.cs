@@ -22,8 +22,17 @@ namespace CSGOP.Functions {
         public static void VerticalBar(int x, int y, int width, int height, float value, float thickness, byte R, byte G, byte B, byte A, WindowRenderTarget device) {
             RawRectangleF first = new RawRectangleF(x, y, x + width, y + height);
             device.DrawRectangle(first, new SolidColorBrush(device, Color.White), thickness);
-            first.Top += height - ((float)height / 100.0f * value);
-            device.FillRectangle(first, new SolidColorBrush(device, new Color { R = R, G = G, B = B, A = A }));
+            RawRectangleF second = new RawRectangleF(x, y, x - 1 + width, y - 1 + height);
+            second.Top += height - ((float)height / 100.0f * value);
+            device.FillRectangle(second, new SolidColorBrush(device, new Color { R = R, G = G, B = B, A = A }));
+        }
+
+        public static void HorizontalBar(int x, int y, int width, int height, float value, float thickness, byte R, byte G, byte B, byte A, WindowRenderTarget device) {
+            RawRectangleF first = new RawRectangleF(x, y, x + width, y + height);
+            device.DrawRectangle(first, new SolidColorBrush(device, Color.White), thickness);
+            RawRectangleF second = new RawRectangleF(x, y, x - 1 + width, y - 1 + height);
+            second.Right -= width - ((float)width / 100.0f * value);
+            device.FillRectangle(second, new SolidColorBrush(device, new Color { R = R, G = G, B = B, A = A }));
         }
 
         public static void Rectangle(int x, int y, int w, int h, float thickness, byte R, byte G, byte B, byte A, WindowRenderTarget device) {
