@@ -19,14 +19,12 @@ namespace CSGOP.GUI {
 
         public Form1() {
             while (Process.WindowHandle("csgo") == false || Process.WindowRect() == false) Thread.Sleep(100);
-            kernel.SetForegroundWindow(Process.Window);
             this.ClientSize = new System.Drawing.Size(Process.Width, Process.Height);
             InitializeComponent();
+            kernel.SetForegroundWindow(Process.Window);
+            kernel.SetWindowLong(this.Handle, -20, (IntPtr)(kernel.GetWindowLong(this.Handle, -20) | 0x80));
             FormHandle = this.Handle;
             Thread.Sleep(10);
-        }
-
-        private void Form1_Load(object sender, EventArgs e) {
         }
 
         protected override void OnPaint(PaintEventArgs e) {

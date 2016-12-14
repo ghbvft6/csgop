@@ -47,6 +47,10 @@ namespace CSGOP.Imported {
             public static extern bool SetForegroundWindow(IntPtr hwnd);
             [DllImport("dwmapi.dll")]
             public static extern bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref int[] margins);
+            [DllImport("user32.dll")]
+            public static extern UInt32 GetWindowLong(IntPtr hwnd, int index);
+            [DllImport("user32.dll")]
+            public static extern bool SetWindowLong(IntPtr hwnd, int index, IntPtr newlong);
         }
 
         public bool AllocConsole() {
@@ -85,6 +89,12 @@ namespace CSGOP.Imported {
         }
         public bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref int[] margins) {
             return Static.DwmExtendFrameIntoClientArea(hwnd, ref margins);
+        }
+        public UInt32 GetWindowLong(IntPtr hwnd, int index) { 
+            return Static.GetWindowLong(hwnd, index);
+        }
+        public bool SetWindowLong(IntPtr hwnd, int index, IntPtr newlong) {
+            return Static.SetWindowLong(hwnd, index, newlong);
         }
     }
 }

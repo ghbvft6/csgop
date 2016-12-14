@@ -30,13 +30,12 @@
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Overlay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.White;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.ShowInTaskbar = false;
         }
         #endregion
     }
