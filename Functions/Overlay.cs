@@ -68,9 +68,9 @@ namespace CSGOP.Functions {
                 Device.TextAntialiasMode = TextAntialiasMode.Aliased;
                 Antialias();
                 if (kernel.GetForegroundWindow() == Process.Window) {
-                    Render.ModificationDate();
-                    Render.AimbotRange();
-                    Render.Run(player, players);
+                    Render.ModificationDate(Device);
+                    Render.AimbotRange(Device);
+                    Render.Run(player, players, Device);
                     Thread.Sleep(1);
                 }
                 Device.EndDraw();
