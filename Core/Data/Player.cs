@@ -12,6 +12,10 @@ namespace CSGOP.Core.Data {
         protected External<bool, BindingClass> dormant;
         protected PositionVector<BindingClass> position;
         protected Bones<BindingClass> bones;
+        protected External<IntPtr, BindingClass> activeweapon;
+        protected External<IntPtr, BindingClass> weaponbase;
+        protected External<int, BindingClass> weaponId;
+
 
         public Player(int address) : base(address) {
         }
@@ -67,6 +71,12 @@ namespace CSGOP.Core.Data {
         IBones IPlayer.Bones {
             get {
                 return bones;
+            }
+        }
+
+        public int WeaponId {
+            get {
+                return weaponId.Value;
             }
         }
     }

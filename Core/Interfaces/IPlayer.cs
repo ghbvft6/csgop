@@ -34,5 +34,9 @@ namespace CSGOP.Core.Data {
         IBones Bones {
             get;
         }
+
+        int WeaponId {
+            get;
+        }
     }
 }
