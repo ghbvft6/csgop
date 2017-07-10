@@ -15,7 +15,8 @@ namespace CSGOP.Core {
             csgoProcess.AddCheat(new Bunnyhop(csgo.Player).Run);
             csgoProcess.AddCheat(new Aimbot(csgo.Player, csgo.Players).Run);
             csgoProcess.AddCheat(new Overlay(csgo.Player, csgo.Players).Run);
-            new Thread(csgoProcess.MonitorClient).Start();
+            //new Thread(csgoProcess.MonitorClient).Start();
+            new Thread(new Games.MU.Process().MonitorClient).Start();
         }
     }
 }

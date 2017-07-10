@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1287D5ED-6EAD-4F2D-AD85-867320127E23}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>csgop</RootNamespace>
     <AssemblyName>csgop</AssemblyName>
@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
@@ -87,6 +90,7 @@
     <Compile Include="Functions\Render.cs" />
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
+    <Compile Include="Games\MU\Process.cs" />
     <Compile Include="Unmanaged\ExternalProcess.cs" />
     <Compile Include="Unmanaged\External.cs" />
     <Compile Include="Games\CSGO\Process.cs" />
