@@ -11,89 +11,44 @@ using System.Collections.Generic;
 namespace CSGOP.Games.MU {
 
     sealed class Process : ExternalProcess<Process>, IGameProcess {
-        public static IClient client;
-        private IList<Action> cheats = new List<Action>();
-        private IList<Thread> cheatsThreads = new List<Thread>();
-        private IntPtr clientBaseAddress = new IntPtr(0);
 
         public Process() {
-            client = new Client(() => clientBaseAddress);
+            ProcessName = "main";
         }
 
-        public IClient Client {
-            get {
-                return client;
+        public override void SetClientBaseAddress() {
+            clientBaseAddress = new External<IntPtr>("main.exe", 0).ExternalPointer;
+        }
+
+        public override void StaticCheat() {
+            var ptr = new External<IntPtr>(() => clientBaseAddress, 0x07D26AC4);
+            while (ptr.Value == IntPtr.Zero) {
+                Thread.Sleep(10);
             }
-        }
-
-        public void AddCheat(Action cheat) {
-            cheats.Add(cheat);
-        }
-
-        public void MonitorClient() {
+            var agility = new External<ushort>((int)ptr.Value + 0x1A);
+            while (agility.Value == 0) {
+                Thread.Sleep(10);
+            }
+            var agiOrig = agility.Value;
+            agility.Value = 65000;
+            Thread.Sleep(44500);
+            agility.Value = agiOrig;
+            Thread.Sleep(5000);
+            agility.Value = 65000;
             while (true) {
-                var foundClient = false;
-                while (foundClient == false) {
-                    while (AttachToProccess() == false) {
-                        ProcessName = "main";
-                        Thread.Sleep(100);
-                    }
-                    foreach (ProcessModule Module in Process.Modules) {
-                        if (Module.ModuleName.Equals("main.exe")) {
-                            clientBaseAddress = Module.BaseAddress;
-                            foundClient = true;
-                            break;
-                        }
-                    }
-                    Thread.Sleep(100);
-                }
-                foreach (var cheat in cheats) {
-                    var t = new Thread(() => cheat());
-                    cheatsThreads.Add(t);
-                    t.Start();
-                }
-                while (true) {
-                    try {
-                        var testproc = System.Diagnostics.Process.GetProcessById(Process.Id);
-                        var ptr = new External<IntPtr>(() => clientBaseAddress, 0x07D26AC4);
-                        while (ptr.Value == IntPtr.Zero) {
-                            Thread.Sleep(10);
-                        }
-                        var agility = new External<ushort>((int)ptr.Value + 0x1A);
-                        while (agility.Value == 0) {
-                            Thread.Sleep(10);
-                        }
-                        var agiOrig = agility.Value;
-                        agility.Value = 65000;
-                        Thread.Sleep(44500);
-                        agility.Value = agiOrig;
-                        Thread.Sleep(5000);
-                        agility.Value = 65000;
-                        while (true) {
-                            Thread.Sleep(55000);
-                            agility.Value = agiOrig;
-                            Thread.Sleep(5000);
-                            agility.Value = 65000;
-                        }
-                    } catch (ArgumentException e) {
-                        break;
-                    }
-                    Thread.Sleep(100);
-                }
-                foreach (var cheat in cheatsThreads) {
-                    cheat.Abort();
-                }
-                cheatsThreads.Clear();
+                Thread.Sleep(55000);
+                agility.Value = agiOrig;
+                Thread.Sleep(5000);
+                agility.Value = 65000;
             }
-        }
-
-        public void AddCheat(Thread cheat) {
-            throw new NotImplementedException();
         }
     }
 
     class External<T> : External<T, Process> where T : struct {
         public External(int address) : base(address) {
+        }
+
+        public External(string module, int offset) : base(module, offset) {
         }
 
         public External(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset){

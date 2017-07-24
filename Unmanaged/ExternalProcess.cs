@@ -1,14 +1,15 @@
-﻿using CSGOP.Games.CSGO;
+﻿using CSGOP.Core.Data;
 using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace CSGOP.Unmanaged {
 
-    class ExternalProcess<BindingClass> {
+    abstract class ExternalProcess<BindingClass> {
         private readonly static Kernel32 kernel;
         private static IntPtr pHandle;
         private static IntPtr window;
@@ -16,6 +17,11 @@ namespace CSGOP.Unmanaged {
         private static int height;
         private static System.Diagnostics.Process process;
         private static string processName;
+
+        public static IClient client;
+        private static IList<Action> cheats = new List<Action>();
+        private static IList<Thread> cheatsThreads = new List<Thread>();
+        protected static IntPtr clientBaseAddress = new IntPtr(0);
 
         static ExternalProcess() {
             kernel = Kernel32.Instance;
@@ -88,5 +94,51 @@ namespace CSGOP.Unmanaged {
             }
             return false;
         }
+
+
+        public IClient Client {
+            get {
+                return client;
+            }
+        }
+
+        public void AddCheat(Action cheat) {
+            cheats.Add(cheat);
+        }
+
+        public void MonitorClient() {
+            while (true) {
+                while (AttachToProccess() == false) {
+                    Thread.Sleep(100);
+                }
+                SetClientBaseAddress();
+                foreach (var cheat in cheats) {
+                    var t = new Thread(() => cheat());
+                    cheatsThreads.Add(t);
+                    t.Start();
+                }
+                while (true) {
+                    try {
+                        var testproc = System.Diagnostics.Process.GetProcessById(Process.Id);
+                        StaticCheat();
+                    } catch (ArgumentException e) {
+                        break;
+                    }
+                    Thread.Sleep(100);
+                }
+                foreach (var cheat in cheatsThreads) {
+                    cheat.Abort();
+                }
+                cheatsThreads.Clear();
+            }
+        }
+
+        public void AddCheat(Thread cheat) {
+            throw new NotImplementedException();
+        }
+
+        public abstract void SetClientBaseAddress();
+
+        public virtual void StaticCheat() { }
     }
 }

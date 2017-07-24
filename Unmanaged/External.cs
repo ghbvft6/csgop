@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace CSGOP.Unmanaged {
 
@@ -83,6 +84,23 @@ namespace CSGOP.Unmanaged {
         public External(int address) {
             // NOT USED: parentObject, offset, UpdateAddress
             this.address = new IntPtr(address);
+            this.UpdateAddressDelegate = () => { }; // not null
+        }
+
+        public External(string module, int offset) {
+            // NOT USED: parentObject, UpdateAddress
+            var foundClient = false;
+            while (foundClient == false) {
+                foreach (ProcessModule Module in ExternalProcess<BindingClass>.Process.Modules) {
+                    if (Module.ModuleName.Equals(module)) {
+                        this.address = Module.BaseAddress;
+                        foundClient = true;
+                        break;
+                    }
+                }
+                Thread.Sleep(100);
+            }
+            this.offset = offset;
             this.UpdateAddressDelegate = () => { }; // not null
         }
 
