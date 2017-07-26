@@ -3,6 +3,8 @@ using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -30,6 +32,8 @@ namespace CSGOP.Unmanaged {
         public IList<Action> cheats = new List<Action>();
         public IList<Thread> cheatsThreads = new List<Thread>();
         protected static IntPtr clientBaseAddress = new IntPtr(0);
+
+        private static MemoryMappedFile mmf;
 
         static ExternalProcess() {
             kernel = Kernel32.Instance;
@@ -79,7 +83,34 @@ namespace CSGOP.Unmanaged {
         public bool AttachToProccess() {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
-                process = processes[0];
+                unsafe
+                {
+                    mmf = MemoryMappedFile.CreateOrOpen("Global\\usedPids", 4096, MemoryMappedFileAccess.ReadWrite);
+                    MemoryMappedViewStream mmvStream = mmf.CreateViewStream(0, 4096);
+                    byte[] buffer = new byte[4096];
+                    mmvStream.Read(buffer, 0, 4096);
+                    int[] usedPids = new int[1024];
+                    Buffer.BlockCopy(buffer, 0, usedPids, 0, 4096);
+                    var found = false;
+                    foreach (var p in processes) {
+                        found = false;
+                        for (var i = 1; i <= usedPids[0]; ++i) {
+                            if (p.Id == usedPids[i]) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found == false) {
+                            process = p;
+                            break;
+                        }
+                    }
+                    if (found == true) {
+                        return false;
+                    }
+                    mmvStream.Close();
+                }
+
             } else {
                 return false;
             }
@@ -92,6 +123,21 @@ namespace CSGOP.Unmanaged {
             }
             var isAttached = pHandle == IntPtr.Zero ? false : true;
             if (isAttached) {
+                unsafe
+                {
+                    mmf = MemoryMappedFile.OpenExisting("Global\\usedPids");
+                    MemoryMappedViewStream mmvStream = mmf.CreateViewStream(0, 4096);
+                    byte[] buffer = new byte[4096];
+                    mmvStream.Read(buffer, 0, 4096);
+                    int[] usedPids = new int[1024];
+                    Buffer.BlockCopy(buffer, 0, usedPids, 0, 4096);
+                    usedPids[0] = usedPids[0] + 1;
+                    usedPids[usedPids[0]] = process.Id;
+                    Buffer.BlockCopy(usedPids, 0, buffer, 0, 4096);
+                    mmvStream.Seek(0, SeekOrigin.Begin);
+                    mmvStream.Write(buffer, 0, 4096);
+                    mmvStream.Close();
+                }
                 SetClientBaseAddress();
                 foreach (var cheat in cheats) {
                     var t = new Thread(() => cheat());
