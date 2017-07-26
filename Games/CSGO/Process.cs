@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace CSGOP.Games.CSGO {
 
-    sealed class Process : ExternalProcess<Process>, IGameProcess {
+    sealed class Process : ExternalProcess<Process> {
 
         public Process() {
             ProcessName = "csgo";

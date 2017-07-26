@@ -9,7 +9,17 @@ using System.Threading;
 
 namespace CSGOP.Unmanaged {
 
-    abstract class ExternalProcess<BindingClass> {
+    abstract class ExternalProcess {
+        public IList<Action> cheats = new List<Action>();
+        public IList<Thread> cheatsThreads = new List<Thread>();
+
+        public abstract System.Diagnostics.Process Process { get; set; }
+
+        public abstract bool AttachToProccess();
+        public abstract void SetClientBaseAddress();
+    }
+
+    abstract class ExternalProcess<BindingClass> : ExternalProcess {
         private readonly static Kernel32 kernel;
         private static IntPtr pHandle;
         private static IntPtr window;
@@ -19,8 +29,7 @@ namespace CSGOP.Unmanaged {
         private static string processName;
 
         public static IClient client;
-        private static IList<Action> cheats = new List<Action>();
-        private static IList<Thread> cheatsThreads = new List<Thread>();
+        
         protected static IntPtr clientBaseAddress = new IntPtr(0);
 
         static ExternalProcess() {
@@ -47,7 +56,15 @@ namespace CSGOP.Unmanaged {
             set { height = value; }
         }
 
-        public static System.Diagnostics.Process Process {
+        public override System.Diagnostics.Process Process {
+            get { return process; }
+            set {
+                process = value;
+                ProcessName = process.ProcessName;
+            }
+        }
+
+        public static System.Diagnostics.Process ProcessStatic {
             get { return process; }
             set {
                 process = value;
@@ -60,7 +77,7 @@ namespace CSGOP.Unmanaged {
             set { processName = value; }
         }
 
-        public static bool AttachToProccess() {
+        public override bool AttachToProccess() {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 process = processes[0];
@@ -70,7 +87,7 @@ namespace CSGOP.Unmanaged {
             return AttachToProccess(process);
         }
 
-        public static bool AttachToProccess(System.Diagnostics.Process process) {
+        public bool AttachToProccess(System.Diagnostics.Process process) {
             if (process != null) {
                 pHandle = kernel.OpenProcess(0x10 | 0x20 | 0x08, false, process.Id);
             }
@@ -106,39 +123,8 @@ namespace CSGOP.Unmanaged {
             cheats.Add(cheat);
         }
 
-        public void MonitorClient() {
-            while (true) {
-                while (AttachToProccess() == false) {
-                    Thread.Sleep(100);
-                }
-                SetClientBaseAddress();
-                foreach (var cheat in cheats) {
-                    var t = new Thread(() => cheat());
-                    cheatsThreads.Add(t);
-                    t.Start();
-                }
-                while (true) {
-                    try {
-                        var testproc = System.Diagnostics.Process.GetProcessById(Process.Id);
-                        StaticCheat();
-                    } catch (ArgumentException e) {
-                        break;
-                    }
-                    Thread.Sleep(100);
-                }
-                foreach (var cheat in cheatsThreads) {
-                    cheat.Abort();
-                }
-                cheatsThreads.Clear();
-            }
-        }
-
         public void AddCheat(Thread cheat) {
             throw new NotImplementedException();
         }
-
-        public abstract void SetClientBaseAddress();
-
-        public virtual void StaticCheat() { }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace CSGOP.Games.MU {
 
-    sealed class Process : ExternalProcess<Process>, IGameProcess {
+    sealed class Process : ExternalProcess<Process> {
 
         public Process() {
             ProcessName = "main";
@@ -20,7 +20,7 @@ namespace CSGOP.Games.MU {
             clientBaseAddress = new External<IntPtr>("main.exe", 0).ExternalPointer;
         }
 
-        public override void StaticCheat() {
+        public void AgilityCheat() {
             var ptr = new External<IntPtr>(() => clientBaseAddress, 0x07D26AC4);
             while (ptr.Value == IntPtr.Zero) {
                 Thread.Sleep(10);
