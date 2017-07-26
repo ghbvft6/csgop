@@ -16,11 +16,10 @@ namespace CSGOP.Core {
 
         static Cheat() {
             var csgo = new Games.CSGO.Process();
-            var csgoClient = Games.CSGO.Process.client;
-            csgo.AddCheat(() => { while (true) { csgoClient.UpdateAllAddresses(); Thread.Sleep(5000); } });
-            csgo.AddCheat(new Bunnyhop(csgoClient.Player).Run);
-            csgo.AddCheat(new Aimbot(csgoClient.Player, csgoClient.Players).Run);
-            csgo.AddCheat(new Overlay(csgoClient.Player, csgoClient.Players).Run);
+            csgo.AddCheat(() => { while (true) { Games.CSGO.Process.client.UpdateAllAddresses(); Thread.Sleep(5000); } });
+            csgo.AddCheat<Bunnyhop>();
+            csgo.AddCheat<Aimbot>();
+            csgo.AddCheat<Overlay>();
             games.Add(csgo);
 
             var mu = new Games.MU.Process();

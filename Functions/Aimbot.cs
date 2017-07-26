@@ -6,16 +6,17 @@ using System;
 using CSGOP.Unmanaged;
 using CSGOP.Core.Data;
 using CSGOP.Core;
+using csgop.Functions;
 
 namespace CSGOP.Functions {
-    class Aimbot {
+    class Aimbot : CheatFunction {
 
         private readonly IPlayer player;
         private readonly IPlayer[] players;
 
-        public Aimbot(IPlayer player, IPlayer[] players) {
-            this.player = player;
-            this.players = players;
+        public Aimbot(IClient client) : base(client) {
+            this.player = client.Player;
+            this.players = client.Players;
         }
 
         WorldToScreen world = new WorldToScreen(Games.CSGO.Process.client.View);
@@ -46,7 +47,7 @@ namespace CSGOP.Functions {
             if (y < -180.0f) { y = -360.0f; }
         }
 
-        public void Run() {
+        public override void Run() {
             while (true) {
                 if (automatic == true || Kernel32.Instance.GetAsyncKeyState(02)) {
                     for (int i = 0; i < players.Length; ++i) {

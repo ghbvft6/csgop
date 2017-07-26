@@ -10,17 +10,18 @@ using Factory = SharpDX.Direct2D1.Factory;
 using Format = SharpDX.DXGI.Format;
 using CSGOP.Core.Data;
 using System;
+using csgop.Functions;
 
 namespace CSGOP.Functions {
 
-    class Overlay {
+    class Overlay : CheatFunction {
 
         private readonly IPlayer player;
         private readonly IPlayer[] players;
 
-        public Overlay(IPlayer player, IPlayer[] players) {
-            this.player = player;
-            this.players = players;
+        public Overlay(IClient client) : base(client) {
+            this.player = client.Player;
+            this.players = client.Players;
         }
 
         private Thread DirectX = null;
@@ -38,7 +39,7 @@ namespace CSGOP.Functions {
             kernel = Kernel32.Instance;
         }
 
-        public void Run() {
+        public override void Run() {
             while (Form1.FormHandle == IntPtr.Zero) Thread.Sleep(100);
             width = Process.Width;
             height = Process.Height;

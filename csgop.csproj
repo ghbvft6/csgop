@@ -76,6 +76,7 @@
     <Compile Include="Core\Interfaces\IPositionVector.cs" />
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Core\IGameProcess.cs" />
+    <Compile Include="Functions\CheatFunction.cs" />
     <Compile Include="Games\CSGO\Data\PositionVector.cs" />
     <Compile Include="Games\CSGO\Data\BonesVector.cs" />
     <Compile Include="Core\Cheat.cs" />

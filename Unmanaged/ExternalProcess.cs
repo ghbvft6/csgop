@@ -1,4 +1,5 @@
-﻿using CSGOP.Core.Data;
+﻿using csgop.Functions;
+using CSGOP.Core.Data;
 using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
@@ -184,6 +185,11 @@ namespace CSGOP.Unmanaged {
 
         public void AddCheat(Action cheat) {
             cheats.Add(cheat);
+        }
+
+        public void AddCheat<CheatType>() where CheatType : CheatFunction {
+            var cheat = (CheatFunction)Activator.CreateInstance(typeof(CheatType), client);
+            cheats.Add(() => { cheat.Run(); });
         }
 
         public void AddCheat(Thread cheat) {

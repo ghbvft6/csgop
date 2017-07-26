@@ -1,18 +1,19 @@
-﻿using CSGOP.Core.Data;
+﻿using csgop.Functions;
+using CSGOP.Core.Data;
 using CSGOP.Games.CSGO.Data;
 using CSGOP.Imported;
 using System.Threading;
 
 namespace CSGOP.Functions {
-    class Bunnyhop {
+    class Bunnyhop : CheatFunction {
         
         private readonly IPlayer player;
 
-        public Bunnyhop(IPlayer player) {
-            this.player = player;
+        public Bunnyhop(IClient client) : base(client) {
+            this.player = client.Player;
         }
 
-        public void Run() {
+        public override void Run() {
             while (true) {
                 if (Kernel32.Instance.GetAsyncKeyState(0x11) && player.State == 257) {
                     Thread.Sleep(10);
