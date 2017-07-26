@@ -88,20 +88,22 @@ namespace CSGOP.Unmanaged {
         }
 
         public External(string module, int offset) {
-            // NOT USED: parentObject, UpdateAddress
-            var foundClient = false;
-            while (foundClient == false) {
-                foreach (ProcessModule Module in ExternalProcess<BindingClass>.Process.Modules) {
-                    if (Module.ModuleName.Equals(module)) {
-                        this.address = Module.BaseAddress;
-                        foundClient = true;
-                        break;
-                    }
-                }
-                Thread.Sleep(100);
-            }
+            // NOT USED: parentObject
             this.offset = offset;
-            this.UpdateAddressDelegate = () => { }; // not null
+            this.UpdateAddressDelegate = () => {
+                var foundClient = false;
+                while (foundClient == false) {
+                    foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
+                        if (Module.ModuleName.Equals(module)) {
+                            this.address = Module.BaseAddress;
+                            foundClient = true;
+                            break;
+                        }
+                    }
+                    Thread.Sleep(100);
+                }
+            };
+            UpdateAddressDelegate();
         }
 
         public unsafe External(Func<IntPtr> GetBaseAddress, int offset) {
