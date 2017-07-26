@@ -9,14 +9,12 @@ using System.Threading;
 
 namespace CSGOP.Unmanaged {
 
-    abstract class ExternalProcess {
-        public IList<Action> cheats = new List<Action>();
-        public IList<Thread> cheatsThreads = new List<Thread>();
+    interface ExternalProcess {
+        System.Diagnostics.Process Process { get; set; }
 
-        public abstract System.Diagnostics.Process Process { get; set; }
-
-        public abstract bool AttachToProccess();
-        public abstract void SetClientBaseAddress();
+        bool AttachToProccess();
+        void DeattachFromProccess();
+        void SetClientBaseAddress();
     }
 
     abstract class ExternalProcess<BindingClass> : ExternalProcess {
@@ -29,7 +27,8 @@ namespace CSGOP.Unmanaged {
         private static string processName;
 
         public static IClient client;
-        
+        public IList<Action> cheats = new List<Action>();
+        public IList<Thread> cheatsThreads = new List<Thread>();
         protected static IntPtr clientBaseAddress = new IntPtr(0);
 
         static ExternalProcess() {
@@ -56,7 +55,7 @@ namespace CSGOP.Unmanaged {
             set { height = value; }
         }
 
-        public override System.Diagnostics.Process Process {
+        public System.Diagnostics.Process Process {
             get { return process; }
             set {
                 process = value;
@@ -77,7 +76,7 @@ namespace CSGOP.Unmanaged {
             set { processName = value; }
         }
 
-        public override bool AttachToProccess() {
+        public bool AttachToProccess() {
             var processes = System.Diagnostics.Process.GetProcessesByName(processName);
             if (processes.Length > 0) {
                 process = processes[0];
@@ -91,7 +90,25 @@ namespace CSGOP.Unmanaged {
             if (process != null) {
                 pHandle = kernel.OpenProcess(0x10 | 0x20 | 0x08, false, process.Id);
             }
-            return pHandle == IntPtr.Zero ? false : true;
+            var isAttached = pHandle == IntPtr.Zero ? false : true;
+            if (isAttached) {
+                SetClientBaseAddress();
+                foreach (var cheat in cheats) {
+                    var t = new Thread(() => cheat());
+                    cheatsThreads.Add(t);
+                    t.Start();
+                }
+                Console.WriteLine("Attached to " + Process.Id);
+            }
+            return isAttached;
+        }
+
+        public void DeattachFromProccess() {
+            foreach (var cheat in cheatsThreads) {
+                cheat.Abort();
+            }
+            cheatsThreads.Clear();
+            Console.WriteLine("Deattached from " + Process.Id);
         }
 
         public static bool WindowHandle(string process) {
@@ -126,5 +143,7 @@ namespace CSGOP.Unmanaged {
         public void AddCheat(Thread cheat) {
             throw new NotImplementedException();
         }
+
+        public abstract void SetClientBaseAddress();
     }
 }
