@@ -96,7 +96,7 @@ namespace CSGOP.Unmanaged {
                     if (ExternalProcess<BindingClass>.ProcessStatic != null) {
                         foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
                             if (Module.ModuleName.Equals(module)) {
-                                this.address = Module.BaseAddress;
+                                this.address = Module.BaseAddress + this.offset;
                                 foundClient = true;
                                 break;
                             }
