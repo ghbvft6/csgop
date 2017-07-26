@@ -17,12 +17,11 @@ namespace CSGOP.Games.MU {
         }
 
         public void AgilityCheat() {
-            var mainexe = new External<IntPtr>("main.exe", 0).ExternalPointer;
-            var ptr = new External<IntPtr>(() => mainexe, 0x07D26AC4);
+            var ptr = new External<IntPtr>("main.exe", 0x07D26AC4);
             while (ptr.Value == IntPtr.Zero) {
                 Thread.Sleep(10);
             }
-            var agility = new External<ushort>((int)ptr.Value + 0x1A);
+            var agility = new External<ushort>(ptr, 0x1A);
             while (agility.Value == 0) {
                 Thread.Sleep(10);
             }

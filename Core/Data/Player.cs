@@ -15,9 +15,13 @@ namespace CSGOP.Core.Data {
         protected External<IntPtr, BindingClass> activeweapon;
         protected External<IntPtr, BindingClass> weaponbase;
         protected External<int, BindingClass> weaponId;
-
+        private string module;
+        private int offset;
 
         public Player(int address) : base(address) {
+        }
+
+        public Player(string module, int offset) : base(module, offset) {
         }
 
         public Player(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
