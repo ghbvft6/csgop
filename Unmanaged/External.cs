@@ -181,6 +181,13 @@ namespace CSGOP.Unmanaged {
                 }
             }
 
+            public unsafe Array(int length, string module, int offset, int elementSize) {
+                array = new External<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = new External<T, BindingClass>(module, offset + i * elementSize);
+                }
+            }
+
             public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
                 array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
