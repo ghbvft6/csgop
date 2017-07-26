@@ -17,7 +17,6 @@ namespace CSGOP.Unmanaged {
 
         bool AttachToProccess();
         void DeattachFromProccess();
-        void SetClientBaseAddress();
     }
 
     abstract class ExternalProcess<BindingClass> : ExternalProcess {
@@ -32,7 +31,6 @@ namespace CSGOP.Unmanaged {
         public static IClient client;
         public IList<Action> cheats = new List<Action>();
         public IList<Thread> cheatsThreads = new List<Thread>();
-        protected static IntPtr clientBaseAddress = new IntPtr(0);
 
         private static MemoryMappedFile mmf;
 
@@ -139,7 +137,6 @@ namespace CSGOP.Unmanaged {
                     mmvStream.Write(buffer, 0, 4096);
                     mmvStream.Close();
                 }
-                SetClientBaseAddress();
                 foreach (var cheat in cheats) {
                     var t = new Thread(() => cheat());
                     cheatsThreads.Add(t);
@@ -195,7 +192,5 @@ namespace CSGOP.Unmanaged {
         public void AddCheat(Thread cheat) {
             throw new NotImplementedException();
         }
-
-        public abstract void SetClientBaseAddress();
     }
 }

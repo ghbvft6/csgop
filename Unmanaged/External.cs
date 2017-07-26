@@ -93,14 +93,16 @@ namespace CSGOP.Unmanaged {
             this.UpdateAddressDelegate = () => {
                 var foundClient = false;
                 while (foundClient == false) {
-                    foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
-                        if (Module.ModuleName.Equals(module)) {
-                            this.address = Module.BaseAddress;
-                            foundClient = true;
-                            break;
+                    if (ExternalProcess<BindingClass>.ProcessStatic != null) {
+                        foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
+                            if (Module.ModuleName.Equals(module)) {
+                                this.address = Module.BaseAddress;
+                                foundClient = true;
+                                break;
+                            }
                         }
-                    }
-                    Thread.Sleep(100);
+                        Thread.Sleep(100);
+                    } else break;
                 }
             };
             UpdateAddressDelegate();

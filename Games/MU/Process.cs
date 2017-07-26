@@ -16,12 +16,9 @@ namespace CSGOP.Games.MU {
             ProcessName = "main";
         }
 
-        public override void SetClientBaseAddress() {
-            clientBaseAddress = new External<IntPtr>("main.exe", 0).ExternalPointer;
-        }
-
         public void AgilityCheat() {
-            var ptr = new External<IntPtr>(() => clientBaseAddress, 0x07D26AC4);
+            var mainexe = new External<IntPtr>("main.exe", 0).ExternalPointer;
+            var ptr = new External<IntPtr>(() => mainexe, 0x07D26AC4);
             while (ptr.Value == IntPtr.Zero) {
                 Thread.Sleep(10);
             }

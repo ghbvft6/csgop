@@ -4,7 +4,7 @@ using System;
 
 namespace CSGOP.Games.CSGO.Data {
     unsafe class Player : Player<Process> {
-        public Player(Func<IntPtr> GetBaseAddress, int offset, int playersOffset) : base(GetBaseAddress, offset) {
+        public Player(Func<IntPtr> clientdllAddress, int offset, int playersOffset) : base(clientdllAddress, offset) {
             hp = new External<int>(this, 0xFC);
             armor = new External<int>(this, 0xAA04);
             team = new External<int>(this, 0xF0);
@@ -14,7 +14,7 @@ namespace CSGOP.Games.CSGO.Data {
             position = new PositionVector(this, 0x134);
             bones = new Bones(this, 0x2698);
             activeweapon = new External<IntPtr>(this, 0x1337);
-            weaponbase = new External<IntPtr>(() => GetBaseAddress() + playersOffset + ((activeweapon.Value.ToInt32() & 0xFFF) - 1) * 0x10, 0);
+            weaponbase = new External<IntPtr>(() => clientdllAddress() + playersOffset + ((activeweapon.Value.ToInt32() & 0xFFF) - 1) * 0x10, 0);
             weaponId = new External<int>(weaponbase, 0x1337);
         }
     }

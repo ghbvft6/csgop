@@ -14,11 +14,7 @@ namespace CSGOP.Games.CSGO {
 
         public Process() {
             ProcessName = "csgo";
-            client = new Client(() => clientBaseAddress);
-        }
-
-        public override void SetClientBaseAddress() {
-            clientBaseAddress = new External<IntPtr>("client.dll", 0).ExternalPointer;
+            client = new Client();
         }
     }
 
