@@ -1,6 +1,5 @@
 ﻿using CSGOP.Core;
 using CSGOP.Core.Data;
-using CSGOP.Games.CSGO;
 using CSGOP.Imported;
 using System;
 using System.Collections.Generic;
@@ -32,12 +31,12 @@ namespace CSGOP.Unmanaged {
                     if (fieldInfo.FieldType.IsArray) {
                         foreach (var element in fieldInfo.GetValue(obj) as object[]) {
                             if (element == null
-                                || element.GetType().Namespace.Split('.')[0].Equals(typeof(Cheat).Namespace.Split('.')[0]) == false) continue;
+                                || element.GetType().Namespace.Split('.')[0].Equals(typeof(Client<object>).Namespace.Split('.')[0]) == false) continue; // typeof(Cheat)
                             queue.Enqueue(element);
                         }
                     } else {
                         if (fieldInfo.GetValue(obj) == null
-                            || fieldInfo.GetValue(obj).GetType().Namespace.Split('.')[0].Equals(typeof(Cheat).Namespace.Split('.')[0]) == false
+                            || fieldInfo.GetValue(obj).GetType().Namespace.Split('.')[0].Equals(typeof(Client<object>).Namespace.Split('.')[0]) == false // typeof(Cheat)
                             || fieldInfo.Name.Equals("parentObject")) continue;
                         queue.Enqueue(fieldInfo.GetValue(obj));
                     }
