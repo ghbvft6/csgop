@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using CSGOP.Core.Data;
 using System.Threading;
-using CSGOP.Games.CSGO.Data;
 using System.Collections.Generic;
 
 namespace CSGOP.Games.MU {

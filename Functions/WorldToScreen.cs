@@ -1,6 +1,5 @@
 ﻿using CSGOP.Core.Data;
 using CSGOP.Games.CSGO;
-using CSGOP.Games.CSGO.Data;
 using CSGOP.Unmanaged;
 
 namespace CSGOP.Functions {

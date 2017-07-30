@@ -2,7 +2,6 @@
 using CSGOP.Unmanaged;
 using CSGOP.GUI;
 using CSGOP.Games.CSGO;
-using CSGOP.Games.CSGO.Data;
 using System.Threading;
 using SharpDX;
 using SharpDX.Direct2D1;

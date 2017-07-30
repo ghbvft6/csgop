@@ -1,6 +1,5 @@
 ﻿using CSGOP.Core;
 using CSGOP.Games.CSGO;
-using CSGOP.Games.CSGO.Data;
 using CSGOP.Imported;
 using CSGOP.Unmanaged;
 using System;

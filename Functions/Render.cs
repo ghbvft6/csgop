@@ -1,5 +1,4 @@
 ﻿using CSGOP.Games.CSGO;
-using CSGOP.Games.CSGO.Data;
 using CSGOP.Unmanaged;
 using System.IO;
 using SharpDX;

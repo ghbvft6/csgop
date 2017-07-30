@@ -4,7 +4,6 @@ using CSGOP.Functions;
 using System.Diagnostics;
 using System.Threading;
 using CSGOP.Core.Data;
-using CSGOP.Games.CSGO.Data;
 using System.Collections.Generic;
 using System;
 

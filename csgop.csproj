@@ -101,12 +101,7 @@
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Core\IGameProcess.cs" />
     <Compile Include="Functions\CheatFunction.cs" />
-    <Compile Include="Games\CSGO\Data\PositionVector.cs" />
-    <Compile Include="Games\CSGO\Data\BonesVector.cs" />
     <Compile Include="Core\Cheat.cs" />
-    <Compile Include="Games\CSGO\Data\Client.cs" />
-    <Compile Include="Games\CSGO\Data\Bones.cs" />
-    <Compile Include="Games\CSGO\Data\Player.cs" />
     <Compile Include="Functions\Aimbot.cs" />
     <Compile Include="Functions\Bunnyhop.cs" />
     <Compile Include="Functions\Algebra.cs" />
@@ -115,10 +110,10 @@
     <Compile Include="Functions\Render.cs" />
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
-    <Compile Include="Games\MU\Process.cs" />
+    <Compile Include="Games\MU.cs" />
     <Compile Include="Unmanaged\ExternalProcess.cs" />
     <Compile Include="Unmanaged\External.cs" />
-    <Compile Include="Games\CSGO\Process.cs" />
+    <Compile Include="Games\CSGO.cs" />
     <Compile Include="Imported\Kernel32.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
