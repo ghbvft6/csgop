@@ -2,7 +2,7 @@
 using System;
 
 namespace CSGOP.Core.Data {
-    unsafe class Player<BindingClass> : External<IntPtr, BindingClass>, IPlayer {
+    unsafe class Player<BindingClass> : IPlayer {
 
         protected External<int, BindingClass> hp;
         protected External<int, BindingClass> armor;
@@ -15,18 +15,6 @@ namespace CSGOP.Core.Data {
         protected External<IntPtr, BindingClass> activeweapon;
         protected External<IntPtr, BindingClass> weaponbase;
         protected External<int, BindingClass> weaponId;
-
-        public Player(int address) : base(address) {
-        }
-
-        public Player(string module, int offset) : base(module, offset) {
-        }
-
-        public Player(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
-        }
-
-        public Player(External<IntPtr, BindingClass> parentObject, int offset) : base(parentObject, offset) {
-        }
 
         int IPlayer.Hp {
             get {
