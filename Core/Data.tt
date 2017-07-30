@@ -1,0 +1,87 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="c:\dev\csgop\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.CodeDom.Compiler" #>
+<#@ import namespace="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" #>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".txt" #>
+using System;
+using CSGOP.Unmanaged;
+
+namespace CSGOP.Core.Data {
+<#
+			string[] interfaceCsFileName = {
+                @"c:\dev\csgop\Games\CSGO\Process.cs",
+                @"c:\dev\csgop\Functions\CheatFunction.cs",
+                @"c:\dev\csgop\Unmanaged\ExternalProcess.cs",
+                @"c:\dev\csgop\Unmanaged\Unmanaged.cs",
+                @"c:\dev\csgop\Unmanaged\External.cs",
+                @"c:\dev\csgop\Imported\Kernel32.cs"
+			};
+            var files = Directory.GetFiles(@"c:\dev\csgop\Core\Data\");
+            var files2 = Directory.GetFiles(@"c:\dev\csgop\Core\Interfaces\");
+            var files3 = Directory.GetFiles(@"c:\dev\csgop\Games\CSGO\Data\");
+            string[] combined = interfaceCsFileName.Concat(files).ToArray();
+            combined = combined.Concat(files2).ToArray();
+            combined = combined.Concat(files3).ToArray();
+
+            CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Core.dll"}) {
+                GenerateExecutable = false,
+                IncludeDebugInformation = false,
+                GenerateInMemory = true,
+                CompilerOptions = "/unsafe /langversion:7"
+            };
+            CSharpCodeProvider csProvider = new CSharpCodeProvider();
+			var settings = csProvider
+                .GetType()
+                .GetField("_compilerSettings", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(csProvider);
+            var path = settings
+                .GetType()
+                .GetField("_compilerFullPath", BindingFlags.Instance | BindingFlags.NonPublic);
+            path.SetValue(settings, ((string)path.GetValue(settings)).Replace(@"bin\roslyn\", @"\..\..\MSBuild\15.0\Bin\Roslyn\"));
+
+            CompilerResults results = csProvider.CompileAssemblyFromFile(parameters, combined);
+            if (results.Errors.HasErrors) {
+                foreach (CompilerError error in results.Errors) {
+#><#= error.ToString() #>
+<#
+                }
+            }
+            Assembly assembly = results.CompiledAssembly;
+			foreach (Type type in assembly.GetTypes()) {
+				if (type.Namespace == "CSGOP.Core.Data") {
+#>
+
+		class <#= type.Name #><#
+					if (type.GetInterfaces().Length > 0) {
+#><#= " : " + type.GetInterfaces()[0].Name #><#
+					}
+					for (var i = 1; i < type.GetInterfaces().Length; ++i) {
+#><#= ", " + type.GetInterfaces()[i].Name #><#
+					}
+#> {
+<#
+					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
+#>			private <#= fieldInfo.FieldType.Name + " " + fieldInfo.Name #>;
+<#
+					}
+					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
+#>			public <#= fieldInfo.FieldType.Name + " " + char.ToUpper(fieldInfo.Name[0]) + fieldInfo.Name.Substring(1) #> {
+				get => <#= fieldInfo.Name #>;
+				set => <#= fieldInfo.Name #> = value;
+			}
+<#
+					}
+#>
+		}
+<#
+                }
+			}
+#>
+}
+
