@@ -30,7 +30,7 @@ namespace CSGOP.Functions {
 
         private void recoilsystem() {
             recoil = 0;
-            recoil = player.ConsecutiveShots * 3.0f;
+            recoil = player.Consecutiveshots * 3.0f;
             if (recoil > 35.0f) { recoil = 35.0f; }
         }
 

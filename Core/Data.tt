@@ -16,10 +16,11 @@ using CSGOP.Core.Data;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
-namespace CSGOP.Core.DataTemplateOutput {
+namespace CSGOP.Core.Data {
 <#
 			string[] interfaceCsFileName = {
                 @"c:\dev\csgop\Core\DataTemplate.cs",
+				@"c:\dev\csgop\Core\Data.cs",
                 @"c:\dev\csgop\Functions\CheatFunction.cs",
                 @"c:\dev\csgop\Unmanaged\ExternalProcess.cs",
                 @"c:\dev\csgop\Unmanaged\Unmanaged.cs",

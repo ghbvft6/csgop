@@ -94,16 +94,6 @@
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Core\DataTemplate.cs" />
-    <Compile Include="Core\Data\Bones.cs" />
-    <Compile Include="Core\Data\BonesVector.cs" />
-    <Compile Include="Core\Data\Client.cs" />
-    <Compile Include="Core\Data\Player.cs" />
-    <Compile Include="Core\Data\PositionVector.cs" />
-    <Compile Include="Core\Interfaces\IBones.cs" />
-    <Compile Include="Core\Interfaces\IBonesVector.cs" />
-    <Compile Include="Core\Interfaces\IClient.cs" />
-    <Compile Include="Core\Interfaces\IPlayer.cs" />
-    <Compile Include="Core\Interfaces\IPositionVector.cs" />
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Core\IGameProcess.cs" />
     <Compile Include="Functions\CheatFunction.cs" />
@@ -174,6 +164,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
