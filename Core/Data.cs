@@ -228,18 +228,5 @@ namespace CSGOP.Core.Data {
 				set;
 			}
 		}
-	class External<T> : External<T, object> where T : struct {
-        public External(int address) : base(address) {
-        }
-
-        public External(string module, int offset) : base(module, offset) {
-        }
-
-        public External(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
-        }
-
-        public External(External<IntPtr, object> parentObject, int offset) : base(parentObject, offset) {
-        }
-    }
 }
 
