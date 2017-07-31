@@ -88,6 +88,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Data.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Core\DataTemplate.cs" />
     <Compile Include="Core\Data\Bones.cs" />
     <Compile Include="Core\Data\BonesVector.cs" />
     <Compile Include="Core\Data\Client.cs" />
@@ -166,12 +172,7 @@
   <ItemGroup>
     <Content Include="Core\Data.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Data.txt</LastGenOutput>
-    </Content>
-    <Content Include="Core\Data.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Data.tt</DependentUpon>
+      <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

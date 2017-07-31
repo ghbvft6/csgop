@@ -8,7 +8,7 @@ namespace CSGOP.Core.Data {
         protected External<float, BindingClass> y;
         protected External<float, BindingClass> z;
 
-        float IVector3.X {
+        public float X {
             get {
                 return x.Value;
             }

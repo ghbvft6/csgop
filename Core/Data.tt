@@ -8,14 +8,18 @@
 <#@ import namespace="System.CodeDom.Compiler" #>
 <#@ import namespace="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" #>
 <#@ import namespace="System.IO" #>
-<#@ output extension=".txt" #>
+<#@ import namespace="System.CodeDom" #>
+<#@ output extension=".cs" #>
 using System;
 using CSGOP.Unmanaged;
+using CSGOP.Core.Data;
 
-namespace CSGOP.Core.Data {
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+
+namespace CSGOP.Core.DataTemplateOutput {
 <#
 			string[] interfaceCsFileName = {
-                @"c:\dev\csgop\Games\CSGO\Process.cs",
+                @"c:\dev\csgop\Core\DataTemplate.cs",
                 @"c:\dev\csgop\Functions\CheatFunction.cs",
                 @"c:\dev\csgop\Unmanaged\ExternalProcess.cs",
                 @"c:\dev\csgop\Unmanaged\Unmanaged.cs",
@@ -24,7 +28,7 @@ namespace CSGOP.Core.Data {
 			};
             var files = Directory.GetFiles(@"c:\dev\csgop\Core\Data\");
             var files2 = Directory.GetFiles(@"c:\dev\csgop\Core\Interfaces\");
-            var files3 = Directory.GetFiles(@"c:\dev\csgop\Games\CSGO\Data\");
+            var files3 = Directory.GetFiles(@"c:\dev\csgop\Games\");
             string[] combined = interfaceCsFileName.Concat(files).ToArray();
             combined = combined.Concat(files2).ToArray();
             combined = combined.Concat(files3).ToArray();
@@ -54,26 +58,106 @@ namespace CSGOP.Core.Data {
             }
             Assembly assembly = results.CompiledAssembly;
 			foreach (Type type in assembly.GetTypes()) {
-				if (type.Namespace == "CSGOP.Core.Data") {
+				if (type.Namespace == "CSGOP.Core.DataTemplate" && type.Name != "External`1") {
 #>
 
-		class <#= type.Name #><#
-					if (type.GetInterfaces().Length > 0) {
-#><#= " : " + type.GetInterfaces()[0].Name #><#
+		class <#= type.Name + "<BindingClass> : I" + type.Name #> {
+<#
+					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
+						string typeName = fieldInfo.FieldType.Name;
+						string typeNameArraySuffix = "";
+						if (typeName.Contains("[]")){
+							typeName = typeName.Substring(0, typeName.Length - 2);
+							typeNameArraySuffix = "[]";
+                        }
+						if (typeName[typeName.Length-2] == '`') {
+							typeName = typeName.Substring(0, typeName.Length - 2);
+							if (typeName == "External") {
+								var genericTypeArgument = "";
+								var t = fieldInfo.FieldType.GenericTypeArguments[0];
+								using (var provider = new CSharpCodeProvider()) {
+									var typeRef = new CodeTypeReference(t);
+									genericTypeArgument = provider.GetTypeOutput(typeRef);
+								}
+								typeName += "<" + genericTypeArgument + ", BindingClass>";
+							}
+                        } else {
+							typeName += "<BindingClass>";
+                        }
+						if (typeName == "Array<BindingClass>") typeName = "External<float, BindingClass>.Array";
+#>			protected <#= typeName + typeNameArraySuffix + " " + fieldInfo.Name #>;
+<#
 					}
-					for (var i = 1; i < type.GetInterfaces().Length; ++i) {
+					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
+						string typeName = fieldInfo.FieldType.Name;
+						string valueSuffix = "";
+						string typenamePrefix = "";
+						string setter = "";
+						if (typeName[typeName.Length-2] == '`') {
+							typeName = typeName.Substring(0, typeName.Length - 2);
+							if (typeName == "External") {
+								var t = fieldInfo.FieldType.GenericTypeArguments[0];
+								using (var provider = new CSharpCodeProvider()) {
+									var typeRef = new CodeTypeReference(t);
+									typeName = provider.GetTypeOutput(typeRef);
+								}
+								valueSuffix = ".Value";
+							}
+                        } else {
+							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" ? "I" : "" );
+                        }
+						if (typenamePrefix == "I" ) setter = "";
+						else setter = "set => "  + fieldInfo.Name + valueSuffix + " = value;";
+						if (typeName == "Array" ) {
+							typeName = "External.IValues<float>";
+							valueSuffix = ".ValuesArray";
+							setter = "";
+                        }
+#>			public <#= typenamePrefix + typeName + " " + char.ToUpper(fieldInfo.Name[0]) + fieldInfo.Name.Substring(1) #> {
+				get => <#= fieldInfo.Name + valueSuffix #>;
+				<#= setter #>
+			}
+<#
+					}
+#>
+		}
+		interface <#= "I" + type.Name #><#
+#><#= (type.GetInterfaces().Length > 0 ? " : " + type.GetInterfaces()[0] : "") #><#
+					for (var i = 1; i < type.GetInterfaces().Length ; ++i) { // type.GetInterfaces().Length
 #><#= ", " + type.GetInterfaces()[i].Name #><#
 					}
 #> {
 <#
 					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
-#>			private <#= fieldInfo.FieldType.Name + " " + fieldInfo.Name #>;
-<#
-					}
-					foreach (FieldInfo fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)){
-#>			public <#= fieldInfo.FieldType.Name + " " + char.ToUpper(fieldInfo.Name[0]) + fieldInfo.Name.Substring(1) #> {
-				get => <#= fieldInfo.Name #>;
-				set => <#= fieldInfo.Name #> = value;
+						string typeName = fieldInfo.FieldType.Name;
+						string typenamePrefix = "";
+						string setter = "";
+						string typeNameArraySuffix = "";
+						if (typeName.Contains("[]")){
+							typeName = typeName.Substring(0, typeName.Length - 2);
+							typeNameArraySuffix = "[]";
+                        }
+						if (typeName[typeName.Length-2] == '`') {
+							typeName = typeName.Substring(0, typeName.Length - 2);
+							if (typeName == "External") {
+								var t = fieldInfo.FieldType.GenericTypeArguments[0];
+								using (var provider = new CSharpCodeProvider()) {
+									var typeRef = new CodeTypeReference(t);
+									typeName = provider.GetTypeOutput(typeRef);
+								}
+							}
+                        } else {
+							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" ? "I" : "" );
+                        }
+						if (typenamePrefix == "I" ) setter = "";
+						else setter = "set;";
+						if (typeName == "Array" ) {
+							typeName = "External.IValues<float>";
+							setter = "";
+                        }
+#>			<#= typenamePrefix + typeName + typeNameArraySuffix + " " + char.ToUpper(fieldInfo.Name[0]) + fieldInfo.Name.Substring(1) #> {
+				get;
+				<#= setter #>
 			}
 <#
 					}
@@ -83,5 +167,18 @@ namespace CSGOP.Core.Data {
                 }
 			}
 #>
+	class External<T> : External<T, object> where T : struct {
+        public External(int address) : base(address) {
+        }
+
+        public External(string module, int offset) : base(module, offset) {
+        }
+
+        public External(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
+        }
+
+        public External(External<IntPtr, object> parentObject, int offset) : base(parentObject, offset) {
+        }
+    }
 }
 
