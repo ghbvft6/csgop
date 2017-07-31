@@ -19,20 +19,10 @@ using CSGOP.Core.Data;
 namespace CSGOP.Core.Data {
 <#
 			string[] interfaceCsFileName = {
-                @"c:\dev\csgop\Core\DataTemplate.cs",
-				@"c:\dev\csgop\Core\Data.cs",
-                @"c:\dev\csgop\Functions\CheatFunction.cs",
-                @"c:\dev\csgop\Unmanaged\ExternalProcess.cs",
-                @"c:\dev\csgop\Unmanaged\Unmanaged.cs",
-                @"c:\dev\csgop\Unmanaged\External.cs",
-                @"c:\dev\csgop\Imported\Kernel32.cs"
+                @"c:\dev\csgop\Core\DataTemplate.cs"
 			};
-            var files = Directory.GetFiles(@"c:\dev\csgop\Core\Data\");
-            var files2 = Directory.GetFiles(@"c:\dev\csgop\Core\Interfaces\");
-            var files3 = Directory.GetFiles(@"c:\dev\csgop\Games\");
+            var files = Directory.GetFiles(@"c:\dev\csgop\Core\Interfaces\");
             string[] combined = interfaceCsFileName.Concat(files).ToArray();
-            combined = combined.Concat(files2).ToArray();
-            combined = combined.Concat(files3).ToArray();
 
             CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Core.dll"}) {
                 GenerateExecutable = false,
@@ -105,7 +95,7 @@ namespace CSGOP.Core.Data {
 								valueSuffix = ".Value";
 							}
                         } else {
-							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" ? "I" : "" );
+							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" && fieldInfo.FieldType.Name != "Array" ? "I" : "" );
                         }
 						if (typenamePrefix == "I" ) setter = "";
 						else setter = "set => "  + fieldInfo.Name + valueSuffix + " = value;";
@@ -148,7 +138,7 @@ namespace CSGOP.Core.Data {
 								}
 							}
                         } else {
-							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" ? "I" : "" );
+							typenamePrefix = (fieldInfo.FieldType.Namespace == "CSGOP.Core.DataTemplate" && fieldInfo.FieldType.Name != "Array" ? "I" : "" );
                         }
 						if (typenamePrefix == "I" ) setter = "";
 						else setter = "set;";

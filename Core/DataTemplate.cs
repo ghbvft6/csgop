@@ -1,10 +1,5 @@
 ﻿using CSGOP.Core.Data;
-using CSGOP.Unmanaged;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSGOP.Core.DataTemplate {
     unsafe class Client {
@@ -56,17 +51,8 @@ namespace CSGOP.Core.DataTemplate {
         public float Z => throw new NotImplementedException();
     }
 
-    class External<T> : External<T, object> where T : struct {
-        public External(int address) : base(address) {
-        }
-
-        public External(string module, int offset) : base(module, offset) {
-        }
-
-        public External(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
-        }
-
-        public External(External<IntPtr, object> parentObject, int offset) : base(parentObject, offset) {
+    class External<T> where T : struct {
+        public class Array {
         }
     }
 }

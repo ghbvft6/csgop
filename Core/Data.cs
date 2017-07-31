@@ -228,5 +228,10 @@ namespace CSGOP.Core.Data {
 				set;
 			}
 		}
+
+		class Array<BindingClass> : IArray {
+		}
+		interface IArray {
+		}
 }
 
