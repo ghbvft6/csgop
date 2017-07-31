@@ -1,6 +1,8 @@
 ﻿using CSGOP.Core.Data;
 using System;
 
+#pragma warning disable 0649 // Field is never assigned to, and will always have its default value null
+
 namespace CSGOP.Core.DataTemplate {
     unsafe class Client {
         protected Player player;
