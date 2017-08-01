@@ -39,17 +39,17 @@ namespace CSGOP.Core.Data {
 		}
 
 		class Player<BindingClass> : IPlayer {
-			protected External<int, BindingClass> hp;
-			protected External<int, BindingClass> armor;
-			protected External<int, BindingClass> team;
-			protected External<int, BindingClass> state;
-			protected External<int, BindingClass> consecutiveshots;
-			protected External<bool, BindingClass> dormant;
+			protected IExternal<int, BindingClass> hp;
+			protected IExternal<int, BindingClass> armor;
+			protected IExternal<int, BindingClass> team;
+			protected IExternal<int, BindingClass> state;
+			protected IExternal<int, BindingClass> consecutiveshots;
+			protected IExternal<bool, BindingClass> dormant;
 			protected PositionVector<BindingClass> position;
 			protected Bones<BindingClass> bones;
-			protected External<System.IntPtr, BindingClass> activeweapon;
-			protected External<System.IntPtr, BindingClass> weaponbase;
-			protected External<int, BindingClass> weaponId;
+			protected IExternal<System.IntPtr, BindingClass> activeweapon;
+			protected IExternal<System.IntPtr, BindingClass> weaponbase;
+			protected IExternal<int, BindingClass> weaponId;
 			public int Hp {
 				get => hp.Value;
 				set => hp.Value = value;
@@ -166,9 +166,9 @@ namespace CSGOP.Core.Data {
 		}
 
 		class BonesVector<BindingClass> : IBonesVector {
-			protected External<float, BindingClass> x;
-			protected External<float, BindingClass> y;
-			protected External<float, BindingClass> z;
+			protected IExternal<float, BindingClass> x;
+			protected IExternal<float, BindingClass> y;
+			protected IExternal<float, BindingClass> z;
 			public float X {
 				get => x.Value;
 				set => x.Value = value;
@@ -198,9 +198,9 @@ namespace CSGOP.Core.Data {
 		}
 
 		class PositionVector<BindingClass> : IPositionVector {
-			protected External<float, BindingClass> x;
-			protected External<float, BindingClass> y;
-			protected External<float, BindingClass> z;
+			protected IExternal<float, BindingClass> x;
+			protected IExternal<float, BindingClass> y;
+			protected IExternal<float, BindingClass> z;
 			public float X {
 				get => x.Value;
 				set => x.Value = value;

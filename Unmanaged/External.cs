@@ -66,75 +66,57 @@ namespace CSGOP.Unmanaged {
         }
     }
 
-    class External<T, BindingClass> : Unmanaged<T>, IExternal where T : struct {
+    interface IExternal<T, BindingClass> {
+        void UpdatePointingAddresses();
+        unsafe void* Pointer {
+            get;
+        }
+        T Value {
+            get;
+            set;
+        }
+        IntPtr ExternalPointer {
+            get;
+            set;
+        }
+    }
 
-        private External<IntPtr, BindingClass> parentObject;
+    class External<T, BindingClass> : Unmanaged<T>, IExternal<T, BindingClass> where T : struct {
         private IntPtr address;
-        private int offset;
+        
         protected readonly static Kernel32 kernel;
         private static uint lpNumberOfBytesReadOrWritten; // used by ReadProcessMemory()
 
         private Action UpdateAddressDelegate;
+        private Action UpdatePointingAddressesDelegate;
 
         static External() {
             kernel = Kernel32.Instance;
         }
 
-        public External(int address) {
-            // NOT USED: parentObject, offset, UpdateAddress
+        private External() {
+            UpdateAddressDelegate = () => { };
+            UpdatePointingAddressesDelegate = () => UpdateAddressDelegate();
+        }
+
+        protected External(int address) : base() {
             this.address = new IntPtr(address);
-            this.UpdateAddressDelegate = () => { }; // not null
         }
 
-        public External(string module, int offset) {
-            // NOT USED: parentObject
-            this.offset = offset;
-            this.UpdateAddressDelegate = () => {
-                var foundClient = false;
-                while (foundClient == false) {
-                    if (ExternalProcess<BindingClass>.ProcessStatic != null) {
-                        foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
-                            if (Module.ModuleName.Equals(module)) {
-                                this.address = Module.BaseAddress + this.offset;
-                                foundClient = true;
-                                break;
-                            }
-                        }
-                        Thread.Sleep(100);
-                    } else break;
-                }
-            };
-            UpdateAddressDelegate();
+        public static External<T, BindingClass> New(int address) {
+            return new External<T, BindingClass>(address);
         }
 
-        public unsafe External(Func<IntPtr> GetBaseAddress, int offset) {
-            // NOT USED: parentObject
-            this.offset = offset;
-            this.UpdateAddressDelegate = () => { address = GetBaseAddress() + this.offset; };
-            UpdateAddressDelegate();
+        public static External<T, BindingClass> New(string module, int offset) {
+            return new External<T, BindingClass>.WithOffset(module, offset);
         }
 
-        public unsafe External(External<IntPtr, BindingClass> parentObject, int offset) {
-            this.parentObject = parentObject;
-            this.offset = offset;
-            unsafe
-            {
-                UpdateAddressDelegate = () => { address = *((IntPtr*)parentObject.Pointer) + this.offset; };
-            }
-            UpdateAddressDelegate();
+        public static External<T, BindingClass> New(Func<IntPtr> GetBaseAddress, int offset) {
+            return new External<T, BindingClass>.WithOffset(GetBaseAddress, offset);
         }
 
-        public void UpdatePointingAddresses() {
-            if (parentObject != null) {
-                parentObject.UpdatePointingAddresses();
-                UpdateAddressDelegate();
-            } else {
-                UpdateAddressDelegate();
-            }
-        }
-
-        public void UpdateAddress() {
-            UpdateAddressDelegate();
+        public static External<T, BindingClass> New(IExternal<IntPtr, BindingClass> parentObject, int offset) {
+            return new External<T, BindingClass>.WithOffset.WithPointer(parentObject, offset);
         }
 
         public new T Value {
@@ -168,6 +150,69 @@ namespace CSGOP.Unmanaged {
             kernel.WriteProcessMemory(ExternalProcess<BindingClass>.PHandle, address, ptr, (uint)Marshal.SizeOf(typeof(T)), out lpNumberOfBytesReadOrWritten);
         }
 
+        public void UpdateAddress() {
+            UpdateAddressDelegate();
+        }
+
+        public void UpdatePointingAddresses() {
+            UpdatePointingAddressesDelegate();
+        }
+
+
+        protected class WithOffset : External<T, BindingClass>, IExternal {
+
+            private int offset;
+            
+            private WithOffset() { }
+
+            public WithOffset(string module, int offset) {
+                this.offset = offset;
+                this.UpdateAddressDelegate = () => {
+                    var foundClient = false;
+                    while (foundClient == false) {
+                        if (ExternalProcess<BindingClass>.ProcessStatic != null) {
+                            foreach (ProcessModule Module in ExternalProcess<BindingClass>.ProcessStatic.Modules) {
+                                if (Module.ModuleName.Equals(module)) {
+                                    address = Module.BaseAddress + this.offset;
+                                    foundClient = true;
+                                    break;
+                                }
+                            }
+                            Thread.Sleep(100);
+                        } else break;
+                    }
+                };
+                UpdateAddressDelegate();
+            }
+
+            public unsafe WithOffset(Func<IntPtr> GetBaseAddress, int offset) {
+                // NOT USED: parentObject
+                this.offset = offset;
+                this.UpdateAddressDelegate = () => { address = GetBaseAddress() + this.offset; };
+                UpdateAddressDelegate();
+            }            
+
+
+            public class WithPointer : WithOffset {
+
+                private IExternal<IntPtr, BindingClass> parentObject;
+
+                public unsafe WithPointer(IExternal<IntPtr, BindingClass> parentObject, int offset) {
+                    this.UpdatePointingAddressesDelegate = () => {
+                        parentObject.UpdatePointingAddresses();
+                        UpdateAddressDelegate();
+                    };
+                    this.parentObject = parentObject;
+                    this.offset = offset;
+                    unsafe
+                    {
+                        UpdateAddressDelegate = () => { address = *((IntPtr*)parentObject.Pointer) + this.offset; };
+                    }
+                    UpdateAddressDelegate();
+                }
+            }
+        }
+
 
         public class Array {
 
@@ -183,21 +228,21 @@ namespace CSGOP.Unmanaged {
             public unsafe Array(int length, string module, int offset, int elementSize) {
                 array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new External<T, BindingClass>(module, offset + i * elementSize);
+                    array[i] = External<T, BindingClass>.New(module, offset + i * elementSize);
                 }
             }
 
             public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
                 array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new External<T, BindingClass>(GetBaseAddress, offset + i * elementSize);
+                    array[i] = External<T, BindingClass>.New(GetBaseAddress, offset + i * elementSize);
                 }
             }
 
-            public unsafe Array(int length, External<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+            public unsafe Array(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
                 array = new External<T, BindingClass>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = new External<T, BindingClass>(parentObject, offset + i * elementSize);
+                    array[i] = External<T, BindingClass>.New(parentObject, offset + i * elementSize);
                 }
             }
 

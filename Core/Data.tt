@@ -64,6 +64,7 @@ namespace CSGOP.Core.Data {
 						if (typeName[typeName.Length-2] == '`') {
 							typeName = typeName.Substring(0, typeName.Length - 2);
 							if (typeName == "External") {
+								typeName = "IExternal";
 								var genericTypeArgument = "";
 								var t = fieldInfo.FieldType.GenericTypeArguments[0];
 								using (var provider = new CSharpCodeProvider()) {
