@@ -1,4 +1,4 @@
-﻿using CSGOP.Core.Data;
+﻿using CSGOP.Data.Interfaces;
 using System;
 
 #pragma warning disable 0649 // Field is never assigned to, and will always have its default value null

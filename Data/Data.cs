@@ -1,6 +1,5 @@
 ﻿using System;
 using CSGOP.Unmanaged;
-using CSGOP.Core.Data;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
@@ -182,7 +181,7 @@ namespace CSGOP.Data {
 				set => z.Value = value;
 			}
 		}
-		interface IBonesVector : CSGOP.Core.Data.IVector3 {
+		interface IBonesVector : CSGOP.Data.Interfaces.IVector3 {
 			float X {
 				get;
 				set;
@@ -214,7 +213,7 @@ namespace CSGOP.Data {
 				set => z.Value = value;
 			}
 		}
-		interface IPositionVector : CSGOP.Core.Data.IVector3 {
+		interface IPositionVector : CSGOP.Data.Interfaces.IVector3 {
 			float X {
 				get;
 				set;

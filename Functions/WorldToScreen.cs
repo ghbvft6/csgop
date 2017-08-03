@@ -1,4 +1,4 @@
-﻿using CSGOP.Core.Data;
+﻿using CSGOP.Data.Interfaces;
 using CSGOP.Unmanaged;
 
 namespace CSGOP.Functions {

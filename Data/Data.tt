@@ -12,7 +12,6 @@
 <#@ output extension=".cs" #>
 using System;
 using CSGOP.Unmanaged;
-using CSGOP.Core.Data;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
@@ -21,7 +20,7 @@ namespace CSGOP.Data {
 			string[] interfaceCsFileName = {
                 @"c:\dev\csgop\Data\DataTemplate.cs"
 			};
-            var files = Directory.GetFiles(@"c:\dev\csgop\Core\Interfaces\");
+            var files = Directory.GetFiles(@"c:\dev\csgop\Data\Interfaces\");
             string[] combined = interfaceCsFileName.Concat(files).ToArray();
 
             CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Core.dll"}) {

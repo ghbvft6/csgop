@@ -1,4 +1,4 @@
-﻿namespace CSGOP.Core.Data {
+﻿namespace CSGOP.Data.Interfaces {
     unsafe interface IVector3 {
 
         float X {
