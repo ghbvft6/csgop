@@ -3,7 +3,7 @@ using CSGOP.Imported;
 using System.Threading;
 using System;
 using CSGOP.Unmanaged;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using CSGOP.Core;
 using csgop.Functions;
 

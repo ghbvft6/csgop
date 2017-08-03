@@ -2,7 +2,7 @@
 using CSGOP.Unmanaged;
 using System.IO;
 using SharpDX;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using CSGOP.Core;
 
 namespace CSGOP.Functions {

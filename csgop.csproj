@@ -88,12 +88,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Data.cs">
+    <Compile Include="Data\Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Core\DataTemplate.cs" />
+    <Compile Include="Data\DataTemplate.cs" />
     <Compile Include="Core\Interfaces\IVector3.cs" />
     <Compile Include="Core\IGameProcess.cs" />
     <Compile Include="Functions\CheatFunction.cs" />
@@ -160,14 +160,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Core\Data.tt">
+    <Content Include="Data\Data.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

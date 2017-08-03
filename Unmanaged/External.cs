@@ -1,5 +1,5 @@
 ﻿using CSGOP.Core;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using CSGOP.Imported;
 using System;
 using System.Collections.Generic;

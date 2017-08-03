@@ -1,4 +1,4 @@
-﻿using CSGOP.Core.Data;
+﻿using CSGOP.Data;
 using System;
 using System.Threading;
 

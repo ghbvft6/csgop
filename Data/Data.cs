@@ -4,7 +4,7 @@ using CSGOP.Core.Data;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 
-namespace CSGOP.Core.Data {
+namespace CSGOP.Data {
 
 		class Client<BindingClass> : IClient {
 			protected Player<BindingClass> player;

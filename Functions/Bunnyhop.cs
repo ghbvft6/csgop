@@ -1,5 +1,5 @@
 ﻿using csgop.Functions;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using CSGOP.Imported;
 using System.Threading;
 

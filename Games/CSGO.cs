@@ -3,7 +3,7 @@ using CSGOP.Imported;
 using CSGOP.Unmanaged;
 using System;
 using System.Diagnostics;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using System.Threading;
 using System.Collections.Generic;
 

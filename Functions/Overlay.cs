@@ -7,7 +7,7 @@ using SharpDX;
 using SharpDX.Direct2D1;
 using Factory = SharpDX.Direct2D1.Factory;
 using Format = SharpDX.DXGI.Format;
-using CSGOP.Core.Data;
+using CSGOP.Data;
 using System;
 using csgop.Functions;
 
