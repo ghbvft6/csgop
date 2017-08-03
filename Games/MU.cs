@@ -93,5 +93,51 @@ namespace CSGOP.Games.MU {
         public static External<T> New<T>(IExternal<IntPtr, Process> parentObject, int offset) where T : struct {
             return ExternalFactory<T>.New(parentObject, offset);
         }
+
+        public class Array<T> : External<T, Process>.Array where T : struct {
+            private Array(int length, int address, int elementSize) : base(length, address, elementSize) {
+            }
+
+            private Array(int length, string module, int offset, int elementSize) : base(length, module, offset, elementSize) {
+            }
+
+            private Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) : base(length, GetBaseAddress, offset, elementSize) {
+            }
+
+            private Array(int length, IExternal<IntPtr, Process> parentObject, int offset, int elementSize) : base(length, parentObject, offset, elementSize) {
+            }
+
+            public static Array<T> New(int length, int address, int elementSize) {
+                return new Array<T>(length, address, elementSize);
+            }
+
+            public static Array<T> New(int length, string module, int offset, int elementSize) {
+                return new Array<T>(length, module, offset, elementSize);
+            }
+
+            public static Array<T> New(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
+                return new Array<T>(length, GetBaseAddress, offset, elementSize);
+            }
+
+            public static Array<T> New(int length, IExternal<IntPtr, Process> parentObject, int offset, int elementSize) {
+                return new Array<T>(length, parentObject, offset, elementSize);
+            }
+        }
+
+        public static Array<T> NewArray<T>(int length, int address, int elementSize) where T : struct {
+            return Array<T>.New(length, address, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, string module, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, module, offset, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, GetBaseAddress, offset, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, IExternal<IntPtr, Process> parentObject, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, parentObject, offset, elementSize);
+        }
     }
 }
