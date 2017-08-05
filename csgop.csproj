@@ -95,7 +95,6 @@
     </Compile>
     <Compile Include="Data\DataTemplate.cs" />
     <Compile Include="Data\Interfaces\IVector3.cs" />
-    <Compile Include="Core\IGameProcess.cs" />
     <Compile Include="Functions\CheatFunction.cs" />
     <Compile Include="Core\Cheat.cs" />
     <Compile Include="Functions\Aimbot.cs" />
