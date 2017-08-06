@@ -17,7 +17,7 @@ namespace CSGOP.Games.CSGO {
         }
     }
 
-    unsafe class Client : Client<Process> {
+    class Client : Client<Process> {
         public Client() {
             player = new Player("client.dll", 0xAA78E4, 0x4ACA154);
             players = Common.Array.New(24, (i) => new Player("client.dll", 0x4ACA154 + (i + 1) * 0x10, 0x4ACA154));
@@ -25,7 +25,7 @@ namespace CSGOP.Games.CSGO {
         }
     }
 
-    unsafe class Player : Player<Process> {
+    class Player : Player<Process> {
         public Player(string module, int offset, int playersOffset) {
             var playerBase = External.New<IntPtr>(module, offset);
             hp = External.New<int>(playerBase, 0xFC);
@@ -42,7 +42,7 @@ namespace CSGOP.Games.CSGO {
         }
     }
 
-    unsafe class Bones : Bones<Process> {
+    class Bones : Bones<Process> {
         public Bones(External<IntPtr> playerBase, int offset) {
             var boneBase = External.New<IntPtr>(playerBase, offset);
             head = new BonesVector(boneBase, 0x30 * 8);
@@ -50,7 +50,7 @@ namespace CSGOP.Games.CSGO {
         }
     }
 
-    unsafe class BonesVector : BonesVector<Process> {
+    class BonesVector : BonesVector<Process> {
         public BonesVector(External<IntPtr> boneBase, int boneOffset) {
             x = External.New<float>(boneBase, boneOffset + 0x0C);
             y = External.New<float>(boneBase, boneOffset + 0x1C);
@@ -58,7 +58,7 @@ namespace CSGOP.Games.CSGO {
         }
     }
 
-    unsafe class PositionVector : PositionVector<Process> {
+    class PositionVector : PositionVector<Process> {
         public PositionVector(External<IntPtr> playerBase, int positionOffset) {
             x = External.New<float>(playerBase, positionOffset + sizeof(float) * 0);
             y = External.New<float>(playerBase, positionOffset + sizeof(float) * 1);
