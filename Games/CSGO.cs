@@ -1,6 +1,6 @@
 ﻿using CSGOP.Core;
 using CSGOP.Imported;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 using System;
 using CSGOP.Common;
 using System.Diagnostics;

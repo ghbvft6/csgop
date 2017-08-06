@@ -1,5 +1,5 @@
 ﻿using CSGOP.Games.CSGO;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 using CSGOP.Functions;
 using System.Diagnostics;
 using System.Threading;

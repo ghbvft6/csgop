@@ -1,5 +1,5 @@
 ﻿using System;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 

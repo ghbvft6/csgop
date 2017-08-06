@@ -1,5 +1,5 @@
 ﻿using CSGOP.Data.Interfaces;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 
 namespace CSGOP.Functions {
     class WorldToScreen {

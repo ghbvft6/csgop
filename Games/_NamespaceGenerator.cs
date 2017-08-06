@@ -1,5 +1,5 @@
 ﻿using System;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 
 namespace CSGOP.Games.CSGO {
 
@@ -41,7 +41,7 @@ interface External<T> : IExternal<T, Process> { }
         }
     }
 
-    class External : Unmanaged.External<Process> {
+    class External : Memory.External<Process> {
         public static External<T> New<T>(int address) where T : struct {
             return ExternalFactory<T>.New(address);
         }
@@ -98,7 +98,7 @@ interface External<T> : IExternal<T, Process> { }
         }
     }
 
-    class External : Unmanaged.External<Process> {
+    class External : Memory.External<Process> {
         public static External<T> New<T>(int address) where T : struct {
             return ExternalFactory<T>.New(address);
         }

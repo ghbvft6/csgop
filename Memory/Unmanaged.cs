@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CSGOP.Unmanaged {
+namespace CSGOP.Memory {
     class Unmanaged<T> where T : struct {
 
         protected IntPtr ptr;

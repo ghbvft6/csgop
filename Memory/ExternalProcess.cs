@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace CSGOP.Unmanaged {
+namespace CSGOP.Memory {
 
     interface ExternalProcess {
         System.Diagnostics.Process Process { get; set; }

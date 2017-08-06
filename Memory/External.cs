@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace CSGOP.Unmanaged {
+namespace CSGOP.Memory {
 
     interface IExternal {
         IntPtr ExternalPointer { get; set; }

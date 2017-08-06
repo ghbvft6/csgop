@@ -1,7 +1,7 @@
 ﻿using CSGOP.Core;
 using CSGOP.Games.CSGO;
 using CSGOP.Imported;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 using System;
 using System.Threading;
 using System.Windows.Forms;

@@ -2,7 +2,7 @@
 using CSGOP.Imported;
 using System.Threading;
 using System;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 using CSGOP.Data;
 using CSGOP.Core;
 using csgop.Functions;
