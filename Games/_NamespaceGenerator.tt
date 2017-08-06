@@ -1,0 +1,82 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="c:\dev\csgop\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.CodeDom.Compiler" #>
+<#@ import namespace="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.CodeDom" #>
+<#@ output extension=".cs" #>
+using System;
+using CSGOP.Unmanaged;
+
+<#
+	var files = Directory.GetFiles(@"c:\dev\csgop\Games\");
+	foreach (var file in files) {
+		var filename = Path.GetFileNameWithoutExtension(file);
+		if (filename != "_NamespaceGenerator"){
+#>
+namespace CSGOP.Games.<#=filename#> {
+
+interface External<T> : IExternal<T, Process> { }
+
+    class ExternalFactory<T> : External<T, Process>, External<T> where T : struct {
+
+        protected ExternalFactory(int address) : base(address) {
+        }
+
+        protected new class WithOffset : External<T, Process>.WithOffset, External<T> {
+
+            public WithOffset(string module, int offset) : base(module, offset) {
+            }
+
+            public unsafe WithOffset(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
+            }
+
+            public new class WithPointer : External<T, Process>.WithOffset.WithPointer, External<T> {
+                public unsafe WithPointer(IExternal<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
+                }
+            }
+        }
+
+        public new static External<T> New(int address) {
+            return new ExternalFactory<T>(address);
+        }
+
+        public new static External<T> New(string module, int offset) {
+            return new ExternalFactory<T>.WithOffset(module, offset);
+        }
+
+        public new static External<T> New(Func<IntPtr> GetBaseAddress, int offset) {
+            return new ExternalFactory<T>.WithOffset(GetBaseAddress, offset);
+        }
+
+        public new static External<T> New(IExternal<IntPtr, Process> parentObject, int offset) {
+            return new ExternalFactory<T>.WithOffset.WithPointer(parentObject, offset);
+        }
+    }
+
+    class External : Unmanaged.External<Process> {
+        public static External<T> New<T>(int address) where T : struct {
+            return ExternalFactory<T>.New(address);
+        }
+
+        public static External<T> New<T>(string module, int offset) where T : struct {
+            return ExternalFactory<T>.New(module, offset);
+        }
+
+        public static External<T> New<T>(Func<IntPtr> GetBaseAddress, int offset) where T : struct {
+            return ExternalFactory<T>.New(GetBaseAddress, offset);
+        }
+
+        public static External<T> New<T>(IExternal<IntPtr, Process> parentObject, int offset) where T : struct {
+            return ExternalFactory<T>.New(parentObject, offset);
+        }
+    }
+}<#
+        }
+    }
+#>
