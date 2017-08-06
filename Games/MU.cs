@@ -1,5 +1,5 @@
 ﻿using CSGOP.Core;
-using CSGOP.Imported;
+using CSGOP.OS;
 using CSGOP.Memory;
 using System;
 using System.Diagnostics;

@@ -1,4 +1,4 @@
-﻿using CSGOP.Imported;
+﻿using CSGOP.OS;
 using CSGOP.Memory;
 using CSGOP.GUI;
 using CSGOP.Games.CSGO;
@@ -32,10 +32,10 @@ namespace CSGOP.Functions {
         public static int width = Process.Width;
         public static int height = Process.Height;
 
-        private readonly static Kernel32 kernel;
+        private readonly static Kernel kernel;
 
         static Overlay() {
-            kernel = Kernel32.Instance;
+            kernel = Kernel.Instance;
         }
 
         public override void Run() {
@@ -67,7 +67,7 @@ namespace CSGOP.Functions {
                 Device.Clear(Color.Transparent);
                 Device.TextAntialiasMode = TextAntialiasMode.Aliased;
                 Antialias();
-                if (kernel.GetForegroundWindow() == Process.Window) {
+                if (Windows.Instance.GetForegroundWindow() == Process.Window) {
                     Render.ModificationDate(Device);
                     Render.AimbotRange(Device);
                     Render.Run(player, players, Device);

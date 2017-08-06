@@ -1,6 +1,6 @@
 ﻿using csgop.Functions;
 using CSGOP.Data;
-using CSGOP.Imported;
+using CSGOP.OS;
 using System.Threading;
 
 namespace CSGOP.Functions {
@@ -14,9 +14,9 @@ namespace CSGOP.Functions {
 
         public override void Run() {
             while (true) {
-                if (Kernel32.Instance.GetAsyncKeyState(0x11) && player.State == 257) {
+                if (Devices.Instance.GetAsyncKeyState(0x11) && player.State == 257) {
                     Thread.Sleep(10);
-                    Kernel32.Instance.mouse_event(0x800, 0, 0, 120, 0);
+                    Devices.Instance.mouse_event(0x800, 0, 0, 120, 0);
                     Thread.Sleep(10);
                 }
                 Thread.Sleep(1);

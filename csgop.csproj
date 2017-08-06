@@ -115,7 +115,9 @@
     <Compile Include="Memory\ExternalProcess.cs" />
     <Compile Include="Memory\External.cs" />
     <Compile Include="Games\CSGO.cs" />
-    <Compile Include="Imported\Kernel32.cs" />
+    <Compile Include="OS\Devices.cs" />
+    <Compile Include="OS\Windows.cs" />
+    <Compile Include="OS\Kernel.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

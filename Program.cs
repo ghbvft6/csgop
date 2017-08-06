@@ -1,6 +1,6 @@
 ﻿using CSGOP.Core;
 using CSGOP.GUI;
-using CSGOP.Imported;
+using CSGOP.OS;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -12,7 +12,7 @@ namespace CSGOP {
         /// </summary>
         [STAThread]
         static void Main() {
-            var kernel = Kernel32.Instance;
+            var kernel = Kernel.Instance;
             kernel.AllocConsole();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

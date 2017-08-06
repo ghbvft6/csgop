@@ -1,6 +1,6 @@
 ﻿using CSGOP.Core;
 using CSGOP.Data;
-using CSGOP.Imported;
+using CSGOP.OS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -181,14 +181,14 @@ namespace CSGOP.Memory {
     class External<T, BindingClass> : Unmanaged<T>, IExternal<T, BindingClass> where T : struct {
         private IntPtr address;
         
-        protected readonly static Kernel32 kernel;
+        protected readonly static Kernel kernel;
         private static uint lpNumberOfBytesReadOrWritten; // used by ReadProcessMemory()
 
         private Action UpdateAddressDelegate;
         private Action UpdatePointingAddressesDelegate;
 
         static External() {
-            kernel = Kernel32.Instance;
+            kernel = Kernel.Instance;
         }
 
         private External() {

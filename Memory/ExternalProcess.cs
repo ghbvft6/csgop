@@ -1,6 +1,6 @@
 ﻿using csgop.Functions;
 using CSGOP.Data;
-using CSGOP.Imported;
+using CSGOP.OS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +20,7 @@ namespace CSGOP.Memory {
     }
 
     abstract class ExternalProcess<BindingClass> : ExternalProcess {
-        private readonly static Kernel32 kernel;
+        private readonly static Kernel kernel;
         private static IntPtr pHandle;
         private static IntPtr window;
         private static int width;
@@ -35,7 +35,7 @@ namespace CSGOP.Memory {
         private static MemoryMappedFile mmf;
 
         static ExternalProcess() {
-            kernel = Kernel32.Instance;
+            kernel = Kernel.Instance;
         }
 
         public static IntPtr PHandle {
@@ -164,8 +164,8 @@ namespace CSGOP.Memory {
         }
 
         public static bool WindowRect() {
-            Kernel32.RECT WindowSize = new Kernel32.RECT();
-            if (kernel.GetClientRect(Games.CSGO.Process.Window, out WindowSize)) {
+            Windows.RECT WindowSize = new Windows.RECT();
+            if (Windows.Instance.GetClientRect(Games.CSGO.Process.Window, out WindowSize)) {
                 width = WindowSize.Right - WindowSize.Left;
                 height = WindowSize.Bottom - WindowSize.Top;
                 return true;

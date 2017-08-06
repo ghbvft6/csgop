@@ -1,5 +1,5 @@
 ﻿using CSGOP.Games.CSGO;
-using CSGOP.Imported;
+using CSGOP.OS;
 using System.Threading;
 using System;
 using CSGOP.Memory;
@@ -48,7 +48,7 @@ namespace CSGOP.Functions {
 
         public override void Run() {
             while (true) {
-                if (automatic == true || Kernel32.Instance.GetAsyncKeyState(02)) {
+                if (automatic == true || Devices.Instance.GetAsyncKeyState(02)) {
                     for (int i = 0; i < players.Length; ++i) {
                         if (players[i].Dormant == false && player.Team != players[i].Team && players[i].Hp > 0 && world.conversion(players[i].Bones.Head, boneout, width, height)) {
                             distance = Algebra.distance(boneout[0], boneout[1], width / 2, height / 2);
@@ -59,7 +59,7 @@ namespace CSGOP.Functions {
                                 x = (boneout[0] - width / 2) / smooth;
                                 y = (boneout[1] - height / 2 - -recoil) / smooth;
                                 normalize();
-                                Kernel32.Instance.mouse_event(01, (uint)x, (uint)y, 0, 0);
+                                Devices.Instance.mouse_event(01, (uint)x, (uint)y, 0, 0);
                             }
                         }
                     }
