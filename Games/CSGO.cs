@@ -37,7 +37,7 @@ namespace CSGOP.Games.CSGO {
             position = new PositionVector(playerBase, 0x134);
             bones = new Bones(playerBase, 0x2698);
             activeweapon = External.New<IntPtr>(playerBase, 0x1337);
-            weaponbase = External.New<IntPtr>(() => External.New<IntPtr>(module, 0).ExternalPointer + playersOffset + ((activeweapon.Value.ToInt32() & 0xFFF) - 1) * 0x10, 0);
+            weaponbase = External.New<IntPtr>(() => External.GetModuleAddress(module) + playersOffset + ((activeweapon.Value.ToInt32() & 0xFFF) - 1) * 0x10, 0);
             weaponId = External.New<int>(weaponbase, 0x1337);
         }
     }

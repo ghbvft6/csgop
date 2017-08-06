@@ -58,6 +58,11 @@ namespace CSGOP.Memory {
     }
 
     class External<BindingClass> {
+
+        public static IntPtr GetModuleAddress(string module) {
+            return External<IntPtr, BindingClass>.New(module, 0).ExternalPointer;
+        }
+
         public class Array<T> where T : struct {
 
             private External<T, BindingClass>[] array;
