@@ -57,6 +57,112 @@ namespace CSGOP.Unmanaged {
         }
     }
 
+    class External<BindingClass> {
+        public class Array<T> where T : struct {
+
+            private External<T, BindingClass>[] array;
+
+            private Array(int length, int address, int elementSize) {
+                array = new External<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = External<T, BindingClass>.New(address + i * elementSize);
+                }
+            }
+
+            private unsafe Array(int length, string module, int offset, int elementSize) {
+                array = new External<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = External<T, BindingClass>.New(module, offset + i * elementSize);
+                }
+            }
+
+            private unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
+                array = new External<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = External<T, BindingClass>.New(GetBaseAddress, offset + i * elementSize);
+                }
+            }
+
+            private unsafe Array(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+                array = new External<T, BindingClass>[length];
+                for (var i = 0; i < length; ++i) {
+                    array[i] = External<T, BindingClass>.New(parentObject, offset + i * elementSize);
+                }
+            }
+
+            public static Array<T> New(int length, int address, int elementSize) {
+                return new Array<T>(length, address, elementSize);
+            }
+
+            public static Array<T> New(int length, string module, int offset, int elementSize) {
+                return new Array<T>(length, module, offset, elementSize);
+            }
+
+            public static Array<T> New(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
+                return new Array<T>(length, GetBaseAddress, offset, elementSize);
+            }
+
+            public static Array<T> New(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+                return new Array<T>(length, parentObject, offset, elementSize);
+            }
+
+            public External<T, BindingClass> this[int i] {
+                get {
+                    return array[i];
+                }
+            }
+
+            public int Length {
+                get {
+                    return array.Length;
+                }
+            }
+
+            public Values<T> ValuesArray {
+                get {
+                    return new Values<T>(array);
+                }
+            }
+        }
+
+        public static Array<T> NewArray<T>(int length, int address, int elementSize) where T : struct {
+            return Array<T>.New(length, address, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, string module, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, module, offset, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, GetBaseAddress, offset, elementSize);
+        }
+
+        public static Array<T> NewArray<T>(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) where T : struct {
+            return Array<T>.New(length, parentObject, offset, elementSize);
+        }
+
+        public class Values<T> : External.IValues<T> where T : struct {
+
+            public External<T, BindingClass>[] array;
+
+            public Values(External<T, BindingClass>[] array) {
+                this.array = array;
+            }
+
+            public T this[int i] {
+                get {
+                    return array[i].Value;
+                }
+            }
+
+            public int Length {
+                get {
+                    return array.Length;
+                }
+            }
+        }
+    }
+
     interface IExternal<T, BindingClass> {
         void UpdatePointingAddresses();
         unsafe void* Pointer {
@@ -200,79 +306,6 @@ namespace CSGOP.Unmanaged {
                         UpdateAddressDelegate = () => { address = *((IntPtr*)parentObject.Pointer) + this.offset; };
                     }
                     UpdateAddressDelegate();
-                }
-            }
-        }
-
-
-        public class Array {
-
-            private External<T, BindingClass>[] array;
-
-            public Array(int length, int address, int elementSize) {
-                array = new External<T, BindingClass>[length];
-                for (var i = 0; i < length; ++i) {
-                    array[i] = new External<T, BindingClass>(address + i * elementSize);
-                }
-            }
-
-            public unsafe Array(int length, string module, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
-                for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(module, offset + i * elementSize);
-                }
-            }
-
-            public unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
-                for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(GetBaseAddress, offset + i * elementSize);
-                }
-            }
-
-            public unsafe Array(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
-                for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(parentObject, offset + i * elementSize);
-                }
-            }
-
-            public External<T, BindingClass> this[int i] {
-                get {
-                    return array[i];
-                }
-            }
-
-            public int Length {
-                get {
-                    return array.Length;
-                }
-            }
-
-            public Values ValuesArray {
-                get {
-                    return new Values(array);
-                }
-            }
-        }
-
-        public class Values : External.IValues<T> {
-
-            public External<T, BindingClass>[] array;
-
-            public Values(External<T, BindingClass>[] array) {
-                this.array = array;
-            }
-
-            public T this[int i] {
-                get {
-                    return array[i].Value;
-                }
-            }
-
-            public int Length {
-                get {
-                    return array.Length;
                 }
             }
         }

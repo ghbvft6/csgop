@@ -48,7 +48,7 @@ namespace CSGOP.Data {
             }
             Assembly assembly = results.CompiledAssembly;
 			foreach (Type type in assembly.GetTypes()) {
-				if (type.Namespace == "CSGOP.DataTemplate" && type.Name != "External`1") {
+				if (type.Namespace == "CSGOP.DataTemplate" && type.Name != "External`1" && type.Name != "Array`1" && type.Name != "External") {
 #>
 
 		class <#= type.Name + "<BindingClass> : I" + type.Name #> {
@@ -75,7 +75,7 @@ namespace CSGOP.Data {
                         } else {
 							typeName += "<BindingClass>";
                         }
-						if (typeName == "Array<BindingClass>") typeName = "External<float, BindingClass>.Array";
+						if (typeName == "Array") typeName = "External<BindingClass>.Array<float>";
 #>			protected <#= typeName + typeNameArraySuffix + " " + fieldInfo.Name #>;
 <#
 					}

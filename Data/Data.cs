@@ -8,7 +8,7 @@ namespace CSGOP.Data {
 		class Client<BindingClass> : IClient {
 			protected Player<BindingClass> player;
 			protected Player<BindingClass>[] players;
-			protected External<float, BindingClass>.Array view;
+			protected External<BindingClass>.Array<float> view;
 			public IPlayer Player {
 				get => player;
 				
@@ -226,11 +226,6 @@ namespace CSGOP.Data {
 				get;
 				set;
 			}
-		}
-
-		class Array<BindingClass> : IArray {
-		}
-		interface IArray {
 		}
 }
 

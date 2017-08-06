@@ -7,7 +7,7 @@ namespace CSGOP.DataTemplate {
     unsafe class Client {
         protected Player player;
         protected Player[] players;
-        protected External<float>.Array view;
+        protected External.Array<float> view;
     }
 
     unsafe class Player {
@@ -53,8 +53,11 @@ namespace CSGOP.DataTemplate {
         public float Z => throw new NotImplementedException();
     }
 
-    class External<T> where T : struct {
-        public class Array {
+    class External {
+        public class Array<T> where T : struct {
         }
+    }
+
+    class External<T> where T : struct {
     }
 }
