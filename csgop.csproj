@@ -88,6 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Array.cs" />
     <Compile Include="Data\Data.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

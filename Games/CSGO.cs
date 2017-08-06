@@ -2,6 +2,7 @@
 using CSGOP.Imported;
 using CSGOP.Unmanaged;
 using System;
+using CSGOP.Common;
 using System.Diagnostics;
 using CSGOP.Data;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace CSGOP.Games.CSGO {
     unsafe class Client : Client<Process> {
         public Client() {
             player = new Player("client.dll", 0xAA78E4, 0x4ACA154);
-            players = CSGOP.Unmanaged.External.NewArray(24, (i) => new Player("client.dll", 0x4ACA154 + (i + 1) * 0x10, 0x4ACA154));
+            players = Common.Array.New(24, (i) => new Player("client.dll", 0x4ACA154 + (i + 1) * 0x10, 0x4ACA154));
             view = External.NewArray<float>(16, "client.dll", 0x4ABBCF4, sizeof(float));
         }
     }

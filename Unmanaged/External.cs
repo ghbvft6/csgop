@@ -55,15 +55,6 @@ namespace CSGOP.Unmanaged {
                 get;
             }
         }
-
-        // TODO move
-        public static T[] NewArray<T>(int length, Func<int, T> constructor) {
-            var array = new T[length];
-            for (var i = 0; i < length; ++i) {
-                array[i] = constructor(i);
-            }
-            return array;
-        }
     }
 
     interface IExternal<T, BindingClass> {
