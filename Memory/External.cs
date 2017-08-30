@@ -60,38 +60,38 @@ namespace CSGOP.Memory {
     class External<BindingClass> {
 
         public static IntPtr GetModuleAddress(string module) {
-            return External<IntPtr, BindingClass>.New(module, 0).ExternalPointer;
+            return External<BindingClass, IntPtr>.New(module, 0).ExternalPointer;
         }
 
         public class Array<T> where T : struct {
 
-            private External<T, BindingClass>[] array;
+            private External<BindingClass, T>[] array;
 
             private Array(int length, int address, int elementSize) {
-                array = new External<T, BindingClass>[length];
+                array = new External<BindingClass, T>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(address + i * elementSize);
+                    array[i] = External<BindingClass, T>.New(address + i * elementSize);
                 }
             }
 
             private unsafe Array(int length, string module, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
+                array = new External<BindingClass, T>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(module, offset + i * elementSize);
+                    array[i] = External<BindingClass, T>.New(module, offset + i * elementSize);
                 }
             }
 
             private unsafe Array(int length, Func<IntPtr> GetBaseAddress, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
+                array = new External<BindingClass, T>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(GetBaseAddress, offset + i * elementSize);
+                    array[i] = External<BindingClass, T>.New(GetBaseAddress, offset + i * elementSize);
                 }
             }
 
-            private unsafe Array(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
-                array = new External<T, BindingClass>[length];
+            private unsafe Array(int length, IExternal<BindingClass, IntPtr> parentObject, int offset, int elementSize) {
+                array = new External<BindingClass, T>[length];
                 for (var i = 0; i < length; ++i) {
-                    array[i] = External<T, BindingClass>.New(parentObject, offset + i * elementSize);
+                    array[i] = External<BindingClass, T>.New(parentObject, offset + i * elementSize);
                 }
             }
 
@@ -107,11 +107,11 @@ namespace CSGOP.Memory {
                 return new Array<T>(length, GetBaseAddress, offset, elementSize);
             }
 
-            public static Array<T> New(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) {
+            public static Array<T> New(int length, IExternal<BindingClass, IntPtr> parentObject, int offset, int elementSize) {
                 return new Array<T>(length, parentObject, offset, elementSize);
             }
 
-            public External<T, BindingClass> this[int i] {
+            public External<BindingClass, T> this[int i] {
                 get {
                     return array[i];
                 }
@@ -142,15 +142,15 @@ namespace CSGOP.Memory {
             return Array<T>.New(length, GetBaseAddress, offset, elementSize);
         }
 
-        public static Array<T> NewArray<T>(int length, IExternal<IntPtr, BindingClass> parentObject, int offset, int elementSize) where T : struct {
+        public static Array<T> NewArray<T>(int length, IExternal<BindingClass, IntPtr> parentObject, int offset, int elementSize) where T : struct {
             return Array<T>.New(length, parentObject, offset, elementSize);
         }
 
         public class Values<T> : External.IValues<T> where T : struct {
 
-            public External<T, BindingClass>[] array;
+            public External<BindingClass, T>[] array;
 
-            public Values(External<T, BindingClass>[] array) {
+            public Values(External<BindingClass, T>[] array) {
                 this.array = array;
             }
 
@@ -168,7 +168,7 @@ namespace CSGOP.Memory {
         }
     }
 
-    interface IExternal<T, BindingClass> {
+    interface IExternal<BindingClass, T> {
         void UpdatePointingAddresses();
         unsafe void* Pointer {
             get;
@@ -183,7 +183,7 @@ namespace CSGOP.Memory {
         }
     }
 
-    class External<T, BindingClass> : Unmanaged<T>, IExternal<T, BindingClass> where T : struct {
+    class External<BindingClass, T> : Unmanaged<T>, IExternal<BindingClass, T> where T : struct {
         private IntPtr address;
         
         protected readonly static Kernel kernel;
@@ -205,20 +205,20 @@ namespace CSGOP.Memory {
             this.address = new IntPtr(address);
         }
 
-        public static External<T, BindingClass> New(int address) {
-            return new External<T, BindingClass>(address);
+        public static External<BindingClass, T> New(int address) {
+            return new External<BindingClass, T>(address);
         }
 
-        public static External<T, BindingClass> New(string module, int offset) {
-            return new External<T, BindingClass>.WithOffset(module, offset);
+        public static External<BindingClass, T> New(string module, int offset) {
+            return new External<BindingClass, T>.WithOffset(module, offset);
         }
 
-        public static External<T, BindingClass> New(Func<IntPtr> GetBaseAddress, int offset) {
-            return new External<T, BindingClass>.WithOffset(GetBaseAddress, offset);
+        public static External<BindingClass, T> New(Func<IntPtr> GetBaseAddress, int offset) {
+            return new External<BindingClass, T>.WithOffset(GetBaseAddress, offset);
         }
 
-        public static External<T, BindingClass> New(IExternal<IntPtr, BindingClass> parentObject, int offset) {
-            return new External<T, BindingClass>.WithOffset.WithPointer(parentObject, offset);
+        public static External<BindingClass, T> New(IExternal<BindingClass, IntPtr> parentObject, int offset) {
+            return new External<BindingClass, T>.WithOffset.WithPointer(parentObject, offset);
         }
 
         public new T Value {
@@ -261,7 +261,7 @@ namespace CSGOP.Memory {
         }
 
 
-        protected class WithOffset : External<T, BindingClass>, IExternal {
+        protected class WithOffset : External<BindingClass, T>, IExternal {
 
             private int offset;
             
@@ -297,9 +297,9 @@ namespace CSGOP.Memory {
 
             public class WithPointer : WithOffset {
 
-                private IExternal<IntPtr, BindingClass> parentObject;
+                private IExternal<BindingClass, IntPtr> parentObject;
 
-                public unsafe WithPointer(IExternal<IntPtr, BindingClass> parentObject, int offset) {
+                public unsafe WithPointer(IExternal<BindingClass, IntPtr> parentObject, int offset) {
                     this.UpdatePointingAddressesDelegate = () => {
                         parentObject.UpdatePointingAddresses();
                         UpdateAddressDelegate();

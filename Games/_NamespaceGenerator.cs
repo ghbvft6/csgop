@@ -3,14 +3,14 @@ using CSGOP.Memory;
 
 namespace CSGOP.Games.CSGO {
 
-interface External<T> : IExternal<T, Process> { }
+interface External<T> : IExternal<Process, T> { }
 
-    class ExternalFactory<T> : External<T, Process>, External<T> where T : struct {
+    class ExternalFactory<T> : External<Process, T>, External<T> where T : struct {
 
         protected ExternalFactory(int address) : base(address) {
         }
 
-        protected new class WithOffset : External<T, Process>.WithOffset, External<T> {
+        protected new class WithOffset : External<Process, T>.WithOffset, External<T> {
 
             public WithOffset(string module, int offset) : base(module, offset) {
             }
@@ -18,8 +18,8 @@ interface External<T> : IExternal<T, Process> { }
             public unsafe WithOffset(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
             }
 
-            public new class WithPointer : External<T, Process>.WithOffset.WithPointer, External<T> {
-                public unsafe WithPointer(IExternal<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
+            public new class WithPointer : External<Process, T>.WithOffset.WithPointer, External<T> {
+                public unsafe WithPointer(IExternal<Process, IntPtr> parentObject, int offset) : base(parentObject, offset) {
                 }
             }
         }
@@ -36,7 +36,7 @@ interface External<T> : IExternal<T, Process> { }
             return new ExternalFactory<T>.WithOffset(GetBaseAddress, offset);
         }
 
-        public new static External<T> New(IExternal<IntPtr, Process> parentObject, int offset) {
+        public new static External<T> New(IExternal<Process, IntPtr> parentObject, int offset) {
             return new ExternalFactory<T>.WithOffset.WithPointer(parentObject, offset);
         }
     }
@@ -54,20 +54,20 @@ interface External<T> : IExternal<T, Process> { }
             return ExternalFactory<T>.New(GetBaseAddress, offset);
         }
 
-        public static External<T> New<T>(IExternal<IntPtr, Process> parentObject, int offset) where T : struct {
+        public static External<T> New<T>(IExternal<Process, IntPtr> parentObject, int offset) where T : struct {
             return ExternalFactory<T>.New(parentObject, offset);
         }
     }
 }namespace CSGOP.Games.MU {
 
-interface External<T> : IExternal<T, Process> { }
+interface External<T> : IExternal<Process, T> { }
 
-    class ExternalFactory<T> : External<T, Process>, External<T> where T : struct {
+    class ExternalFactory<T> : External<Process, T>, External<T> where T : struct {
 
         protected ExternalFactory(int address) : base(address) {
         }
 
-        protected new class WithOffset : External<T, Process>.WithOffset, External<T> {
+        protected new class WithOffset : External<Process, T>.WithOffset, External<T> {
 
             public WithOffset(string module, int offset) : base(module, offset) {
             }
@@ -75,8 +75,8 @@ interface External<T> : IExternal<T, Process> { }
             public unsafe WithOffset(Func<IntPtr> GetBaseAddress, int offset) : base(GetBaseAddress, offset) {
             }
 
-            public new class WithPointer : External<T, Process>.WithOffset.WithPointer, External<T> {
-                public unsafe WithPointer(IExternal<IntPtr, Process> parentObject, int offset) : base(parentObject, offset) {
+            public new class WithPointer : External<Process, T>.WithOffset.WithPointer, External<T> {
+                public unsafe WithPointer(IExternal<Process, IntPtr> parentObject, int offset) : base(parentObject, offset) {
                 }
             }
         }
@@ -93,7 +93,7 @@ interface External<T> : IExternal<T, Process> { }
             return new ExternalFactory<T>.WithOffset(GetBaseAddress, offset);
         }
 
-        public new static External<T> New(IExternal<IntPtr, Process> parentObject, int offset) {
+        public new static External<T> New(IExternal<Process, IntPtr> parentObject, int offset) {
             return new ExternalFactory<T>.WithOffset.WithPointer(parentObject, offset);
         }
     }
@@ -111,7 +111,7 @@ interface External<T> : IExternal<T, Process> { }
             return ExternalFactory<T>.New(GetBaseAddress, offset);
         }
 
-        public static External<T> New<T>(IExternal<IntPtr, Process> parentObject, int offset) where T : struct {
+        public static External<T> New<T>(IExternal<Process, IntPtr> parentObject, int offset) where T : struct {
             return ExternalFactory<T>.New(parentObject, offset);
         }
     }
