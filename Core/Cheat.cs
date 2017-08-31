@@ -18,10 +18,10 @@ namespace CSGOP.Core {
             csgo.AddCheat<Bunnyhop>();
             csgo.AddCheat<Aimbot>();
             csgo.AddCheat<Overlay>();
-            games.Add(csgo);
+            //games.Add(csgo);
 
             var mu = new Games.MU.Process();
-            mu.AddCheat(() => { mu.AgilityCheat(); });           
+            mu.AddCheat(() => { mu.AttackSpeedCheat(); });           
             games.Add(mu);
         }
 
