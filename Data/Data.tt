@@ -75,7 +75,15 @@ namespace CSGOP.Data {
                         } else {
 							typeName += "<BindingClass>";
                         }
-						if (typeName == "Array") typeName = "External<BindingClass>.Array<float>";
+						if (typeName == "Array") {
+							var genericTypeArgument = "";
+							var t = fieldInfo.FieldType.GenericTypeArguments[0];
+							using (var provider = new CSharpCodeProvider()) {
+								var typeRef = new CodeTypeReference(t);
+								genericTypeArgument = provider.GetTypeOutput(typeRef);
+							}
+							typeName = "External<BindingClass>.Array<" + genericTypeArgument + ">";
+						}
 #>			protected <#= typeName + typeNameArraySuffix + " " + fieldInfo.Name #>;
 <#
 					}
@@ -100,7 +108,13 @@ namespace CSGOP.Data {
 						if (typenamePrefix == "I" ) setter = "";
 						else setter = "set => "  + fieldInfo.Name + valueSuffix + " = value;";
 						if (typeName == "Array" ) {
-							typeName = "External.IValues<float>";
+							var genericTypeArgument = "";
+							var t = fieldInfo.FieldType.GenericTypeArguments[0];
+							using (var provider = new CSharpCodeProvider()) {
+								var typeRef = new CodeTypeReference(t);
+								genericTypeArgument = provider.GetTypeOutput(typeRef);
+							}
+							typeName = "External.IValues<" + genericTypeArgument + ">";
 							valueSuffix = ".ValuesArray";
 							setter = "";
                         }
@@ -143,7 +157,13 @@ namespace CSGOP.Data {
 						if (typenamePrefix == "I" ) setter = "";
 						else setter = "set;";
 						if (typeName == "Array" ) {
-							typeName = "External.IValues<float>";
+							var genericTypeArgument = "";
+							var t = fieldInfo.FieldType.GenericTypeArguments[0];
+							using (var provider = new CSharpCodeProvider()) {
+								var typeRef = new CodeTypeReference(t);
+								genericTypeArgument = provider.GetTypeOutput(typeRef);
+							}
+							typeName = "External.IValues<" + genericTypeArgument + ">";
 							setter = "";
                         }
 #>			<#= typenamePrefix + typeName + typeNameArraySuffix + " " + char.ToUpper(fieldInfo.Name[0]) + fieldInfo.Name.Substring(1) #> {
