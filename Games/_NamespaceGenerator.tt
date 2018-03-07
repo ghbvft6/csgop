@@ -11,7 +11,7 @@
 <#@ import namespace="System.CodeDom" #>
 <#@ output extension=".cs" #>
 using System;
-using CSGOP.Unmanaged;
+using CSGOP.Memory;
 
 <#
 	var files = Directory.GetFiles(@"c:\dev\csgop\Games\");
@@ -59,7 +59,7 @@ interface External<T> : IExternal<Process, T> { }
         }
     }
 
-    class External : Unmanaged.External<Process> {
+    class External : Memory.External<Process> {
         public static External<T> New<T>(int address) where T : struct {
             return ExternalFactory<T>.New(address);
         }
