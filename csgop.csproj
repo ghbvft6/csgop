@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="Data\DataTemplate.cs" />
     <Compile Include="Data\Interfaces\IVector3.cs" />
+    <Compile Include="Functions\TextReader.cs" />
     <Compile Include="Functions\CheatFunction.cs" />
     <Compile Include="Core\Cheat.cs" />
     <Compile Include="Functions\Aimbot.cs" />
@@ -128,6 +129,8 @@
     <Compile Include="Functions\Render.cs" />
     <Compile Include="Functions\SoundESP.cs" />
     <Compile Include="Functions\WorldToScreen.cs" />
+    <Compile Include="Games\Wordpad.cs" />
+    <Compile Include="Games\Notepad.cs" />
     <Compile Include="Games\_NamespaceGenerator.cs">
       <DependentUpon>_NamespaceGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>

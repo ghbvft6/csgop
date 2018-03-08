@@ -9,6 +9,7 @@ namespace CSGOP.Data {
 			protected Player<BindingClass> player;
 			protected Player<BindingClass>[] players;
 			protected External<BindingClass>.Array<float> view;
+			protected External<BindingClass>.Array<byte> text;
 			public IPlayer Player {
 				get => player;
 				
@@ -19,6 +20,10 @@ namespace CSGOP.Data {
 			}
 			public External.IValues<float> View {
 				get => view.ValuesArray;
+				
+			}
+			public External.IValues<byte> Text {
+				get => text.ValuesArray;
 				
 			}
 		}
@@ -32,6 +37,10 @@ namespace CSGOP.Data {
 				
 			}
 			External.IValues<float> View {
+				get;
+				
+			}
+			External.IValues<byte> Text {
 				get;
 				
 			}

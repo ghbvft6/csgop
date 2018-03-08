@@ -13,7 +13,7 @@ namespace CSGOP.Core {
         private static IList<ExternalProcess> gamesRunning = new List<ExternalProcess>();
 
         static Cheat() {
-            var csgo = new Games.CSGO.Process();
+            /*var csgo = new Games.CSGO.Process();
             csgo.AddCheat(() => { while (true) { Games.CSGO.Process.client.UpdateAllAddresses(); Thread.Sleep(5000); } });
             csgo.AddCheat<Bunnyhop>();
             csgo.AddCheat<Aimbot>();
@@ -22,7 +22,15 @@ namespace CSGOP.Core {
 
             var mu = new Games.MU.Process();
             mu.AddCheat(() => { mu.AttackSpeedCheat(); });           
-            games.Add(mu);
+            games.Add(mu);*/
+
+            var notepad = new Games.Notepad.Process();
+            notepad.AddCheat<TextReader>();
+            games.Add(notepad);
+
+            var wordpad = new Games.Wordpad.Process();
+            wordpad.AddCheat<TextReader>();
+            games.Add(wordpad);
         }
 
         public void MonitorGames() {
